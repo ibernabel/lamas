@@ -20,4 +20,8 @@ class Broker extends Model
   {
     return $this->belongsTo(User::class);
   }
+  public function portfolios()
+  {
+    return $this->hasOne(Portfolio::class);
+  }
 }
