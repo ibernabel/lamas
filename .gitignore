@@ -1,23 +1,112 @@
+# Laravel 11 Project .gitignore
+
 /.phpunit.cache
-/node_modules
-/public/build
-/public/hot
-/public/storage
-/storage/*.key
 /storage/pail
-/vendor
-.env
-.env.backup
-.env.production
 .phpactor.json
-.phpunit.result.cache
 Homestead.json
 Homestead.yaml
 auth.json
+/.fleet
+/.nova
+/.zed
+
+# Dependency directories
+/vendor/
+node_modules/
+
+# Environment configuration
+.env
+.env.backup
+.env.production
+.env.local
+.env.development
+.env.staging
+
+# Composer
+composer.lock
+composer.phar
+
+# NPM / Yarn
 npm-debug.log
 yarn-error.log
-/.fleet
-/.idea
-/.nova
-/.vscode
-/.zed
+yarn.lock
+!package-lock.json
+
+# Build and compilation outputs
+/public/build/
+/public/hot
+/public/storage
+/storage/*.key
+
+# IDE and editor directories
+/.idea/
+/.vscode/
+*.sublime-project
+*.sublime-workspace
+.phpstorm.meta.php
+_ide_helper.php
+_ide_helper_models.php
+
+# Temporary and cache files
+/bootstrap/cache/
+/storage/framework/cache/
+/storage/framework/sessions/
+/storage/framework/views/
+/storage/logs/
+*.cache
+
+# Uploaded files (consider if you want to track some uploaded content)
+/storage/app/public/*
+!/storage/app/public/.gitkeep
+
+# Compiled assets
+/public/css/
+/public/js/
+/public/mix-manifest.json
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary backup files
+*.bak
+*.gzip
+*.zip
+*.tmp
+
+# Phpunit
+/phpunit.xml
+.phpunit.result.cache
+
+# Deployment and server files
+.deployer
+.deploy
+.deployment
+
+# Misc development and system files
+.env.dusk.local
+.php-version
+.phpenv
+.env.testing
+.phpunit
+.php_cs.cache
+.php-cs-fixer.cache
+.php-cs-fixer.php
+.php_cs
+.php_cs.dist
+
+# Frontend build tools
+/node_modules
+/dist
+/coverage
+
+# Security and sensitive files
+*.pem
+*.key
+*.crt
+*.csr
