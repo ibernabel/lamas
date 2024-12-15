@@ -19,7 +19,9 @@ class Promoter extends Model
         'bank_name',
         'bank_account_number',
         'bank_account_type',
-        'bank_account_name'
+        'bank_account_name',
+        'user_id',
+
     ];
     protected $hidden = [
         'created_at',

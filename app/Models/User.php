@@ -73,4 +73,8 @@ class User extends Authenticatable
   {
     return $this->hasOne(Promoter::class);
   }
+  public function broker()
+  {
+    return $this->hasOne(Broker::class);
+  }
 }
