@@ -32,4 +32,8 @@ class Promoter extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function costumers()
+    {
+        return $this->hasMany(Costumer::class);
+    }
 }

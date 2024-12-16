@@ -18,4 +18,8 @@ class Portfolio extends Model
     {
         return $this->belongsTo(Broker::class);
     }
+    public function costumers()
+    {
+        return $this->hasMany(Costumer::class);
+    }
 }
