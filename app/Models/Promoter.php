@@ -11,8 +11,6 @@ class Promoter extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'email',
         'NID',
         'bonus_type',
         'bonus_value',

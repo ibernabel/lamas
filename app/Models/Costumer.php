@@ -45,4 +45,8 @@ class Costumer extends Model
     {
         return $this->hasOne(CostumerDetail::class);
     }
+    public function references()
+    {
+        return $this->hasMany(CostumerReference::class);
+    }
 }
