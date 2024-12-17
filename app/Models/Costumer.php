@@ -57,4 +57,8 @@ class Costumer extends Model
     {
         return $this->hasOne(CostumerJobInfo::class);
     }
+    public function company()
+    {
+      return $this->hasOne(Company::class);
+    }
 }

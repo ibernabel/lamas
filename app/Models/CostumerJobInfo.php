@@ -19,12 +19,16 @@ class CostumerJobInfo extends Model
       'payment_account_number',
       'schedule',
       'supervisor_name',
-
+      'company_id',
       'costumer_id',
     ];
 
     public function costumer()
     {
         return $this->belongsTo(Costumer::class, 'costumer_id');
+    }
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
     }
 }
