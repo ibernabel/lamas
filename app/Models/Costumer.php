@@ -49,8 +49,12 @@ class Costumer extends Model
     {
         return $this->hasMany(CostumerReference::class);
     }
-    public function financial_info()
+    public function financiaInfo()
     {
         return $this->hasOne(CostumerFinancialInfo::class);
+    }
+    public function jobInfo()
+    {
+        return $this->hasOne(CostumerJobInfo::class);
     }
 }
