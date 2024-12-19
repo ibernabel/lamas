@@ -29,5 +29,9 @@ class LoanApplication extends Model
     {
         return $this->hasMany(LoanApplicationRisk::class);
     }
+    public function notes()
+    {
+        return $this->hasMany(LoanApplicationNote::class);
+    }
 
 }
