@@ -20,4 +20,9 @@ class LoanApplicationRisk extends Model
     {
         return $this->belongsTo(LoanApplication::class);
     }
+    public function riskCategory()
+    {
+        return $this->belongsTo(LoanApplicationRiskCategory::class);
+    }
+
 }
