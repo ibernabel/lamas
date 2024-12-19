@@ -19,8 +19,8 @@ return new class extends Migration
                   ->constrained()
                   ->cascadeOnDelete()
                   ->cascadeOnUpdate();
-            $table->foreignId('risk_category_id')
-                  ->constrained()
+            $table->foreignId('risk_category_id')->nullable()
+                  ->constrained('loan_application_risk_categories')
                   ->onDelete('set null')
                   ->cascadeOnUpdate();
             $table->timestamps();
