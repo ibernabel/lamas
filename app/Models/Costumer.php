@@ -61,4 +61,8 @@ class Costumer extends Model
     {
       return $this->hasOne(Company::class);
     }
+    public function loan()
+    {
+      return $this->hasMany(LoanApplication::class);
+    }
 }
