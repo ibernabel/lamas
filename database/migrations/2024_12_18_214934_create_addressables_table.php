@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('phones', function (Blueprint $table) {
+        Schema::create('addressables', function (Blueprint $table) {
             $table->id();
-            $table->string('country_area');
-            $table->string('number');
-            $table->string('extension')->nullable();
-            $table->string('type');
-            $table->morphs('phoneable');
+            $table->foreignId('address_id')
+                  ->constrained()
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
+            $table->morphs('addressable');
+
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('phones');
+        Schema::dropIfExists('addressables');
     }
 };
