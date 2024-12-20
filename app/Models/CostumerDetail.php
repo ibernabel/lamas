@@ -26,5 +26,13 @@ class CostumerDetail extends Model
     {
         return $this->belongsTo(Costumer::class);
     }
+    public function phones()
+    {
+        return $this->morphMany(Phone::class, 'phoneable');
+    }
+    public function addresses()
+    {
+        return $this->morphMany(Address::class, 'addressable');
+    }
 
 }

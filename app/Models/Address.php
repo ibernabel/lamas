@@ -17,4 +17,12 @@ class Address extends Model
         'references',
     ];
 
+    public function companies()
+    {
+        return $this->morphedByMany(Company::class, 'addressable');
+    }
+    public function costumerDetails()
+    {
+        return $this->morphedByMany(CostumerDetail::class, 'addressable');
+    }
 }

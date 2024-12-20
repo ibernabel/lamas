@@ -22,4 +22,12 @@ class Company extends Model
     {
       return $this->belongsTo(Costumer::class, 'costumer_id');
     }
+    public function phones()
+    {
+        return $this->morphMany(Phone::class, 'phoneable');
+    }
+    public function addresses()
+    {
+        return $this->morphMany(Address::class, 'addressable');
+    }
 }
