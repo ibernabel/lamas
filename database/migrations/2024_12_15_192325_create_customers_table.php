@@ -11,22 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('costumers', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('NID')
                 ->unique()
                 ->comment('National Identification Number (NID)');
             $table->string('lead_channel')
-                  ->comment('Channel used by the costumer to reach us');
+                  ->comment('Channel used by the customer to reach us');
             $table->boolean('is_referred')
                 ->default(false)
-                ->comment('Indicates if the costumer is referred');
+                ->comment('Indicates if the customer is referred');
             $table->string('referred_by')
                 ->nullable()
-                ->comment('NID of the costumer who referred this costumer');
+                ->comment('NID of the customer who referred this customer');
             $table->boolean('is_active')
                 ->default(true)
-                ->comment('Indicates if the costumer is active');
+                ->comment('Indicates if the customer is active');
             $table->foreignId('portfolio_id')
                 ->nullable()
                 ->constrained('portfolios')
@@ -46,6 +46,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('costumers');
+        Schema::dropIfExists('customers');
     }
 };

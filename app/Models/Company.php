@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
+  use HasFactory;
+  
     protected $fillable = [
         'name',
         'email',
@@ -14,13 +17,13 @@ class Company extends Model
         'rnc',
         'departmet',
         'branch',
-        'costumer_id',
+        'customer_id',
 
     ];
 
-    public function costumer()
+    public function customer()
     {
-      return $this->belongsTo(Costumer::class, 'costumer_id');
+      return $this->belongsTo(Customer::class, 'customer_id');
     }
     public function phones()
     {

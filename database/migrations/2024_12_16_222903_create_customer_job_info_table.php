@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('costumer_job_info', function (Blueprint $table) {
+        Schema::create('customer_job_info', function (Blueprint $table) {
             $table->id();
             $table->string('role');
             $table->string('level');
@@ -24,8 +24,8 @@ return new class extends Migration
             $table->string('schedule');
             $table->string('supervisor_name');
 
-            $table->foreignId('costumer_id')
-                  ->constrained('costumers')
+            $table->foreignId('customer_id')
+                  ->constrained('customers')
                   ->onDelete('cascade')
                   ->cascadeOnUpdate();
             $table->timestamps();
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('costumer_job_info');
+        Schema::dropIfExists('customer_job_info');
     }
 };

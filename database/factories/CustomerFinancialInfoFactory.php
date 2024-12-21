@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CostumerFinancialInfo>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Customer>
  */
-class CostumerFinancialInfoFactory extends Factory
+class CustomerFinancialInfoFactory extends Factory
 {
   /**
    * Define the model's default state.
@@ -27,7 +27,7 @@ class CostumerFinancialInfoFactory extends Factory
       'household_expenses' => $this->faker->randomFloat(2, 0, 999999),
       'labor_benefits' => $this->faker->randomFloat(2, 0, 999999),
       'guarantee_assets' => $this->faker->randomFloat(2, 0, 999999),
-      'costumer_id' => $this->faker->numberBetween(1, 50),
+      'customer_id' => $this->faker->numberBetween(1, 50),
 
     ];
   }

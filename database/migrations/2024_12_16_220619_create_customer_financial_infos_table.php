@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('costumer_financial_info', function (Blueprint $table) {
+        Schema::create('customer_financial_info', function (Blueprint $table) {
             $table->id();
             $table->float('other_incomes')->nullable();
             $table->float('total_incomes')->nullable();
@@ -24,8 +24,8 @@ return new class extends Migration
             $table->float('labor_benefits')->nullable();
             $table->float('guarantee_assets')->nullable();
 
-            $table->foreignId('costumer_id')
-                  ->constrained('costumers')
+            $table->foreignId('customer_id')
+                  ->constrained('customers')
                   ->cascadeOnDelete()
                   ->cascadeOnUpdate();
             $table->timestamps();
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('costumer_financial_info');
+        Schema::dropIfExists('customer_financial_info');
     }
 };

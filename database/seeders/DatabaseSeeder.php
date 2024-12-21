@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
           UserSeeder::class,
           BrokerSeeder::class,
           PortfolioSeeder::class,
-          CostumerSeeder::class,
+          CustomerSeeder::class,
           PromoterSeeder::class,
         ]);
 

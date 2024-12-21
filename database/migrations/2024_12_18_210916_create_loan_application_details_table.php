@@ -19,7 +19,7 @@ return new class extends Migration
             $table->float('quota');
             $table->enum('frecuency',["daily", "weekly", "bi-weekly", "fortnightly", "monthly"]);
             $table->string('purpose');
-            $table->string('costumer_comment');
+            $table->string('customer_comment');
 
             $table->foreignId('loan_application_id')
                   ->constrained('loan_applications')

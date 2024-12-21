@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('costumer_references', function (Blueprint $table) {
+        Schema::create('customer_references', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('phone_number');
             $table->string('relationship');
             $table->boolean('is_who_referred')->default(false);
 
-            $table->foreignId('costumer_id')
-                  ->constrained('costumers')
+            $table->foreignId('customer_id')
+                  ->constrained('customers')
                   ->cascadeOnDelete()
                   ->cascadeOnUpdate();
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('costumer_references');
+        Schema::dropIfExists('customer_references');
     }
 };

@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CostumerDetail>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CustomerDetail>
  */
-class CostumerDetailFactory extends Factory
+class CustomerDetailFactory extends Factory
 {
   /**
    * Define the model's default state.
@@ -25,7 +25,7 @@ class CostumerDetailFactory extends Factory
       'gender' => $this->faker->randomElement(['male', 'female', 'other']),
       'marital_status' => $this->faker->randomElement(['single', 'married', 'divorced', 'widowed', 'other']),
       'education_level' => $this->faker->randomElement(['high_school', 'bachelor', 'master', 'doctoral', 'other']),
-      'costumer_id' => $this->faker->numberBetween(1, 50),
+      'customer_id' => $this->faker->numberBetween(1, 50),
     ];
   }
 }

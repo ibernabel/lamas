@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('departmet');
             $table->string('branch');
 
-            $table->foreignId('costumer_id')->constrained('costumers')->cascadeOnDelete();
+            $table->foreignId('customer_id')->constrained('customers')->cascadeOnDelete();
             $table->timestamps();
         });
     }

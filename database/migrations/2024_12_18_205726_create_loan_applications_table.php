@@ -19,7 +19,7 @@ return new class extends Migration
             $table->boolean('is_rejected')->default(false);
             $table->boolean('is_archived')->default(false);
             $table->boolean('is_new')->default(true);
-            $table->foreignId('costumer_id')->nullable()
+            $table->foreignId('customer_id')->nullable()
                   ->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('set null');
