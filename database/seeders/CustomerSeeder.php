@@ -14,22 +14,39 @@ use Illuminate\Database\Seeder;
 
 class CustomerSeeder extends Seeder
 {
-  /**
-   * Run the database seeds.
-   */
-  public function run(): void
-  {
-    Customer::factory(50)
-      ->has(
-        CustomerDetail::factory()
-          ->has(Phone::factory()->count(2), 'phones')
-          ->has(Address::factory(), 'addresses')
-        , 'details'
-      )
-      ->has(CustomerFinancialInfo::factory(), 'financialInfo')
-      ->has(CustomerJobInfo::factory(), 'jobInfo')
-      ->has(CustomerReference::factory()->count(2), 'references')
-      ->has(Company::factory(), 'company')  // Added relationship name
-      ->create();
-  }
+    private const CUSTOMER_COUNT = 50;
+    private const PHONE_COUNT = 2;
+    private const REFERENCE_COUNT = 2;
+
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $this->createCustomersWithRelations();
+    }
+
+    /**
+     * Create customers with all their related data
+     */
+    private function createCustomersWithRelations(): void
+    {
+        Customer::factory(self::CUSTOMER_COUNT)
+            ->has($this->createCustomerDetails(), 'details')
+            ->has(CustomerFinancialInfo::factory(), 'financialInfo')
+            ->has(CustomerJobInfo::factory(), 'jobInfo')
+            ->has(CustomerReference::factory()->count(self::REFERENCE_COUNT), 'references')
+            ->has(Company::factory(), 'company')
+            ->create();
+    }
+
+    /**
+     * Create customer details with phones and addresses
+     */
+    private function createCustomerDetails()
+    {
+        return CustomerDetail::factory()
+            ->has(Phone::factory()->count(self::PHONE_COUNT), 'phones')
+            ->has(Address::factory(), 'addresses');
+    }
 }
