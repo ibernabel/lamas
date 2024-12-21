@@ -31,6 +31,6 @@ class Company extends Model
     }
     public function addresses()
     {
-        return $this->morphMany(Address::class, 'addressable');
+        return $this->morphedToMany(Address::class, 'addressable');
     }
 }

@@ -49,7 +49,7 @@ class Customer extends Model
     {
         return $this->hasMany(CustomerReference::class);
     }
-    public function financiaInfo()
+    public function financialInfo()
     {
         return $this->hasOne(CustomerFinancialInfo::class);
     }

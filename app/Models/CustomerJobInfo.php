@@ -22,7 +22,6 @@ class CustomerJobInfo extends Model
     'payment_account_number',
     'schedule',
     'supervisor_name',
-    'company_id',
     'customer_id',
   ];
 

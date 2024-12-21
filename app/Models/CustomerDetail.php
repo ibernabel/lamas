@@ -35,6 +35,6 @@ class CustomerDetail extends Model
   }
   public function addresses()
   {
-    return $this->morphMany(Address::class, 'addressable');
+    return $this->morphToMany(Address::class, 'addressable');
   }
 }

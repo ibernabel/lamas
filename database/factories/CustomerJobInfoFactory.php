@@ -18,14 +18,14 @@ class CustomerJobInfoFactory extends Factory
     {
         return [
             'role' => $this->faker->jobTitle(),
-            'level' => $this->faker->word,
+            'level' => $this->faker->word(),
             'start_date' => $this->faker->date(),
             'salary' => $this->faker->randomFloat(2, 0, 999999),
-            'payment_type' => $this->faker->word,
-            'payment_frequency' => $this->faker->randomElements(["daily", "weekly", "bi-weekly", "fortnightly", "monthly"]),
+            'payment_type' => $this->faker->word(),
+            'payment_frequency' => $this->faker->randomElement(["daily", "weekly", "bi-weekly", "fortnightly", "monthly"]),
             'payment_bank' => $this->faker->company(),
             'payment_account_number' => $this->faker->numerify('############'),
-            'schedule' => $this->faker->word,
+            'schedule' => $this->faker->word(),
             'supervisor_name' => $this->faker->name(),
         ];
     }
