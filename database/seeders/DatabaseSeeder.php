@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Broker;
+use App\Models\Portfolio;
+use App\Models\Promoter;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,13 +20,15 @@ class DatabaseSeeder extends Seeder
           RoleSeeder::class,
           PermissionSeeder::class,
           UserSeeder::class,
+          BrokerSeeder::class,
+          PortfolioSeeder::class,
+          CostumerSeeder::class,
+          PromoterSeeder::class,
         ]);
+
 
         // User::factory(10)->withPersonalTeam()->create();
 
-        //User::factory()->withPersonalTeam()->create([
-        //    'name' => 'Test User',
-        //    'email' => 'test@example.com',
-        //]);
+
     }
 }

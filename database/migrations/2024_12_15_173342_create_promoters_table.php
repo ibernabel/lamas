@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('phone_number')->unique();
             $table->string('NID')->unique()
               ->comment('National Identification Number (NID)');
-            $table->string('bonus_type')
+            $table->enum('bonus_type', ['percentage', 'fixed'])
                 ->default('fixed')
                 ->comment('percentage or fixed');
 
