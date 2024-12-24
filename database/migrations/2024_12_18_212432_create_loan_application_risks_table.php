@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('risk');
             $table->string('description');
-            $table->foreignId('loan_application_id')
+            $table->foreignId('loan_application_id')->nullable()
                   ->constrained()
                   ->cascadeOnDelete()
                   ->cascadeOnUpdate();

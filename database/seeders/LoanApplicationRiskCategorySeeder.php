@@ -20,23 +20,23 @@ class LoanApplicationRiskCategorySeeder extends Seeder
         ]);
       LoanApplicationRiskCategory::create(
         [
-         'name' => 'credit history',
+         'name' => 'banking and credit history',
           'description' => 'Risks related to credit score',
         ]);
       LoanApplicationRiskCategory::create(
         [
-         'name' => 'family unit',
+         'name' => 'personal/family situation',
           'description' => 'Risks related to family nucleus',
         ]);
       LoanApplicationRiskCategory::create(
         [
-         'name' => 'job stability',
+         'name' => 'employment',
           'description' => 'Risks related to job stability',
         ]);
       LoanApplicationRiskCategory::create(
         [
-         'name' => 'solvency and indebtedness',
-          'description' => 'Risks related to job stability',
+         'name' => 'financial status',
+          'description' => 'Risks related to solvency and indebtedness',
         ]);
       LoanApplicationRiskCategory::create(
         [
@@ -46,7 +46,7 @@ class LoanApplicationRiskCategorySeeder extends Seeder
       LoanApplicationRiskCategory::create(
         [
          'name' => 'guarantees',
-          'description' => 'Risks related to payment capacity and morale to pay',
+          'description' => 'Risks related to Documentation/Process Issues',
         ]
       );
     }

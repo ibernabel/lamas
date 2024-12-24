@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
           CustomerSeeder::class,
           PromoterSeeder::class,
           LoanApplicationRiskCategorySeeder::class,
+          LoanApplicationRiskSeeder::class,
         ]);
 
 
