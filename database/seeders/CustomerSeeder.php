@@ -14,7 +14,7 @@ use Illuminate\Database\Seeder;
 
 class CustomerSeeder extends Seeder
 {
-    private const CUSTOMER_COUNT = 50;
+    private const CUSTOMER_COUNT = 20;
     private const PHONE_COUNT = 2;
     private const REFERENCE_COUNT = 2;
 

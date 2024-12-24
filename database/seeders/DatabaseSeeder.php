@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
           PortfolioSeeder::class,
           CustomerSeeder::class,
           PromoterSeeder::class,
+          LoanApplicationRiskCategorySeeder::class,
         ]);
 
 
