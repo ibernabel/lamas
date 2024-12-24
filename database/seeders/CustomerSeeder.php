@@ -9,6 +9,10 @@ use App\Models\CustomerDetail;
 use App\Models\CustomerFinancialInfo;
 use App\Models\CustomerJobInfo;
 use App\Models\CustomerReference;
+use App\Models\LoanApplication;
+use App\Models\LoanApplicationDetail;
+use App\Models\LoanApplicationNote;
+use App\Models\LoanApplicationRisk;
 use App\Models\Phone;
 use Illuminate\Database\Seeder;
 
@@ -17,6 +21,8 @@ class CustomerSeeder extends Seeder
     private const CUSTOMER_COUNT = 20;
     private const PHONE_COUNT = 2;
     private const REFERENCE_COUNT = 2;
+    private const LOAN_APPLICATION_NOTES_COUNT = 3;
+
 
     /**
      * Run the database seeds.
@@ -37,6 +43,7 @@ class CustomerSeeder extends Seeder
             ->has(CustomerJobInfo::factory(), 'jobInfo')
             ->has(CustomerReference::factory()->count(self::REFERENCE_COUNT), 'references')
             ->has(Company::factory(), 'company')
+            ->has($this->createLoanApplication(), 'loanApplications')
             ->create();
     }
 
@@ -48,5 +55,14 @@ class CustomerSeeder extends Seeder
         return CustomerDetail::factory()
             ->has(Phone::factory()->count(self::PHONE_COUNT), 'phones')
             ->has(Address::factory(), 'addresses');
+    }
+    /**
+     * Create LOan Application and details for Customer
+     */
+    private function createLoanApplication()
+    {
+        return LoanApplication::factory()
+            ->has(LoanApplicationDetail::factory(), 'details')
+            ->has(LoanApplicationNote::factory()->count(self::LOAN_APPLICATION_NOTES_COUNT), 'notes');
     }
 }

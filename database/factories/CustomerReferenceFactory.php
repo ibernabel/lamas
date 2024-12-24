@@ -21,7 +21,7 @@ class CustomerReferenceFactory extends Factory
             'phone_number' => $this->faker->phoneNumber(),
             'relationship' => $this->faker->word(),
             'is_who_referred' => $this->faker->boolean(),
-            'customer_id' => $this->faker->numberBetween(1, 50),
+            'customer_id' => $this->faker->randomElement(\App\Models\Customer::pluck('id')),
         ];
     }
 }

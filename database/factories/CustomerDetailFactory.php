@@ -25,7 +25,7 @@ class CustomerDetailFactory extends Factory
       'gender' => $this->faker->randomElement(['male', 'female', 'other']),
       'marital_status' => $this->faker->randomElement(['single', 'married', 'divorced', 'widowed', 'other']),
       'education_level' => $this->faker->randomElement(['high_school', 'bachelor', 'master', 'doctoral', 'other']),
-      'customer_id' => $this->faker->numberBetween(1, 50),
+      'customer_id' => $this->faker->randomElement(\App\Models\Customer::pluck('id')),
     ];
   }
 }

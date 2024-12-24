@@ -24,7 +24,7 @@ class CompanyFactory extends Factory
             'website' => $this->faker->url(),
             'departmet' => $this->faker->state(),
             'branch' => $this->faker->randomElement(['IT', 'Finance', 'Marketing', 'Sales', 'HR']),
-            'customer_id' => $this->faker->numberBetween(1, 50),
+            'customer_id' => $this->faker->randomElement(\App\Models\Customer::pluck('id')),
         ];
     }
 }
