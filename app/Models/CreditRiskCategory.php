@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LoanApplicationRiskCategory extends Model
+class CreditRiskCategory extends Model
 {
   use HasFactory;
   
@@ -20,6 +20,6 @@ class LoanApplicationRiskCategory extends Model
 
   public function risks()
   {
-    return $this->hasMany(LoanApplicationRisk::class);
+    return $this->hasMany(CreditRisk::class);
   }
 }

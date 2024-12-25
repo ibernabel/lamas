@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('loan_application_risk_categories', function (Blueprint $table) {
+        Schema::create('credit_risk_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('description');
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('loan_application_risk_categories');
+        Schema::dropIfExists('credit_risk_categories');
     }
 };

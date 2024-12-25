@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('loan_application_risks', function (Blueprint $table) {
+        Schema::create('credit_risks', function (Blueprint $table) {
             $table->id();
             $table->string('risk');
             $table->string('description');
-            $table->foreignId('loan_application_id')->nullable()
-                  ->constrained()
-                  ->cascadeOnDelete()
-                  ->cascadeOnUpdate();
             $table->foreignId('risk_category_id')->nullable()
-                  ->constrained('loan_application_risk_categories')
+                  ->constrained('credit_risk_categories')
                   ->onDelete('set null')
                   ->cascadeOnUpdate();
             $table->timestamps();
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('loan_application_risks');
+        Schema::dropIfExists('credit_risks');
     }
 };

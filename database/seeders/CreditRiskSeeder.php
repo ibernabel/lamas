@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\LoanApplicationRisk;
+use App\Models\CreditRisk;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class LoanApplicationRiskSeeder extends Seeder
+class CreditRiskSeeder extends Seeder
 {
 
   /**
@@ -36,7 +36,7 @@ class LoanApplicationRiskSeeder extends Seeder
 
       // Batch insert instead of multiple single inserts
       foreach (array_chunk($risks, 50) as $chunk) {
-        LoanApplicationRisk::insert($chunk);
+        CreditRisk::insert($chunk);
       }
 
       DB::commit();

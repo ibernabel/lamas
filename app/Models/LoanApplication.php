@@ -30,7 +30,7 @@ class LoanApplication extends Model
   }
   public function risks()
   {
-    return $this->hasMany(LoanApplicationRisk::class);
+    return $this->hasMany(CreditRisk::class);
   }
   public function notes()
   {
