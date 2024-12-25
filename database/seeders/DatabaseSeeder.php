@@ -2,11 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Broker;
-use App\Models\Portfolio;
-use App\Models\Promoter;
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,8 +19,8 @@ class DatabaseSeeder extends Seeder
           PortfolioSeeder::class,
           CustomerSeeder::class,
           PromoterSeeder::class,
-          LoanApplicationRiskCategorySeeder::class,
-          LoanApplicationRiskSeeder::class,
+          CreditRiskCategorySeeder::class,
+          CreditRiskSeeder::class,
         ]);
 
 
