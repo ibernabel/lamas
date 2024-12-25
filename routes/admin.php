@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoanApplicationController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 
@@ -12,16 +13,17 @@ Route::middleware([
 
   Route::get('', function () {
     return view('admin.admin');
-  })->name('admin.dashboard');
+  })->name('dashboard');
 
   Route::get('/users', function () {
     return 'Vista administracion de usuarios';
     //return view('admin.users');
   })->name('users');
 
-  Route::get('/application', function () {
-    return redirect('admin.dashboard');
-  })->name('application');
+  //Route::get('/application', function () {
+  //  return redirect('admin');
+  //})->name('application');
+  Route::get('/application', [LoanApplicationController::class, 'index'])->name('application');
 
   Route::get('/application/{id}', function () {
     return 'Vista administracion de solicitudes';

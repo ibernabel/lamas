@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 
@@ -18,10 +19,11 @@ Route::middleware([
   })->name('dashboard');
 
 
+  Route::get('/pruebas', function () {
+    $user = User::where('id', 1)->first();
+    $userName = $user->name;
+    //return 'Pagina de Pruebas ' . $admin;
+    return view('pruebas', compact('userName'));
+  })->name('pruebas');
 });
 
-//Route::get('/prueba', function () {
-//  $admin = Role::find('admin');
-//  return 'Pagina de Pruebas ' . $admin;
-//  //return view('home');
-//})->name('prueba');
