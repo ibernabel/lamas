@@ -13,7 +13,7 @@ class LoanApplicationController extends Controller
   public function index()
   {
     try {
-      $loanApplication = LoanApplication::with([
+      $loanApplications = LoanApplication::with([
         'details',
         'customer' => function ($query) {
           $query->with([
@@ -21,19 +21,18 @@ class LoanApplicationController extends Controller
             'company',
             'jobInfo',
             'financialInfo',
-            'references'
+            'references',
+            'portfolio'
           ]);
         },
         'risks',
         'notes',
       ])
         ->latest()
-        ->paginate(15);
+        ->get();
 
-      return response()->json([
-        'status' => 'success',
-        'data' => $loanApplication
-      ], 200);
+      return view('admin.admin', compact('loanApplications'));
+
     } catch (\Exception $e) {
       return response()->json([
         'status' => 'error',
