@@ -370,5 +370,21 @@
     "You may not delete your personal team.": "No se puede borrar su equipo personal.",
     "You may not leave a team that you created.": "No se puede abandonar un equipo que usted creó.",
     "Your email address is unverified.": "Su dirección de correo electrónico no está verificada.",
-    "Welcome to this beautiful admin panel.": "Bienvenido a este hermoso panel de administración."
+    "Welcome to this beautiful admin panel.": "Bienvenido a este hermoso panel de administración.",
+    "Date": "Fecha",
+    "Time": "Hora",
+    "Date & Time": "Fecha y hora",
+    "Date and Time": "Fecha y hora",
+    "Company": "Empresa",
+    "Phone": "Teléfono",
+    "Address": "Dirección",
+    "City": "Ciudad",
+    "Country": "País",
+    "Postal Code": "Código postal",
+    "Amount": "Cantidad",
+    "Broker": "Asesor",
+    "Status": "Estado",
+    "Type": "Tipo",
+    "Loan Application": "Solicitud de Préstamo",
+    "Loan Applications": "Solicitudes de Préstamos"
 }

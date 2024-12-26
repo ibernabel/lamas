@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\LoanApplication;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 
 class LoanApplicationController extends Controller
 {
@@ -13,25 +16,57 @@ class LoanApplicationController extends Controller
   public function index()
   {
     try {
-      $loanApplications = LoanApplication::with([
-        'details',
-        'customer' => function ($query) {
-          $query->with([
-            'details',
-            'company',
-            'jobInfo',
-            'financialInfo',
-            'references',
-            'portfolio'
-          ]);
-        },
-        'risks',
-        'notes',
+      $data = LoanApplication::with([
+        'details:id,loan_application_id,amount',
+        'customer.details:id,customer_id,first_name,last_name',
+        'customer.company:id,name,customer_id',
+        'customer.portfolio.broker.user:id,name',
       ])
+        ->select('id', 'created_at', 'status', 'customer_id')
+        ->latest()
+        //->dump()
+        ->get();
+      //return response()->json([
+      //  'status' => 'success',
+      //  'data' => $loanApplications
+      //], 200);
+      $loanApplications = datatables()->of($data)->toJson();
+      //return $loanApplications;
+      return view('admin.loan-application', compact('loanApplications'));
+    } catch (\Exception $e) {
+      return response()->json([
+        'status' => 'error',
+        'message' => 'Failed to fetch loan applications. ' . $e->getMessage()
+      ], 500);
+    }
+  }
+  public function datatable()
+  {
+    try {
+      $data = LoanApplication::with([
+        'details:id,loan_application_id,amount',
+        'customer.details:id,customer_id,first_name,last_name',
+        'customer.company:id,name,customer_id',
+        'customer.portfolio.broker.user:id,name',
+      ])
+        ->select([
+          'loan_applications.id',
+          'loan_applications.status',
+          'loan_applications.customer_id',
+          'loan_applications.created_at',
+        ])
         ->latest()
         ->get();
 
-      return view('admin.admin', compact('loanApplications'));
+      //dd($data->first()); // For debuging
+
+      //return $data;
+      return datatables()->of($data)
+        ->addColumn('created_at', function ($row) {
+          return $row->created_at;
+        })
+        ->toJson();
+      //return DB::getSchemaBuilder()->getColumnListing('loan_applications');
 
     } catch (\Exception $e) {
       return response()->json([
@@ -64,33 +99,38 @@ class LoanApplicationController extends Controller
   public function show(int $id)
   {
     try {
-      $loanApplication = LoanApplication::with([
+      // Define eager loading relationships once
+      $relationships = [
         'details',
-        'customer' => function ($query) {
-          $query->with([
-            'details',
-            'company',
-            'jobInfo',
-            'financialInfo',
-            'references'
-          ]);
-        },
+        'customer.details',
+        'customer.company',
+        'customer.jobInfo',
+        'customer.financialInfo',
+        'customer.references',
+        'customer.portfolio.broker.user',
         'risks',
-        'notes',
-      ])->findOrFail($id);
+        'notes'
+      ];
 
-      //return $loanApplication;
+      // Use single with() call with dot notation for nested relationships
+      $loanApplication = LoanApplication::with($relationships)
+        ->findOrFail($id);
+
       return response()->json([
         'status' => 'success',
         'data' => $loanApplication
       ], 200);
     } catch (\Exception $e) {
+      // Log the error for debugging
+      Log::error('Loan Application fetch failed: ' . $e->getMessage());
+
       return response()->json([
         'status' => 'error',
         'message' => 'Failed to fetch loan application. ' . $e->getMessage()
       ], 500);
     }
   }
+
 
   /**
    * Show the form for editing the specified resource.
