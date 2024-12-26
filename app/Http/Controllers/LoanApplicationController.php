@@ -12,21 +12,36 @@ class LoanApplicationController extends Controller
    */
   public function index()
   {
-    $loanApplication = LoanApplication::latest()
-    ->with([
-      'details',
-      'customer',
-      'customer.details',
-      'customer.company',
-      'customer.jobInfo',
-      'customer.financialInfo',
-      'customer.references',
-      'risks',
-      'notes',
-    ])->first();
+    try {
+      $loanApplication = LoanApplication::with([
+        'details',
+        'customer' => function ($query) {
+          $query->with([
+            'details',
+            'company',
+            'jobInfo',
+            'financialInfo',
+            'references'
+          ]);
+        },
+        'risks',
+        'notes',
+      ])
+        ->latest()
+        ->paginate(15);
 
-  return $loanApplication;
+      return response()->json([
+        'status' => 'success',
+        'data' => $loanApplication
+      ], 200);
+    } catch (\Exception $e) {
+      return response()->json([
+        'status' => 'error',
+        'message' => 'Failed to fetch loan applications. ' . $e->getMessage()
+      ], 500);
+    }
   }
+
 
   /**
    * Show the form for creating a new resource.
@@ -47,22 +62,36 @@ class LoanApplicationController extends Controller
   /**
    * Display the specified resource.
    */
-public function show(int $id)
-{
-    $loanApplication = LoanApplication::with([
+  public function show(int $id)
+  {
+    try {
+      $loanApplication = LoanApplication::with([
         'details',
-        'customer',
-        'customer.details',
-        'customer.company',
-        'customer.jobInfo',
-        'customer.financialInfo',
-        'customer.references',
+        'customer' => function ($query) {
+          $query->with([
+            'details',
+            'company',
+            'jobInfo',
+            'financialInfo',
+            'references'
+          ]);
+        },
         'risks',
         'notes',
-    ])->findOrFail($id);
+      ])->findOrFail($id);
 
-    return $loanApplication;
-}
+      //return $loanApplication;
+      return response()->json([
+        'status' => 'success',
+        'data' => $loanApplication
+      ], 200);
+    } catch (\Exception $e) {
+      return response()->json([
+        'status' => 'error',
+        'message' => 'Failed to fetch loan application. ' . $e->getMessage()
+      ], 500);
+    }
+  }
 
   /**
    * Show the form for editing the specified resource.
