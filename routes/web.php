@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\CreditRisk;
+use App\Models\LoanApplication;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
@@ -25,5 +27,19 @@ Route::middleware([
     //return 'Pagina de Pruebas ' . $admin;
     return view('pruebas', compact('userName'));
   })->name('pruebas');
-});
 
+  /**
+   * Attach random risks to loan applications:
+   */
+  //Route::get('/riesgos', function () {
+  //  $loanApplications = LoanApplication::all();
+  //  $risks = CreditRisk::all();
+
+  //  $loanApplications->each(function ($loanApplication) use ($risks) {
+  //    $riskIds = $risks->random(5)->pluck('id')->unique()->toArray();
+  //    $loanApplication->risks()->sync($riskIds);
+  //  });
+
+  //  return $loanApplications;
+  //});
+});

@@ -20,14 +20,19 @@ Route::middleware([
     //return view('admin.users');
   })->name('users');
 
-  //Route::get('/application', function () {
-  //  return redirect('admin');
-  //})->name('application');
-  Route::get('/application', [LoanApplicationController::class, 'index'])->name('application');
+  //Route::resource('loan-application', LoanApplicationController::class)->names('loan-application');
 
-  Route::get('/application/{id}', function () {
-    return 'Vista administracion de solicitudes';
-    //return view('application');
-  })->name('application');
+  Route::get('/loan-application', [LoanApplicationController::class, 'index'])->name('loan-application.index');
+  Route::get('/loan-application/{id}', [LoanApplicationController::class, 'show'])->name('loan-application.show');
+
+  //Redirect to admin dashboard
+  //Route::get('/loan-application', function () {
+  //  return redirect('admin');
+  //})->name('loan-application');
+
+  //Route::get('/application/{id}', function () {
+  //  return 'Vista administracion de solicitudes';
+  //  //return view('application');
+  //})->name('application');
 
 });

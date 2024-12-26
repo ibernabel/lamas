@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class LoanApplication extends Model
 {
@@ -20,19 +24,19 @@ class LoanApplication extends Model
     'updated_at',
   ];
 
-  public function customer()
+  public function customer(): BelongsTo
   {
     return $this->belongsTo(Customer::class);
   }
-  public function details()
+  public function details(): HasOne
   {
     return $this->hasOne(LoanApplicationDetail::class);
   }
-  public function risks()
+  public function risks(): BelongsToMany
   {
-    return $this->hasMany(CreditRisk::class);
+    return $this->belongsToMany(CreditRisk::class);
   }
-  public function notes()
+  public function notes(): HasMany
   {
     return $this->hasMany(LoanApplicationNote::class);
   }

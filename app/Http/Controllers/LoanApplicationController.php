@@ -12,21 +12,20 @@ class LoanApplicationController extends Controller
    */
   public function index()
   {
-    $loanApplications = LoanApplication::latest()
-                                        ->with([
-                                          'details',
-                                          'customer',
-                                          'customer.details',
-                                          'customer.company',
-                                          'customer.jobInfo',
-                                          'customer.financialInfo',
-                                          'customer.references',
-                                          'risks',
-                                          'notes',
-                                          ])
+    $loanApplication = LoanApplication::latest()
+    ->with([
+      'details',
+      'customer',
+      'customer.details',
+      'customer.company',
+      'customer.jobInfo',
+      'customer.financialInfo',
+      'customer.references',
+      'risks',
+      'notes',
+    ])->first();
 
-                                        ->first();
-    return $loanApplications;
+  return $loanApplication;
   }
 
   /**
@@ -48,10 +47,22 @@ class LoanApplicationController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(string $id)
-  {
-    //
-  }
+public function show(int $id)
+{
+    $loanApplication = LoanApplication::with([
+        'details',
+        'customer',
+        'customer.details',
+        'customer.company',
+        'customer.jobInfo',
+        'customer.financialInfo',
+        'customer.references',
+        'risks',
+        'notes',
+    ])->findOrFail($id);
+
+    return $loanApplication;
+}
 
   /**
    * Show the form for editing the specified resource.
