@@ -20,10 +20,10 @@ Route::middleware([
     //return view('admin.users');
   })->name('users');
 
-  //Route::resource('loan-application', LoanApplicationController::class)->names('loan-application');
+  Route::resource('loan-applications', LoanApplicationController::class)->names('loan-applications');
 
-  Route::get('/loan-application', [LoanApplicationController::class, 'index'])->name('loan-application.index');
-  Route::get('/loan-application/{id}', [LoanApplicationController::class, 'show'])->name('loan-application.show');
+  //Route::get('/loan-application', [LoanApplicationController::class, 'index'])->name('loan-application.index');
+  //Route::get('/loan-application/{id}', [LoanApplicationController::class, 'show'])->name('loan-application.show');
 
   //Redirect to admin dashboard
   //Route::get('/loan-application', function () {
