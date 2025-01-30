@@ -120,22 +120,18 @@
                         }
                     },
                     {
-
                         data: "id",
                         render: function(data) {
                             const baseUrl = '{{ route('loan-applications.show', ':id') }}'.replace(
                                 ':id', data);
-                            return `<a class="btn btn-info" href="${baseUrl}">{{__('View')}}</a>`;
+                            return `<a class="btn btn-info" href="${baseUrl}">{{ __('View') }}</a>`;
                         }
-
-
-
                     }
                 ],
                 "responsive": true,
                 "processing": true,
                 "serverSide": true,
-                "pageLength": 25,
+                "pageLength": 10,
                 "language": {
                     "lengthMenu": "Mostrar " +
                         `<select class="form-select form-select-sm" aria-label=".form-select-sm example">
