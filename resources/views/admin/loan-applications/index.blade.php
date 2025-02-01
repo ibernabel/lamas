@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Loan Applications')
+@section('title', 'Solicitudes')
 
 @section('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
