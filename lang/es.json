@@ -386,5 +386,19 @@
     "Status": "Estado",
     "Type": "Tipo",
     "Loan Application": "Solicitud de Préstamo",
-    "Loan Applications": "Solicitudes de Préstamos"
+    "Loan Applications": "Solicitudes de Préstamos",
+    "Received": "Recibido",
+    "received": "Recibido",
+    "Verified": "Verificado",
+    "verified": "Verificado",
+    "Assigned": "Asignado",
+    "assigned": "Asignado",
+    "Analyzed": "Analizado",
+    "analyzed": "Analizado",
+    "Approved": "Aprobado",
+    "approved": "Aprobado",
+    "Rejected": "Rechazado",
+    "rejected": "Rechazado",
+    "Archived": "Archivado",
+    "archived": "Archivado"
 }

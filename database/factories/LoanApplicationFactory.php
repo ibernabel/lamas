@@ -17,7 +17,7 @@ class LoanApplicationFactory extends Factory
     public function definition(): array
     {
         return [
-            'status' => $this->faker->randomElement(["recibida", "verificada", "asignada", "analizada", "aprobada", "rechazada", "archivada"]),
+            'status' => $this->faker->randomElement(['received', 'verified', 'assigned', 'analyzed', 'approved', 'rejected', 'archived']),
             'is_answered' => $this->faker->boolean,
             'is_approved' => $this->faker->boolean,
             'is_rejected' => $this->faker->boolean,

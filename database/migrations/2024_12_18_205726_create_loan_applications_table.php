@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('loan_applications', function (Blueprint $table) {
             $table->id();
-            $table->enum('status',["recibida", "verificada", "asignada", "analizada", "aprobada", "rechazada", "archivada"]);
+            $table->enum('status',['received', 'verified', 'assigned', 'analyzed', 'approved', 'rejected', 'archived']);
+            $table->dateTime('changed_status_at')->nullable();
             $table->boolean('is_answered')->default(false);
             $table->boolean('is_approved')->default(false);
             $table->boolean('is_rejected')->default(false);
