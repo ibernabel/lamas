@@ -15,30 +15,7 @@ class LoanApplicationController extends Controller
    */
   public function index()
   {
-    try {
-      $data = LoanApplication::with([
-        'details:id,loan_application_id,amount',
-        'customer.details:id,customer_id,first_name,last_name',
-        'customer.company:id,name,customer_id',
-        'customer.portfolio.broker.user:id,name',
-      ])
-        ->select('id', 'created_at', 'status', 'customer_id')
-        ->latest()
-        //->dump()
-        ->get();
-      //return response()->json([
-      //  'status' => 'success',
-      //  'data' => $loanApplications
-      //], 200);
-      $loanApplications = datatables()->of($data)->toJson();
-      //return $loanApplications;
-      return view('admin.loan-applications.index', compact('loanApplications'));
-    } catch (\Exception $e) {
-      return response()->json([
-        'status' => 'error',
-        'message' => 'Failed to fetch loan applications. ' . $e->getMessage()
-      ], 500);
-    }
+    return view('admin.loan-applications.index');
   }
   public function datatable()
   {
@@ -64,6 +41,9 @@ class LoanApplicationController extends Controller
       return datatables()->of($data)
         ->addColumn('created_at', function ($row) {
           return $row->created_at;
+        })
+        ->editColumn('status', function ($row) {
+          return __($row->status);
         })
         ->toJson();
       //return DB::getSchemaBuilder()->getColumnListing('loan_applications');
@@ -115,13 +95,7 @@ class LoanApplicationController extends Controller
       // Use single with() call with dot notation for nested relationships
       $loanApplication = LoanApplication::with($relationships)
         ->findOrFail($id);
-        return view('admin.loan-applications.show', compact('loanApplication'));
-
-      //return response()->json([
-      //  'status' => 'success',
-      //  'data' => $loanApplication
-      //], 200);
-
+      return view('admin.loan-applications.show', compact('loanApplication'));
 
     } catch (\Exception $e) {
       // Log the error for debugging
@@ -133,14 +107,40 @@ class LoanApplicationController extends Controller
       ], 500);
     }
   }
-
-
+  
   /**
    * Show the form for editing the specified resource.
    */
-  public function edit(string $id)
+  public function edit(int $id)
   {
-    //
+    try {
+      // Define eager loading relationships once
+      $relationships = [
+        'details',
+        'customer.details',
+        'customer.company',
+        'customer.jobInfo',
+        'customer.financialInfo',
+        'customer.references',
+        'customer.portfolio.broker.user',
+        'risks',
+        'notes'
+      ];
+
+      // Use single with() call with dot notation for nested relationships
+      $loanApplication = LoanApplication::with($relationships)
+        ->findOrFail($id);
+      return view('admin.loan-applications.edit', compact('loanApplication'));
+
+    } catch (\Exception $e) {
+      // Log the error for debugging
+      Log::error('Loan Application fetch failed: ' . $e->getMessage());
+
+      return response()->json([
+        'status' => 'error',
+        'message' => 'Failed to fetch loan application. ' . $e->getMessage()
+      ], 500);
+    }
   }
 
   /**
