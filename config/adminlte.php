@@ -193,7 +193,7 @@ return [
     'classes_body' => '',
     'classes_brand' => '',
     'classes_brand_text' => '',
-    'classes_content_wrapper' => 'bg-white dark:bg-gray-800',
+    'classes_content_wrapper' => 'dark:bg-gray-800 bg-white ',
     'classes_content_header' => '',
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',

@@ -20,6 +20,10 @@ class CustomerDetail extends Model
     'gender',
     'marital_status',
     'education_level',
+    'nationality',
+    'housing_type',
+    'move_in_date',
+    'vehicle_type',
   ];
   protected $hidden = [
     'created_at',
