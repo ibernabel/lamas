@@ -1,124 +1,155 @@
 <x-admin.app-layout>
   <x-slot name="title">
-    {{ __('Loan Application') }}
+      {{ __('Edit Loan Application') }}
   </x-slot>
-  {{--<x-slot name="content_header">
-    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-        {{ __('Loan Application') }}
-    </h2>
-</x-slot>--}}
-    <div class="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8">
-        {{-- Header Section --}}
-        <div class="grid grid-cols-2 gap-x-2 mb-6 items-center">
-          <h3 class="text-lg font-semibold text-gray-400">
-              {{ __('Loan Application')}} #{{ $loanApplication->id }}
-          </h3>
-          <x-loan-status :status="$loanApplication->status" />
-      </div>
 
-        <div class="space-y-6">
-            {{-- Customer Information Section --}}
-            <x-card>
-                <x-card.header>
-                    <x-card.title>Información del Cliente</x-card.title>
-                </x-card.header>
+  <div class="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8">
+      <form action="{{ route('loan-applications.update', $loanApplication) }}" method="POST">
+          @csrf
+          @method('PUT')
+          
+          <div class="space-y-6">
+              {{-- Customer Information Section --}}
+              <x-card.header>
+                  <x-card.title>{{__('Customer Information')}}</x-card.title>
+              </x-card.header>
+              <x-card>
 
-                <x-card.content>
-                        <x-card.detail-item label="Nombre" :value="$loanApplication->customer->details->first_name .
-                            ' ' .
-                            $loanApplication->customer->details->last_name" />
-                        <x-card.detail-item label="Cédula" :value="$loanApplication->customer->NID" />
-                        <x-card.detail-item label="Email" :value="$loanApplication->customer->details->email" />
-                        <x-card.detail-item label="Fecha de Nacimiento" :value="$loanApplication->customer->details->birthday" />
-                        <x-card.detail-item label="Género" :value="$loanApplication->customer->details->gender" />
-                        <x-card.detail-item label="Estado Civil" :value="$loanApplication->customer->details->marital_status" />
-                        <x-card.detail-item label="Educación" :value="$loanApplication->customer->details->education_level" />
-                </x-card.content>
-            </x-card>
+                  <x-card.content>
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <x-input-group>
+                              <x-label for="first_name" value="First Name" />
+                              <x-input2 id="first_name" type="text" name="customer[details][first_name]"
+                                  value="{{ old('customer.details.first_name', $loanApplication->customer->details->first_name) }}" />
+                              <x-input-error for="customer.details.first_name" />
+                          </x-input-group>
 
-            {{-- Loan Details Section --}}
-            <x-card>
-                <x-card.header>
-                    <x-card.title>Detalles del Préstamo</x-card.title>
-                </x-card.header>
+                          <x-input-group>
+                              <x-label for="last_name" value="Last Name" />
+                              <x-input2 id="last_name" type="text" name="customer[details][last_name]"
+                                  value="{{ old('customer.details.last_name', $loanApplication->customer->details->last_name) }}" />
+                              <x-input-error for="customer.details.last_name" />
+                          </x-input-group>
 
-                <x-card.content>
-                        <x-card.detail-item label="Monto" :value="number_format($loanApplication->details->amount, 2)" prefix="RD$" />
-                        <x-card.detail-item label="Plazo" :value="$loanApplication->details->term" suffix="meses" />
-                        <x-card.detail-item label="Tasa" :value="$loanApplication->details->rate" suffix="%" />
-                        <x-card.detail-item label="Cuota" :value="number_format($loanApplication->details->quota, 2)" prefix="RD$" />
-                        <x-card.detail-item label="Frecuencia" :value="$loanApplication->details->frecuency" />
-                        <x-card.detail-item label="Propósito" :value="$loanApplication->details->purpose" />
-                        <x-card.detail-item label="Comentario del Cliente" :value="$loanApplication->details->customer_comment" />
-                </x-card.content>
-            </x-card>
+                          <x-input-group>
+                              <x-label for="email" value="Email" />
+                              <x-input2 id="email" type="email" name="customer[details][email]"
+                                  value="{{ old('customer.details.email', $loanApplication->customer->details->email) }}" />
+                              <x-input-error for="customer.details.email" />
+                          </x-input-group>
 
-            {{-- Employment Information --}}
-            <x-card>
-                <x-card.header>
-                    <x-card.title>Información Laboral</x-card.title>
-                </x-card.header>
+                          <x-input-group>
+                              <x-label for="birthday" value="Birthday" />
+                              <x-input2 id="birthday" type="date" name="customer[details][birthday]"
+                                  value="{{ old('customer.details.birthday', $loanApplication->customer->details->birthday) }}" />
+                              <x-input-error for="customer.details.birthday" />
+                          </x-input-group>
 
-                <x-card.content>
-                        <x-card.detail-item label="Empresa" :value="$loanApplication->customer->company->name" />
-                        <x-card.detail-item label="Cargo" :value="$loanApplication->customer?->jobInfo->role ?? 'No especificado'" />
-                          <x-card.detail-item label="Fecha de Ingreso" :value="$loanApplication->customer?->jobInfo?->start_date ?? ''" />
-                        <x-card.detail-item label="Salario" :value="number_format($loanApplication->customer?->jobInfo?->salary, 2)" prefix="RD$" />
-                        <x-card.detail-item label="Tipo de Pago" :value="$loanApplication->customer?->jobInfo?->payment_type ?? ''" />
-                        <x-card.detail-item label="Frecuencia de Pago" :value="$loanApplication->customer?->jobInfo?->payment_frequency ?? ''" />
-                        <x-card.detail-item label="Banco Nomina" :value="$loanApplication->customer?->jobInfo?->payment_bank ?? ''" />
-                        <x-card.detail-item label="Horario" :value="$loanApplication->customer?->jobInfo?->schedule ?? ''" />
-                        <x-card.detail-item label="Supervisor" :value="$loanApplication->customer?->jobInfo?->supervisor_name ?? ''" />
-                </x-card.content>
-            </x-card>
+                          <x-input-group>
+                              <x-label for="gender" value="Gender" />
+                              <x-select id="gender" name="customer[details][gender]">
+                                  <option value="">Select Gender</option>
+                                  <option value="male" {{ old('customer.details.gender', $loanApplication->customer->details->gender) == 'male' ? 'selected' : '' }}>Male</option>
+                                  <option value="female" {{ old('customer.details.gender', $loanApplication->customer->details->gender) == 'female' ? 'selected' : '' }}>Female</option>
+                              </x-select>
+                              <x-input-error for="customer.details.gender" />
+                          </x-input-group>
+                      </div>
+                  </x-card.content>
+              </x-card>
 
-            {{-- References Section --}}
-            <x-card>
-                <x-card.header>
-                    <x-card.title>Referencias</x-card.title>
-                </x-card.header>
+              {{-- Loan Details Section --}}
+              <x-card.header>
+                  <x-card.title>{{__('Loan Details')}}</x-card.title>
+              </x-card.header>
+              <x-card>
 
-                <x-card.content>
-                    @foreach ($loanApplication->customer->references as $reference)
-                        <div class="mb-4 last:mb-0">
-                            {{--<h4 class="font-medium text-gray-900 mb-2">Referencia {{ $loop->iteration }}</h4>--}}
-                                <x-card.detail-item label="Referencia" :value="$loop->iteration" />
-                                <x-card.detail-item label="Nombre" :value="$reference->name" />
-                                <x-card.detail-item label="Teléfono" :value="$reference->phone_number" />
-                                <x-card.detail-item label="Relación" :value="$reference->relationship" />
-                        </div>
-                    @endforeach
-                </x-card.content>
-            </x-card>
+                  <x-card.content>
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <x-input-group>
+                              <x-label for="amount" value="Amount" />
+                              <x-input2 id="amount" type="number" step="0.01" name="details[amount]"
+                                  value="{{ old('details.amount', $loanApplication->details->amount) }}" />
+                              <x-input-error for="details.amount" />
+                          </x-input-group>
 
-            {{-- Notes Section --}}
-            @if ($loanApplication->notes->isNotEmpty())
-                <x-card>
-                    <x-card.header>
-                        <x-card.title>Notas</x-card.title>
-                    </x-card.header>
+                          <x-input-group>
+                              <x-label for="term" value="Term (months)" />
+                              <x-input2 id="term" type="number" name="details[term]"
+                                  value="{{ old('details.term', $loanApplication->details->term) }}" />
+                              <x-input-error for="details.term" />
+                          </x-input-group>
 
-                    <x-card.content>
-                        <div class="space-y-4">
-                            @foreach ($loanApplication->notes as $note)
-                                <div class="grid gap-x-4 items-center grid-cols-4 ">
-                                    <div class="flex justify-end col-span-1 flex-shrink-0">
-                                        <x-card.avatar :user="$note->user" class="h-10 w-10" />
-                                    </div>
-                                    <div class="flex justify-start col-span-3">
-                                      <x-card.detail-item label="{{ $note->user->name }}: " :value="$note->note" />
+                          <x-input-group>
+                              <x-label for="rate" value="Rate (%)" />
+                              <x-input2 id="rate" type="number" step="0.01" name="details[rate]"
+                                  value="{{ old('details.rate', $loanApplication->details->rate) }}" />
+                              <x-input-error for="details.rate" />
+                          </x-input-group>
 
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </x-card.content>
-                </x-card>
-            @endif
-        </div>
-    </div>
+                          <x-input-group>
+                              <x-label for="frequency" value="Payment Frequency" />
+                              <x-select id="frequency" name="details[frequency]">
+                                  <option value="">Select Frequency</option>
+                                  <option value="weekly" {{ old('details.frequency', $loanApplication->details->frequency) == 'weekly' ? 'selected' : '' }}>Weekly</option>
+                                  <option value="biweekly" {{ old('details.frequency', $loanApplication->details->frequency) == 'biweekly' ? 'selected' : '' }}>Biweekly</option>
+                                  <option value="monthly" {{ old('details.frequency', $loanApplication->details->frequency) == 'monthly' ? 'selected' : '' }}>Monthly</option>
+                              </x-select>
+                              <x-input-error for="details.frequency" />
+                          </x-input-group>
 
-<x-slot name="footer">
-  <p>{{ __('Footer') }}</p>
-</x-slot>
+                          <x-input-group>
+                              <x-label for="purpose" value="Purpose" />
+                              <x-textarea id="purpose" name="details[purpose]">
+                                  {{ old('details.purpose', $loanApplication->details->purpose) }}
+                              </x-textarea>
+                              <x-input-error for="details.purpose" />
+                          </x-input-group>
+                      </div>
+                  </x-card.content>
+              </x-card>
+
+              {{-- Employment Information --}}
+              <x-card.header>
+                  <x-card.title>{{__('Employment Information')}}</x-card.title>
+              </x-card.header>
+              <x-card>
+
+                  <x-card.content>
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <x-input-group>
+                              <x-label for="company_name" value="Company" />
+                              <x-input2 id="company_name" type="text" name="customer[company][name]"
+                                  value="{{ old('customer.company.name', $loanApplication->customer->company->name) }}" />
+                              <x-input-error for="customer.company.name" />
+                          </x-input-group>
+
+                          <x-input-group>
+                              <x-label for="role" value="Role" />
+                              <x-input2 id="role" type="text" name="customer[jobInfo][role]"
+                                  value="{{ old('customer.jobInfo.role', $loanApplication->customer->jobInfo->role) }}" />
+                              <x-input-error for="customer.jobInfo.role" />
+                          </x-input-group>
+
+                          <x-input-group>
+                              <x-label for="salary" value="Salary" />
+                              <x-input2 id="salary" type="number" step="0.01" name="customer[jobInfo][salary]"
+                                  value="{{ old('customer.jobInfo.salary', $loanApplication->customer->jobInfo->salary) }}" />
+                              <x-input-error for="customer.jobInfo.salary" />
+                          </x-input-group>
+                      </div>
+                  </x-card.content>
+              </x-card>
+
+              <div class="flex justify-end space-x-4">
+                  <x-button2 type="button" variant="secondary" onclick="window.history.back()">
+                      {{__('Cancel')}}
+                  </x-button2>
+                  <x-button2 type="submit" variant="primary">
+                      {{__('Update')}}
+                  </x-button2>
+              </div>
+          </div>
+      </form>
+  </div>
 </x-admin.app-layout>

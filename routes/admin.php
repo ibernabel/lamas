@@ -25,7 +25,9 @@ Route::middleware([
   Route::get('/loan-applications', [LoanApplicationController::class, 'index'])->name('loan-applications.index');
   Route::get('/loan-applications/datatable', [LoanApplicationController::class, 'datatable'])->name('loan-applications.datatable');
   Route::get('/loan-applications/{id}', [LoanApplicationController::class, 'show'])->name('loan-applications.show');
-  Route::get('/loan-applications/{id}/edit', [LoanApplicationController::class, 'show'])->name('loan-applications.edit');
+  Route::get('/loan-applications/{id}/edit', [LoanApplicationController::class, 'edit'])->name('loan-applications.edit');
+  Route::put('/loan-applications/{id}', [LoanApplicationController::class, 'update'])
+    ->name('loan-applications.update');
 
   //Redirect to admin dashboard
   //Route::get('/loan-application', function () {

@@ -71,6 +71,12 @@ class LoanApplicationController extends Controller
         'customer' => function ($query) {
           $query->with([
             'details',
+            'details.phones' => function ($query) {
+              $query->limit(1);
+            },
+            'details.addresses' => function ($query) {
+              $query->limit(1);
+            },
             'company',
             'jobInfo',
             'financialInfo',

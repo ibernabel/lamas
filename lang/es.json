@@ -400,5 +400,11 @@
     "Rejected": "Rechazado",
     "rejected": "Rechazado",
     "Archived": "Archivado",
-    "archived": "Archivado"
+    "archived": "Archivado",
+    "Customer Information": "Información del Cliente",
+    "Loan Information": "Información del Préstamo",
+    "Loan Details": "Detalles del Préstamo",
+    "Loan Details & Documents": "Detalles y Documentos del Préstamo",
+    "Employment Information": "Información Laboral",
+    "No address available": "No hay dirección disponible"
 }
