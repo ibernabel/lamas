@@ -41,10 +41,14 @@
                             ->join(', ')
                         : __('No address available')" />
 
+                    <x-card.detail-item label="Tipo de vivienda" :value="$loanApplication->customer->details->housing_type" />
+                    <x-card.detail-item label="Reside desde" :value="$loanApplication->customer->details->move_in_date" />
                     <x-card.detail-item label="Fecha de Nacimiento" :value="$loanApplication->customer->details->birthday" />
                     <x-card.detail-item label="Género" :value="$loanApplication->customer->details->gender" />
                     <x-card.detail-item label="Estado Civil" :value="$loanApplication->customer->details->marital_status" />
+                    <x-card.detail-item label="Nacionalidad" :value="$loanApplication->customer->details->nationality" />
                     <x-card.detail-item label="Educación" :value="$loanApplication->customer->details->education_level" />
+                    <x-card.detail-item label="Vehículo" :value="$loanApplication->customer->details->vehicle_type" />
                 </x-card.content>
             </x-card>
 
@@ -70,8 +74,9 @@
                 <x-card.title>Información Laboral</x-card.title>
             </x-card.header>
             <x-card>
-
+              {{--is_self_employed--}}
                 <x-card.content>
+                    <x-card.detail-item label="Trabajador Independiente" :value="$loanApplication->customer->jobInfo->is_self_employed ? __('Yes') : __('No')" />
                     <x-card.detail-item label="Empresa" :value="$loanApplication->customer->company->name" />
                     <x-card.detail-item label="Cargo" :value="$loanApplication->customer?->jobInfo->role ?? 'No especificado'" />
                     <x-card.detail-item label="Fecha de Ingreso" :value="$loanApplication->customer?->jobInfo?->start_date ?? ''" />
@@ -79,6 +84,8 @@
                     <x-card.detail-item label="Tipo de Pago" :value="$loanApplication->customer?->jobInfo?->payment_type ?? ''" />
                     <x-card.detail-item label="Frecuencia de Pago" :value="$loanApplication->customer?->jobInfo?->payment_frequency ?? ''" />
                     <x-card.detail-item label="Banco Nomina" :value="$loanApplication->customer?->jobInfo?->payment_bank ?? ''" />
+                    <x-card.detail-item label="Otros Ingresos" :value="$loanApplication->customer?->jobInfo?->other_incomes ?? ''" />
+                    <x-card.detail-item label="Fuente Otros Ingresos" :value="$loanApplication->customer?->jobInfo?->other_incomes_source ?? ''" />
                     <x-card.detail-item label="Horario" :value="$loanApplication->customer?->jobInfo?->schedule ?? ''" />
                     <x-card.detail-item label="Supervisor" :value="$loanApplication->customer?->jobInfo?->supervisor_name ?? ''" />
                 </x-card.content>

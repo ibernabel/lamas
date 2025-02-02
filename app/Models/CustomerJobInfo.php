@@ -12,10 +12,13 @@ class CustomerJobInfo extends Model
   protected $table = 'customer_job_info';
 
   protected $fillable = [
+    'is_self_employed',
     'role',
     'level',
     'start_date',
     'salary',
+    'other_incomes',
+    'other_incomes_source',
     'payment_type',
     'payment_frequency',
     'payment_bank',

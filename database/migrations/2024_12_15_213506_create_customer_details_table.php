@@ -20,11 +20,11 @@ return new class extends Migration
             $table->date('birthday')->nullable();
             $table->enum('gender', ['male', 'female', 'other'])->nullable();
             $table->enum('marital_status', ['single', 'married', 'divorced', 'widowed', 'other'])->nullable();
-            $table->enum('education_level', ['high_school', 'bachelor', 'master', 'doctoral', 'other'])->nullable();
+            $table->enum('education_level', ['primary','secondary','high_school', 'bachelor', 'postgraduate', 'master', 'doctorate', 'other'])->nullable();
             $table->string('nationality')->nullable();
-            $table->enum('housing_type', ['owned', 'rented', 'other'])->nullable();
+            $table->enum('housing_type', ['owned', 'rented', 'mortgaged','other'])->nullable();
             $table->date('move_in_date')->nullable();
-            $table->enum('vehicle_type', ['owned', 'leased', 'other'])->nullable();
+            $table->enum('vehicle_type', ['owned', 'rented', 'financed', 'none', 'other'])->nullable();
             
 
 

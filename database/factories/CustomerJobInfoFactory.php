@@ -27,6 +27,9 @@ class CustomerJobInfoFactory extends Factory
             'payment_account_number' => $this->faker->numerify('############'),
             'schedule' => $this->faker->word(),
             'supervisor_name' => $this->faker->name(),
+            'is_self_employed' => $this->faker->boolean(),
+            'other_incomes' => $this->faker->randomFloat(2, 0, 999999),
+            'other_incomes_source' => $this->faker->word(),
             'customer_id' => $this->faker->randomElement(\App\Models\Customer::pluck('id')),
         ];
     }

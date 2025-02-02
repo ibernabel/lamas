@@ -17,12 +17,15 @@ return new class extends Migration
             $table->string('level');
             $table->date('start_date');
             $table->float('salary');
+            $table->float('other_incomes')->nullable();
+            $table->string('other_incomes_source')->nullable();
             $table->string('payment_type');
             $table->string('payment_frequency');
             $table->string('payment_bank');
             $table->string('payment_account_number');
             $table->string('schedule');
             $table->string('supervisor_name');
+            $table->boolean('is_self_employed')->default(false);
 
             $table->foreignId('customer_id')
                   ->constrained('customers')
