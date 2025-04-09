@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('customer_vehicles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_detail_id')->constrained()->onDelete('cascade');
-            $table->enum('vehicle_type', ['owned', 'rented', 'financed', 'none', 'other'])->nullable()->comment('Type of vehicle owned by the customer');
+            $table->enum('vehicle_type', ['owned', 'rented', 'financed', 'leased', 'none', 'other'])->nullable()->comment('Type of vehicle owned by the customer');
             $table->string('vehicle_brand')->nullable();
             $table->string('vehicle_model')->nullable();
             $table->string('vehicle_year')->nullable();
@@ -25,6 +24,11 @@ return new class extends Migration
             $table->boolean('is_leased')->default(false)->comment('Indicates if the vehicle is leased');
             $table->boolean('is_rented')->default(false)->comment('Indicates if the vehicle is rented');
             $table->boolean('is_shared')->default(false)->comment('Indicates if the vehicle is shared');
+
+            $table->foreignId('customer_id')
+            ->constrained('customers')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
             $table->timestamps();
         });
     }
