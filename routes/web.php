@@ -21,25 +21,4 @@ Route::middleware([
   })->name('dashboard');
 
 
-  Route::get('/pruebas', function () {
-    $user = User::where('id', 1)->first();
-    $userName = $user->name;
-    //return 'Pagina de Pruebas ' . $admin;
-    return view('pruebas', compact('userName'));
-  })->name('pruebas');
-
-  /**
-   * Attach random risks to loan applications:
-   */
-  //Route::get('/riesgos', function () {
-  //  $loanApplications = LoanApplication::all();
-  //  $risks = CreditRisk::all();
-
-  //  $loanApplications->each(function ($loanApplication) use ($risks) {
-  //    $riskIds = $risks->random(5)->pluck('id')->unique()->toArray();
-  //    $loanApplication->risks()->sync($riskIds);
-  //  });
-
-  //  return $loanApplications;
-  //});
 });

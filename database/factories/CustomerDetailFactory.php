@@ -60,7 +60,6 @@ class CustomerDetailFactory extends Factory
       ]),
       'housing_type' => $this->faker->randomElement(['owned', 'rented', 'mortgaged']),
       'move_in_date' => $this->faker->date,
-      'vehicle_type' => $this->faker->randomElement(['owned', 'rented', 'financed']),
       'customer_id' => $this->faker->randomElement(\App\Models\Customer::pluck('id')),
     ];
   }

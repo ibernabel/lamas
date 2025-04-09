@@ -41,4 +41,8 @@ class CustomerDetail extends Model
   {
     return $this->morphToMany(Address::class, 'addressable');
   }
+  public function vehicle()
+  {
+    return $this->hasOne(CustomerVehicle::class);
+  }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\LoanApplication;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -17,6 +19,7 @@ class LoanApplicationController extends Controller
   {
     return view('admin.loan-applications.index');
   }
+
   public function datatable()
   {
     try {
@@ -35,9 +38,6 @@ class LoanApplicationController extends Controller
         ->latest()
         ->get();
 
-      //dd($data->first()); // For debuging
-
-      //return $data;
       return datatables()->of($data)
         ->addColumn('created_at', function ($row) {
           return $row->created_at;
@@ -46,8 +46,6 @@ class LoanApplicationController extends Controller
           return __($row->status);
         })
         ->toJson();
-      //return DB::getSchemaBuilder()->getColumnListing('loan_applications');
-
     } catch (\Exception $e) {
       return response()->json([
         'status' => 'error',
@@ -56,13 +54,12 @@ class LoanApplicationController extends Controller
     }
   }
 
-
   /**
    * Show the form for creating a new resource.
    */
   public function create()
   {
-    //
+    return view('admin.loan-applications.create');
   }
 
   /**
@@ -70,7 +67,156 @@ class LoanApplicationController extends Controller
    */
   public function store(Request $request)
   {
-    //
+    try {
+      // Validate the incoming request
+      $validatedData = $request->validate([
+        // Personal Details
+        'first_name' => 'required|string|max:100',
+        'last_name' => 'required|string|max:100',
+        'NID' => 'required|unique:customers,NID',
+        'birth_date' => 'required|date|before:-18 years',
+        'mobile_phone' => 'required|string',
+        'home_phone' => 'nullable|string',
+        'email' => 'required|email|unique:customers,email',
+        'marital_status' => 'required|in:single,married,divorced,widowed',
+        'nationality' => 'required|string',
+        'address' => 'required|string',
+        'housing_type' => 'required|in:owned,rented,family',
+        'residence_start_date' => 'required|date',
+
+        // Vehicle Information
+        'own_vehicle' => 'nullable|boolean',
+        'vehicle_financed' => 'nullable|boolean',
+        'vehicle_brand' => 'nullable|string',
+        'vehicle_year' => 'nullable|integer|min:1900|max:' . date('Y'),
+
+        // Spouse Information
+        'spouse_name' => 'nullable|string',
+        'spouse_phone' => 'nullable|string',
+
+        // Job Information
+        'self_employed' => 'nullable|boolean',
+        'company_name' => 'nullable|string',
+        'work_phone' => 'nullable|string',
+        'work_address' => 'nullable|string',
+        'position' => 'nullable|string',
+        'employment_start_date' => 'nullable|date',
+        'monthly_salary' => 'required|numeric|min:0',
+        'other_income' => 'nullable|numeric|min:0',
+        'other_income_description' => 'nullable|string',
+        'supervisor_name' => 'nullable|string',
+
+        // References
+        'references' => 'required|array|size:2',
+        'references.*.name' => 'required|string',
+        'references.*.occupation' => 'required|string',
+        'references.*.relationship' => 'required|string',
+
+        // Acceptance
+        'acceptance' => 'accepted'
+      ]);
+
+      DB::beginTransaction();
+      try {
+        // Create Customer
+        $customer = Customer::create([
+          'identification' => $validatedData['identification'],
+          'email' => $validatedData['email']
+        ]);
+
+        // Create Customer Details
+        $customerDetail = $customer->details()->create([
+          'first_name' => $validatedData['first_name'],
+          'last_name' => $validatedData['last_name'],
+          'birth_date' => $validatedData['birth_date'],
+          'marital_status' => $validatedData['marital_status'],
+          'nationality' => $validatedData['nationality']
+        ]);
+
+        // Create Phone
+        $customerDetail->phones()->create([
+          'type' => 'mobile',
+          'number' => $validatedData['mobile_phone']
+        ]);
+
+        if (!empty($validatedData['home_phone'])) {
+          $customerDetail->phones()->create([
+            'type' => 'home',
+            'number' => $validatedData['home_phone']
+          ]);
+        }
+
+        // Create Address
+        $customerDetail->addresses()->create([
+          'type' => 'primary',
+          'address' => $validatedData['address'],
+          'housing_type' => $validatedData['housing_type'],
+          'residence_start_date' => $validatedData['residence_start_date']
+        ]);
+
+        // Create Job Info if applicable
+        if (!empty($validatedData['company_name']) || !empty($validatedData['position'])) {
+          $customer->jobInfo()->create([
+            'self_employed' => $validatedData['self_employed'] ?? false,
+            'company_name' => $validatedData['company_name'],
+            'work_phone' => $validatedData['work_phone'],
+            'work_address' => $validatedData['work_address'],
+            'position' => $validatedData['position'],
+            'employment_start_date' => $validatedData['employment_start_date'],
+            'monthly_salary' => $validatedData['monthly_salary'],
+            'other_income' => $validatedData['other_income'] ?? 0,
+            'other_income_description' => $validatedData['other_income_description'],
+            'supervisor_name' => $validatedData['supervisor_name']
+          ]);
+        }
+
+        // Create Vehicle Info if applicable
+        if ($validatedData['own_vehicle']) {
+          $customer->vehicleInfo()->create([
+            'brand' => $validatedData['vehicle_brand'],
+            'year' => $validatedData['vehicle_year'],
+            'financed' => $validatedData['vehicle_financed'] ?? false
+          ]);
+        }
+
+        // Create Spouse Info if applicable
+        if (!empty($validatedData['spouse_name'])) {
+          $customer->spouseInfo()->create([
+            'name' => $validatedData['spouse_name'],
+            'phone' => $validatedData['spouse_phone']
+          ]);
+        }
+
+        // Create References
+        foreach ($validatedData['references'] as $referenceData) {
+          $customer->references()->create([
+            'name' => $referenceData['name'],
+            'occupation' => $referenceData['occupation'],
+            'relationship' => $referenceData['relationship']
+          ]);
+        }
+
+        // Create Loan Application
+        $loanApplication = LoanApplication::create([
+          'customer_id' => $customer->id,
+          'status' => 'received'
+        ]);
+
+        DB::commit();
+
+        return redirect()->route('loan-applications.show', $loanApplication->id)
+          ->with('success', 'Loan application submitted successfully');
+      } catch (\Exception $e) {
+        DB::rollBack();
+        Log::error('Loan Application creation failed: ' . $e->getMessage());
+        
+        return back()->withInput()->withErrors([
+          'error' => 'Failed to submit loan application. ' . $e->getMessage()
+        ]);
+      }
+    } catch (ValidationException $e) {
+      return back()->withInput()->withErrors($e->errors());
+    }
   }
 
   /**
@@ -251,12 +397,6 @@ class LoanApplicationController extends Controller
           'notes'
         ]);
 
-        //return response()->json([
-        //    'status' => 'success',
-        //    'message' => 'Loan application updated successfully',
-        //    'data' => $loanApplication
-        //], 200);
-
         return redirect()->route('loan-applications.show', $loanApplication->id)
           ->with('success', 'Loan application updated successfully');
       } catch (\Exception $e) {
@@ -284,6 +424,29 @@ class LoanApplicationController extends Controller
    */
   public function destroy(string $id)
   {
-    //
+    try {
+      $loanApplication = LoanApplication::findOrFail($id);
+
+      // Check if the loan application can be deleted (only 'received' status)
+      if ($loanApplication->status !== 'received') {
+        return back()->withErrors([
+          'error' => 'Only loan applications with "received" status can be deleted.'
+        ]);
+      }
+
+      // Soft delete the loan application
+      $loanApplication->delete();
+
+      Log::info("Loan Application {$id} soft deleted by user: " . Auth::id());
+
+      return redirect()->route('loan-applications.index')
+        ->with('success', 'Loan application deleted successfully');
+    } catch (\Exception $e) {
+      Log::error('Loan Application deletion failed: ' . $e->getMessage());
+
+      return back()->withErrors([
+        'error' => 'Failed to delete loan application. ' . $e->getMessage()
+      ]);
+    }
   }
 }
