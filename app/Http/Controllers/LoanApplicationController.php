@@ -331,7 +331,21 @@ class LoanApplicationController extends Controller
         'risks.*.level' => 'sometimes|string',
 
         'notes' => 'sometimes|array',
-        'notes.*.content' => 'sometimes|string'
+        'notes.*.content' => 'sometimes|string',
+
+        'customer.vehicle' => 'sometimes|array',
+        'customer.vehicle.type' => 'sometimes|in:owned,rented,financed,none,other',
+        'customer.vehicle.brand' => 'sometimes|string',
+        'customer.vehicle.model' => 'sometimes|string',
+        'customer.vehicle.year' => 'sometimes|integer|min:1900|max:' . date('Y'),
+        'customer.vehicle.color' => 'sometimes|string',
+        'customer.vehicle.plate_number' => 'sometimes|string',
+        'customer.vehicle.owned' => 'sometimes|boolean',
+        'customer.vehicle.rented' => 'sometimes|boolean',
+        'customer.vehicle.leased' => 'sometimes|boolean',
+        'customer.vehicle.shared' => 'sometimes|boolean',
+        'customer.vehicle.financed' => 'sometimes|boolean',
+
       ]);
 
       DB::beginTransaction();
@@ -382,6 +396,11 @@ class LoanApplicationController extends Controller
           $loanApplication->notes()->sync($request->input('notes'));
         }
 
+        // Update or sync vehicle info
+        if ($request->has('customer.vehicle')) {
+          $loanApplication->customer->vehicleInfo()->update($request->input('customer.vehicle'));
+        }
+
         DB::commit();
 
         // Reload the model with all relationships
@@ -394,7 +413,8 @@ class LoanApplicationController extends Controller
           'customer.references',
           'customer.portfolio.broker.user',
           'risks',
-          'notes'
+          'notes',
+          'customer.vehicle'
         ]);
 
         return redirect()->route('loan-applications.show', $loanApplication->id)

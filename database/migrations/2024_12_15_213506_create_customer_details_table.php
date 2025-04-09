@@ -25,8 +25,6 @@ return new class extends Migration
             $table->enum('housing_type', ['owned', 'rented', 'mortgaged','other'])->nullable();
             $table->date('move_in_date')->nullable();
             //$table->enum('vehicle_type', ['owned', 'rented', 'financed', 'none', 'other'])->nullable();
-            
-
 
             $table->foreignId('customer_id')
                 ->constrained('customers')
