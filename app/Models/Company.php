@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Company extends Model
 {
@@ -29,8 +31,8 @@ class Company extends Model
     {
         return $this->morphMany(Phone::class, 'phoneable');
     }
-    public function addresses()
+    public function addresses(): MorphToMany
     {
-        return $this->morphedToMany(Address::class, 'addressable');
+        return $this->morphToMany(Address::class, 'addressable');
     }
 }

@@ -17,7 +17,7 @@ return new class extends Migration
                   ->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
-            $table->morphs('addressable');
+            $table->morphs('addressable'); // atajo para crear las columnas addressable_id y addressable_type
 
             $table->timestamps();
         });

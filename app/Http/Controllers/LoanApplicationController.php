@@ -319,9 +319,12 @@ class LoanApplicationController extends Controller
 
         'customer.company' => 'sometimes|array',
         'customer.company.name' => 'sometimes|string',
+        'customer.company.phone' => 'sometimes|string',
+        'customer.company.address' => 'sometimes|string',
         // Añade más campos específicos de company
 
         'customer.job_info' => 'sometimes|array',
+        'customer.job_info.self_employed' => 'sometimes|boolean',
         'customer.financial_info' => 'sometimes|array',
         'customer.references' => 'sometimes|array',
         'customer.portfolio' => 'sometimes|array',

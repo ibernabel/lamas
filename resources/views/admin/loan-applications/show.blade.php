@@ -49,7 +49,9 @@
                     <x-card.detail-item label="Reside desde" :value="$loanApplication->customer->details->move_in_date" />
                     <x-card.detail-item label="Género" :value="$loanApplication->customer->details->gender" />
                     <x-card.detail-item label="Educación" :value="$loanApplication->customer->details->education_level" />
-                    <x-card.detail-item label="Vehículo" :value="$loanApplication->customer->vehicle->vehicle_type" />
+                    <x-card.detail-item label="Vehículo" :value="$loanApplication->customer->vehicle->vehicle_type ?? ''" />
+                    <x-card.detail-item label="Marca" :value="$loanApplication->customer->vehicle->vehicle_brand ?? ''" />
+                    <x-card.detail-item label="Año" :value="$loanApplication->customer->vehicle->vehicle_year ?? ''" />
                 </x-card.content>
             </x-card>
 
@@ -79,6 +81,16 @@
                 <x-card.content>
                     <x-card.detail-item label="Trabajador Independiente" :value="$loanApplication->customer->jobInfo->is_self_employed ? __('Yes') : __('No')" />
                     <x-card.detail-item label="Empresa" :value="$loanApplication->customer->company->name" />
+                      <x-card.detail-item label="Dirección" :value="$loanApplication->customer->company->addresses->first()
+                        ? collect([
+                            $loanApplication->customer->company->addresses[0]->street,
+                            $loanApplication->customer->company->addresses[0]->street2,
+                            $loanApplication->customer->company->addresses[0]->city,
+                            $loanApplication->customer->company->addresses[0]->state,
+                        ])
+                            ->filter()
+                            ->join(', ')
+                        : __('No address available')" />
                     <x-card.detail-item label="Cargo" :value="$loanApplication->customer?->jobInfo->role ?? 'No especificado'" />
                     <x-card.detail-item label="Fecha de Ingreso" :value="$loanApplication->customer?->jobInfo?->start_date ?? ''" />
                     <x-card.detail-item label="Salario" :value="number_format($loanApplication->customer?->jobInfo?->salary, 2)" prefix="RD$" />
