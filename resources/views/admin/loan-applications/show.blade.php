@@ -28,8 +28,12 @@
                         ' ' .
                         $loanApplication->customer->details->last_name" />
                     <x-card.detail-item label="Cédula" :value="$loanApplication->customer->NID" />
-                    <x-card.detail-item label="Celular" :value="$loanApplication->customer->details->phones[0]->number" />
-                    <x-card.detail-item label="Email" :value="$loanApplication->customer->details->email" />
+                      <x-card.detail-item label="Fecha de Nacimiento" :value="$loanApplication->customer->details->birthday" />
+                        <x-card.detail-item label="Celular" :value="$loanApplication->customer->details->phones[0]->number" />
+                        <x-card.detail-item label="Teléfono Casa:" :value="$loanApplication->customer->details->phones[1]?->number ?? ''" />
+                        <x-card.detail-item label="Email" :value="$loanApplication->customer->details->email" />
+                          <x-card.detail-item label="Estado Civil" :value="$loanApplication->customer->details->marital_status" />
+                            <x-card.detail-item label="Nacionalidad" :value="$loanApplication->customer->details->nationality" />
                     <x-card.detail-item label="Dirección" :value="$loanApplication->customer->details->addresses->first()
                         ? collect([
                             $loanApplication->customer->details->addresses[0]->street,
@@ -43,12 +47,9 @@
 
                     <x-card.detail-item label="Tipo de vivienda" :value="$loanApplication->customer->details->housing_type" />
                     <x-card.detail-item label="Reside desde" :value="$loanApplication->customer->details->move_in_date" />
-                    <x-card.detail-item label="Fecha de Nacimiento" :value="$loanApplication->customer->details->birthday" />
                     <x-card.detail-item label="Género" :value="$loanApplication->customer->details->gender" />
-                    <x-card.detail-item label="Estado Civil" :value="$loanApplication->customer->details->marital_status" />
-                    <x-card.detail-item label="Nacionalidad" :value="$loanApplication->customer->details->nationality" />
                     <x-card.detail-item label="Educación" :value="$loanApplication->customer->details->education_level" />
-                    <x-card.detail-item label="Vehículo" :value="$loanApplication->customer->details->vehicle_type" />
+                    <x-card.detail-item label="Vehículo" :value="$loanApplication->customer->vehicle->vehicle_type" />
                 </x-card.content>
             </x-card>
 
