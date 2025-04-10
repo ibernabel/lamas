@@ -209,7 +209,7 @@ class LoanApplicationController extends Controller
       } catch (\Exception $e) {
         DB::rollBack();
         Log::error('Loan Application creation failed: ' . $e->getMessage());
-        
+
         return back()->withInput()->withErrors([
           'error' => 'Failed to submit loan application. ' . $e->getMessage()
         ]);
@@ -310,98 +310,127 @@ class LoanApplicationController extends Controller
 
       // Validate the incoming request - including nested relationships
       $validatedData = $request->validate([
-        'details' => 'sometimes|array',
-        'details.*.field' => 'sometimes|string',  // Ajusta según tus campos
+        // Loan Details
+        'details.amount' => 'sometimes|numeric|min:0',
+        'details.term' => 'sometimes|integer|min:1',
+        'details.rate' => 'sometimes|numeric|min:0|max:100',
+        'details.frequency' => 'sometimes|in:weekly,biweekly,monthly',
+        'details.purpose' => 'sometimes|string|max:1000',
 
-        'customer' => 'sometimes|array',
-        'customer.details' => 'sometimes|array',
-        'customer.details.*.field' => 'sometimes|string',
+        // Customer Details
+        'customer.NID' => 'sometimes|string|max:50',
+        'customer.details.first_name' => 'sometimes|string|max:100',
+        'customer.details.last_name' => 'sometimes|string|max:100',
+        'customer.details.birthday' => 'sometimes|date',
+        'customer.details.email' => 'sometimes|email|max:255',
+        'customer.details.marital_status' => 'sometimes|in:single,married,divorced,widowed,other',
+        'customer.details.nationality' => 'sometimes|string|max:100',
+        'customer.details.gender' => 'sometimes|in:male,female',
+        'customer.details.education_level' => 'sometimes|in:primary,secondary,high_school,bachelor,postgraduate,master,doctorate,other',
+        'customer.details.housing_type' => 'sometimes|in:owned,rented,mortgaged,other',
+        'customer.details.move_in_date' => 'sometimes|date',
 
-        'customer.company' => 'sometimes|array',
-        'customer.company.name' => 'sometimes|string',
-        'customer.company.phone' => 'sometimes|string',
-        'customer.company.address' => 'sometimes|string',
-        // Añade más campos específicos de company
+        // Phones
+        'customer.details.phones.*.number' => 'sometimes|string|max:20',
+        'customer.details.phones.*.type' => 'sometimes|in:mobile,home',
 
-        'customer.job_info' => 'sometimes|array',
-        'customer.job_info.self_employed' => 'sometimes|boolean',
-        'customer.financial_info' => 'sometimes|array',
-        'customer.references' => 'sometimes|array',
-        'customer.portfolio' => 'sometimes|array',
+        // Addresses
+        'customer.details.addresses.*.street' => 'sometimes|string|max:255',
+        'customer.details.addresses.*.street2' => 'sometimes|string|max:255',
+        'customer.details.addresses.*.city' => 'sometimes|string|max:100',
+        'customer.details.addresses.*.state' => 'sometimes|string|max:100',
 
-        'risks' => 'sometimes|array',
-        'risks.*.type' => 'sometimes|string',
-        'risks.*.level' => 'sometimes|string',
+        // Vehicle
+        'customer.details.vehicle_type' => 'sometimes|in:owned,rented,financed,none,other',
+        'customer.details.vehicle_brand' => 'sometimes|string|max:100',
+        'customer.details.vehicle_model' => 'sometimes|string|max:100',
+        'customer.details.vehicle_year' => 'sometimes|integer|min:1900|max:2100',
 
-        'notes' => 'sometimes|array',
-        'notes.*.content' => 'sometimes|string',
-
-        'customer.vehicle' => 'sometimes|array',
-        'customer.vehicle.type' => 'sometimes|in:owned,rented,financed,none,other',
-        'customer.vehicle.brand' => 'sometimes|string',
-        'customer.vehicle.model' => 'sometimes|string',
-        'customer.vehicle.year' => 'sometimes|integer|min:1900|max:' . date('Y'),
-        'customer.vehicle.color' => 'sometimes|string',
-        'customer.vehicle.plate_number' => 'sometimes|string',
-        'customer.vehicle.owned' => 'sometimes|boolean',
-        'customer.vehicle.rented' => 'sometimes|boolean',
-        'customer.vehicle.leased' => 'sometimes|boolean',
-        'customer.vehicle.shared' => 'sometimes|boolean',
-        'customer.vehicle.financed' => 'sometimes|boolean',
-
+        // Job Information
+        'customer.jobInfo.is_self_employed' => 'sometimes|boolean',
+        'customer.company.name' => 'sometimes|string|max:255',
+        'customer.company.phones.*.number' => 'sometimes|string|max:20',
+        'customer.company.addresses.*.street' => 'sometimes|string|max:255',
+        'customer.jobInfo.role' => 'sometimes|string|max:100',
+        'customer.jobInfo.start_date' => 'sometimes|date',
+        'customer.jobInfo.salary' => 'sometimes|numeric|min:0',
+        'customer.jobInfo.payment_type' => 'sometimes|in:cash,bank_transfer',
+        'customer.jobInfo.payment_frequency' => 'sometimes|in:weekly,biweekly,monthly',
+        'customer.jobInfo.payment_bank' => 'sometimes|string|max:255',
+        'customer.jobInfo.other_incomes' => 'sometimes|numeric|min:0',
+        'customer.jobInfo.other_incomes_source' => 'sometimes|string|max:255',
+        'customer.jobInfo.schedule' => 'sometimes|string|max:255',
+        'customer.jobInfo.supervisor_name' => 'sometimes|string|max:255',
       ]);
 
       DB::beginTransaction();
       try {
-        // Update main loan application
-        $loanApplication->update($validatedData);
-
-        // Update customer related data if provided
-        if ($request->has('customer')) {
-          // Update customer details
-          if ($request->has('customer.details')) {
-            $loanApplication->customer->details()->update($request->input('customer.details'));
-          }
-
-          // Update company
-          if ($request->has('customer.company')) {
-            $loanApplication->customer->company()->update($request->input('customer.company'));
-          }
-
-          // Update job info
-          if ($request->has('customer.job_info')) {
-            $loanApplication->customer->jobInfo()->update($request->input('customer.job_info'));
-          }
-
-          // Update financial info
-          if ($request->has('customer.financial_info')) {
-            $loanApplication->customer->financialInfo()->update($request->input('customer.financial_info'));
-          }
-
-          // Update or sync references
-          if ($request->has('customer.references')) {
-            $loanApplication->customer->references()->sync($request->input('customer.references'));
-          }
-
-          // Update portfolio and related broker data
-          if ($request->has('customer.portfolio')) {
-            $loanApplication->customer->portfolio()->update($request->input('customer.portfolio'));
-          }
+        // Update Loan Application Details
+        if (isset($validatedData['details'])) {
+          $loanApplication->details()->update($validatedData['details']);
         }
 
-        // Update or sync risks
-        if ($request->has('risks')) {
-          $loanApplication->risks()->sync($request->input('risks'));
-        }
+        // Update Customer
+        if (isset($validatedData['customer'])) {
+          $customer = $loanApplication->customer;
 
-        // Update or sync notes
-        if ($request->has('notes')) {
-          $loanApplication->notes()->sync($request->input('notes'));
-        }
+          // Update Customer Basic Info
+          if (isset($validatedData['customer']['NID'])) {
+            $customer->update(['NID' => $validatedData['customer']['NID']]);
+          }
 
-        // Update or sync vehicle info
-        if ($request->has('customer.vehicle')) {
-          $loanApplication->customer->vehicleInfo()->update($request->input('customer.vehicle'));
+          // Update Customer Details
+          if (isset($validatedData['customer']['details'])) {
+            $customerDetails = $customer->details;
+            $customerDetails->update($validatedData['customer']['details']);
+
+            // Update Phones
+            if (isset($validatedData['customer']['details']['phones'])) {
+              $customerDetails->phones()->delete(); // Remove existing phones
+              foreach ($validatedData['customer']['details']['phones'] as $phoneData) {
+                $customerDetails->phones()->create($phoneData);
+              }
+            }
+
+            // Update Addresses
+            if (isset($validatedData['customer']['details']['addresses'])) {
+              $customerDetails->addresses()->delete(); // Remove existing addresses
+              foreach ($validatedData['customer']['details']['addresses'] as $addressData) {
+                $customerDetails->addresses()->create($addressData);
+              }
+            }
+            // Update Vehicle Info
+            if (isset($validatedData['customer']['details']['vehicle'])) {
+              $customer->vehicleInfo()->update($validatedData['customer']['details']['vehicle']);
+            }
+          }
+
+          // Update Company
+          if (isset($validatedData['customer']['company'])) {
+            $company = $customer->company;
+            $company->update($validatedData['customer']['company']);
+
+            // Update Company Phones
+            if (isset($validatedData['customer']['company']['phones'])) {
+              $company->phones()->delete();
+              foreach ($validatedData['customer']['company']['phones'] as $phoneData) {
+                $company->phones()->create($phoneData);
+              }
+            }
+
+            // Update Company Addresses
+            if (isset($validatedData['customer']['company']['addresses'])) {
+              $company->addresses()->delete();
+              foreach ($validatedData['customer']['company']['addresses'] as $addressData) {
+                $company->addresses()->create($addressData);
+              }
+            }
+          }
+
+          // Update Job Info
+          if (isset($validatedData['customer']['jobInfo'])) {
+            $customer->jobInfo()->update($validatedData['customer']['jobInfo']);
+          }
         }
 
         DB::commit();
@@ -410,35 +439,31 @@ class LoanApplicationController extends Controller
         $loanApplication->load([
           'details',
           'customer.details',
+          'customer.details.phones',
+          'customer.details.addresses',
           'customer.company',
+          'customer.company.phones',
+          'customer.company.addresses',
           'customer.jobInfo',
-          'customer.financialInfo',
-          'customer.references',
-          'customer.portfolio.broker.user',
-          'risks',
-          'notes',
-          'customer.vehicle'
+          'customer.details.vehicle',
         ]);
 
         return redirect()->route('loan-applications.show', $loanApplication->id)
           ->with('success', 'Loan application updated successfully');
       } catch (\Exception $e) {
         DB::rollBack();
-        throw $e;
+        Log::error('Loan Application update failed: ' . $e->getMessage());
+        return back()->withInput()->withErrors([
+          'error' => 'Failed to update loan application. ' . $e->getMessage()
+        ]);
       }
     } catch (ValidationException $e) {
-      return response()->json([
-        'status' => 'error',
-        'message' => 'Validation failed',
-        'errors' => $e->errors()
-      ], 422);
+      return back()->withInput()->withErrors($e->errors());
     } catch (\Exception $e) {
       Log::error('Loan Application update failed: ' . $e->getMessage());
-
-      return response()->json([
-        'status' => 'error',
-        'message' => 'Failed to update loan application. ' . $e->getMessage()
-      ], 500);
+      return back()->withInput()->withErrors([
+        'error' => 'Failed to update loan application. ' . $e->getMessage()
+      ]);
     }
   }
 

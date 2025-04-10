@@ -19,7 +19,7 @@
         <div class="space-y-6">
             {{-- Customer Information Section --}}
             <x-card.header>
-                <x-card.title>Información del Cliente</x-card.title>
+                <x-card.title>{{ __('Customer Information') }}</x-card.title>
             </x-card.header>
             <x-card>
 
@@ -28,12 +28,12 @@
                         ' ' .
                         $loanApplication->customer->details->last_name" />
                     <x-card.detail-item label="Cédula" :value="$loanApplication->customer->NID" />
-                      <x-card.detail-item label="Fecha de Nacimiento" :value="$loanApplication->customer->details->birthday" />
-                        <x-card.detail-item label="Celular" :value="$loanApplication->customer->details->phones[0]->number" />
-                        <x-card.detail-item label="Teléfono Casa:" :value="$loanApplication->customer->details->phones[1]?->number ?? ''" />
-                        <x-card.detail-item label="Email" :value="$loanApplication->customer->details->email" />
-                          <x-card.detail-item label="Estado Civil" :value="$loanApplication->customer->details->marital_status" />
-                            <x-card.detail-item label="Nacionalidad" :value="$loanApplication->customer->details->nationality" />
+                    <x-card.detail-item label="Fecha de Nacimiento" :value="$loanApplication->customer->details->birthday" />
+                    <x-card.detail-item label="Celular" :value="$loanApplication->customer->details->phones[0]->number" />
+                    <x-card.detail-item label="Teléfono Casa:" :value="$loanApplication->customer->details->phones[1]?->number ?? ''" />
+                    <x-card.detail-item label="Email" :value="$loanApplication->customer->details->email" />
+                    <x-card.detail-item label="Estado Civil" :value="$loanApplication->customer->details->marital_status" />
+                    <x-card.detail-item label="Nacionalidad" :value="$loanApplication->customer->details->nationality" />
                     <x-card.detail-item label="Dirección" :value="$loanApplication->customer->details->addresses->first()
                         ? collect([
                             $loanApplication->customer->details->addresses[0]->street,
@@ -77,11 +77,11 @@
                 <x-card.title>Información Laboral</x-card.title>
             </x-card.header>
             <x-card>
-              {{--is_self_employed--}}
+                {{-- is_self_employed --}}
                 <x-card.content>
                     <x-card.detail-item label="Trabajador Independiente" :value="$loanApplication->customer->jobInfo->is_self_employed ? __('Yes') : __('No')" />
                     <x-card.detail-item label="Empresa" :value="$loanApplication->customer->company->name" />
-                      <x-card.detail-item label="Dirección" :value="$loanApplication->customer->company->addresses->first()
+                    <x-card.detail-item label="Dirección" :value="$loanApplication->customer->company->addresses->first()
                         ? collect([
                             $loanApplication->customer->company->addresses[0]->street,
                             $loanApplication->customer->company->addresses[0]->street2,
@@ -115,9 +115,11 @@
                         <div class="mb-4 last:mb-0">
                             {{-- <h4 class="font-medium text-gray-900 mb-2">Referencia {{ $loop->iteration }}</h4> --}}
                             <x-card.detail-item label="Referencia" :value="$loop->iteration" />
+                            <hr class="my-2 w-10/12" />
                             <x-card.detail-item label="Nombre" :value="$reference->name" />
-                            <x-card.detail-item label="Teléfono" :value="$reference->phone_number" />
+                            <x-card.detail-item label="Ocupación" :value="$reference->ocupation" />
                             <x-card.detail-item label="Relación" :value="$reference->relationship" />
+                            <x-card.detail-item label="Teléfono" :value="$reference->phone_number" />
                         </div>
                     @endforeach
                 </x-card.content>

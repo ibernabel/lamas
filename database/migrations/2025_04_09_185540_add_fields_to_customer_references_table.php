@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('reference_email')->nullable()->after('phone_number')->comment('Email address of the reference');
             $table->date('reference_since')->nullable()->after('relationship')->comment('Date since the customer has known the reference');
             $table->boolean('is_active')->default(true)->after('reference_since')->comment('Indicates if the reference is active');
+            $table->string('ocupation')->nullable()->after('is_active')->comment('Occupation of the reference');
         });
     }
 
