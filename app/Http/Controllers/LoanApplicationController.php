@@ -230,12 +230,12 @@ class LoanApplicationController extends Controller
         'details',
         'customer.details',
         'customer.details.phones' => function ($query) {
-          $query->limit(1);
+          $query->limit(2);
         },
         'customer.details.addresses' => function ($query) {
-          $query->limit(1);
+          $query->limit(2);
         },
-        'customer.details.vehicle',
+        'customer.vehicle',
         'customer.company',
         'customer.jobInfo',
         'customer.financialInfo',
@@ -271,12 +271,12 @@ class LoanApplicationController extends Controller
         'details',
         'customer.details',
         'customer.details.phones' => function ($query) {
-          $query->limit(1);
+          $query->limit(2);
         },
         'customer.details.addresses' => function ($query) {
-          $query->limit(1);
+          $query->limit(2);
         },
-        'customer.details.vehicle',
+        'customer.vehicle',
         'customer.company',
         'customer.jobInfo',
         'customer.financialInfo',
@@ -343,10 +343,10 @@ class LoanApplicationController extends Controller
         'customer.details.addresses.*.state' => 'sometimes|string|max:100',
 
         // Vehicle
-        'customer.details.vehicle.vehicle_type' => 'sometimes|in:owned,rented,financed,none,other',
-        'customer.details.vehicle.vehicle_brand' => 'sometimes|string|max:100',
-        'customer.details.vehicle.vehicle_model' => 'sometimes|string|max:100',
-        'customer.details.vehicle.vehicle_year' => 'sometimes|integer|min:1900|max:2100',
+        'customer.vehicle.vehicle_type' => 'sometimes|in:owned,rented,financed,shared,leased,borrowed,none,other',
+        'customer.vehicle.vehicle_brand' => 'sometimes|string|max:100',
+        'customer.vehicle.vehicle_model' => 'sometimes|string|max:100',
+        'customer.vehicle.vehicle_year' => 'sometimes|integer|min:1900|max:2100',
 
         // Job Information
         'customer.jobInfo.is_self_employed' => 'sometimes|boolean',
@@ -401,10 +401,15 @@ class LoanApplicationController extends Controller
                 $customerDetails->addresses()->create($addressData);
               }
             }
-            // Update Vehicle Info
-            if (isset($validatedData['customer']['details']['vehicle'])) {
-              $customerDetails->vehicle()->update($validatedData['customer']['details']['vehicle']);
-            }
+
+          }
+          
+          // Update Vehicle Info
+          if (isset($validatedData['customer']['vehicle'])) {
+            $customer->vehicle()->updateOrCreate(
+              ['customer_id' => $customer->id],
+              $validatedData['customer']['vehicle']
+            );
           }
 
           // Update Company
@@ -447,7 +452,7 @@ class LoanApplicationController extends Controller
           'customer.company.phones',
           'customer.company.addresses',
           'customer.jobInfo',
-          'customer.details.vehicle',
+          'customer.vehicle',
         ]);
 
         return redirect()->route('loan-applications.show', $loanApplication->id)

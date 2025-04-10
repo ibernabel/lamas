@@ -442,7 +442,6 @@
     "Postgraduate": "Postgrado",
     "Master": "Maestría",
     "Doctorate": "Doctorado",
-    "Vehicle Type": "Su Vehículo es",
     "None": "Ninguno",
     "Home Phone": "Teléfono de Casa",
     "Work Phone": "Teléfono de Trabajo",
@@ -464,6 +463,12 @@
     "Private": "Privado",
     "Public": "Público",
     "Vehicle": "Vehículo",
+    "Vehicle Type": "Su Vehículo es",
+    "Select vehicle type": "Seleccione tipo de vehículo",
+    "Shared": "Compartido",
+    "Borrowed": "Prestado",
+    "Leased": "Arrendado",
+    "Personal": "Personal",
     "Vehicle Brand": "Marca del Vehículo",
     "Vehicle Model": "Modelo del Vehículo",
     "Vehicle Year": "Año del Vehículo",
@@ -511,7 +516,8 @@
     "Supervisor": "Supervisor",
     "Supervisor Name": "Nombre del Supervisor",
     "Supervisor Phone": "Teléfono del Supervisor",
-
+    "Back to List": "Volver a la lista",
+    "Applications": "Solicitudes",
 
 
     "Whatever you want": "Lo que quieras"

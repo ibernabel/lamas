@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class CustomerDetail extends Model
 {
@@ -40,8 +41,15 @@ class CustomerDetail extends Model
   {
     return $this->morphToMany(Address::class, 'addressable');
   }
-  public function vehicle()
+  public function getVehicleDetails()
   {
-    return $this->hasOne(CustomerVehicle::class);
+    return $this->vehicle ? $this->vehicle->getVehicleDetails() : null;
+  }
+
+  public function setVehicleDetails($details)
+  {
+    if ($this->vehicle) {
+      $this->vehicle->setVehicleDetails($details);
+    }
   }
 }

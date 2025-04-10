@@ -65,4 +65,8 @@ class Customer extends Model
     {
       return $this->hasMany(LoanApplication::class);
     }
+    public function vehicle()
+    {
+      return $this->hasOne(CustomerVehicle::class);
+    }
 }

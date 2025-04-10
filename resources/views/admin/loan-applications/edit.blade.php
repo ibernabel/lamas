@@ -221,43 +221,46 @@
                             </x-input-group>
                             <x-input-group>
                                 <x-label for="vehicle_type" value="{{ __('Vehicle Type') }}" />
-                                <x-select id="vehicle_type" name="customer[details][vehicle][vehicle_type]">
+                                <x-select id="vehicle_type" name="customer[vehicle][vehicle_type]">
                                     <option value="">{{ __('Select') }}</option>
                                     <option value="owned"
-                                        {{ old('customer.details.vehicle.vehicle_type', $loanApplication->customer->details->vehicle->vehicle_type ?? '') == 'owned' ? 'selected' : '' }}>
+                                        {{ old('customer.vehicle.vehicle_type', $loanApplication->customer->vehicle->vehicle_type ?? '') == 'owned' ? 'selected' : '' }}>
                                         {{ __('Owned') }}</option>
                                     <option value="rented"
-                                        {{ old('customer.details.vehicle.vehicle_type', $loanApplication->customer->details->vehicle->vehicle_type ?? '') == 'rented' ? 'selected' : '' }}>
+                                        {{ old('customer.vehicle.vehicle_type', $loanApplication->customer->vehicle->vehicle_type ?? '') == 'rented' ? 'selected' : '' }}>
                                         {{ __('Rented') }}</option>
                                     <option value="financed"
-                                        {{ old('customer.details.vehicle.vehicle_type', $loanApplication->customer->details->vehicle->vehicle_type ?? '') == 'financed' ? 'selected' : '' }}>
+                                        {{ old('customer.vehicle.vehicle_type', $loanApplication->customer->vehicle->vehicle_type ?? '') == 'financed' ? 'selected' : '' }}>
                                         {{ __('Financed') }}</option>
+                                    <option value="borrowed"
+                                        {{ old('customer.vehicle.vehicle_type', $loanApplication->customer->vehicle->vehicle_type ?? '') == 'borrowed' ? 'selected' : '' }}>
+                                        {{ __('Borrowed') }}</option>
                                     <option value="none"
-                                        {{ old('customer.details.vehicle.vehicle_type', $loanApplication->customer->details->vehicle->vehicle_type ?? '') == 'none' ? 'selected' : '' }}>
+                                        {{ old('customer.vehicle.vehicle_type', $loanApplication->customer->vehicle->vehicle_type ?? '') == 'none' ? 'selected' : '' }}>
                                         {{ __('None') }}</option>
                                     <option value="other"
-                                        {{ old('customer.details.vehicle.vehicle_type', $loanApplication->customer->details->vehicle->vehicle_type ?? '') == 'other' ? 'selected' : '' }}>
+                                        {{ old('customer.vehicle.vehicle_type', $loanApplication->customer->vehicle->vehicle_type ?? '') == 'other' ? 'selected' : '' }}>
                                         {{ __('Other') }}</option>
                                 </x-select>
-                                <x-input-error for="customer.details.vehicle.vehicle_type" />
+                                <x-input-error for="customer.vehicle.vehicle_type" />
                             </x-input-group>
                             <x-input-group>
                                 <x-label for="vehicle_brand" value="{{ __('Vehicle Brand') }}" />
-                                <x-input2 id="vehicle_brand" type="text" name="customer[details][vehicle][vehicle_brand]"
-                                    value="{{ old('customer.details.vehicle.vehicle_brand', $loanApplication->customer->details->vehicle->vehicle_brand ?? '') }}" />
-                                <x-input-error for="customer.details.vehicle.vehicle_brand" />
+                                <x-input2 id="vehicle_brand" type="text" name="customer[vehicle][vehicle_brand]"
+                                    value="{{ old('customer.vehicle.vehicle_brand', $loanApplication->customer->vehicle->vehicle_brand ?? '') }}" />
+                                <x-input-error for="customer.vehicle.vehicle_brand" />
                             </x-input-group>
                             <x-input-group>
                                 <x-label for="vehicle_model" value="{{ __('Vehicle Model') }}" />
-                                <x-input2 id="vehicle_model" type="text" name="customer[details][vehicle][vehicle_model]"
-                                    value="{{ old('customer.details.vehicle.vehicle_model', $loanApplication->customer->details->vehicle->vehicle_model ?? '') }}" />
-                                <x-input-error for="customer.details.vehicle.vehicle_model" />
+                                <x-input2 id="vehicle_model" type="text" name="customer[vehicle][vehicle_model]"
+                                    value="{{ old('customer.vehicle.vehicle_model', $loanApplication->customer->vehicle->vehicle_model ?? '') }}" />
+                                <x-input-error for="customer.vehicle.vehicle_model" />
                             </x-input-group>
                             <x-input-group>
                                 <x-label for="vehicle_year" value="{{ __('Vehicle Year') }}" />
-                                <x-input2 id="vehicle_year" type="number" min="1900" max="{{ date('Y') }}" name="customer[details][vehicle][vehicle_year]"
-                                    value="{{ old('customer.details.vehicle.vehicle_year', $loanApplication->customer->details->vehicle->vehicle_year ?? '') }}" />
-                                <x-input-error for="customer.details.vehicle.vehicle_year" />
+                                <x-input2 id="vehicle_year" type="number" min="1900" max="{{ date('Y') }}" name="customer[vehicle][vehicle_year]"
+                                    value="{{ old('customer.vehicle.vehicle_year', $loanApplication->customer->vehicle->vehicle_year ?? '') }}" />
+                                <x-input-error for="customer.vehicle.vehicle_year" />
                             </x-input-group>
 
                         </div>
