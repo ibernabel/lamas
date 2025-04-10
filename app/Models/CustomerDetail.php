@@ -12,7 +12,6 @@ class CustomerDetail extends Model
 
   protected $table = 'customer_details';
   protected $fillable = [
-    'customer_id',
     'first_name',
     'last_name',
     'email',
@@ -24,7 +23,6 @@ class CustomerDetail extends Model
     'nationality',
     'housing_type',
     'move_in_date',
-    'vehicle_type',
   ];
   protected $hidden = [
     'created_at',

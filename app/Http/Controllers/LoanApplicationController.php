@@ -235,6 +235,7 @@ class LoanApplicationController extends Controller
         'customer.details.addresses' => function ($query) {
           $query->limit(1);
         },
+        'customer.details.vehicle',
         'customer.company',
         'customer.jobInfo',
         'customer.financialInfo',
@@ -275,6 +276,7 @@ class LoanApplicationController extends Controller
         'customer.details.addresses' => function ($query) {
           $query->limit(1);
         },
+        'customer.details.vehicle',
         'customer.company',
         'customer.jobInfo',
         'customer.financialInfo',
@@ -341,10 +343,10 @@ class LoanApplicationController extends Controller
         'customer.details.addresses.*.state' => 'sometimes|string|max:100',
 
         // Vehicle
-        'customer.details.vehicle_type' => 'sometimes|in:owned,rented,financed,none,other',
-        'customer.details.vehicle_brand' => 'sometimes|string|max:100',
-        'customer.details.vehicle_model' => 'sometimes|string|max:100',
-        'customer.details.vehicle_year' => 'sometimes|integer|min:1900|max:2100',
+        'customer.details.vehicle.vehicle_type' => 'sometimes|in:owned,rented,financed,none,other',
+        'customer.details.vehicle.vehicle_brand' => 'sometimes|string|max:100',
+        'customer.details.vehicle.vehicle_model' => 'sometimes|string|max:100',
+        'customer.details.vehicle.vehicle_year' => 'sometimes|integer|min:1900|max:2100',
 
         // Job Information
         'customer.jobInfo.is_self_employed' => 'sometimes|boolean',
@@ -401,7 +403,7 @@ class LoanApplicationController extends Controller
             }
             // Update Vehicle Info
             if (isset($validatedData['customer']['details']['vehicle'])) {
-              $customer->vehicleInfo()->update($validatedData['customer']['details']['vehicle']);
+              $customerDetails->vehicle()->update($validatedData['customer']['details']['vehicle']);
             }
           }
 
