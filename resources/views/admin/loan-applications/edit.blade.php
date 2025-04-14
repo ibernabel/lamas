@@ -499,13 +499,13 @@
                                     <x-input-error for="customer.references.{{ $loop->index }}.relationship" />
                                 </x-input-group>
 
-                                {{-- <x-input-group>
+                                <x-input-group>
                                     <x-label for="reference_phone" value="{{ __('Phone') }}" />
                                     <x-input2 id="reference_phone" type="tel"
-                                        name="customer[references][{{ $loop->index }}][phones][0][number]"
-                                        value="{{ old('customer.references.' . $loop->index . '.phones.0.number', $reference->phones[0]->number) }}" />
-                                    <x-input-error for="customer.references.{{ $loop->index }}.phones.0.number" />
-                                </x-input-group> --}}
+                                        name="customer[references][{{ $loop->index }}][phone_number]"
+                                        value="{{ old('customer.references.' . $loop->index . '.phone_number', $reference->phone_number ?? '') }}" />
+                                    <x-input-error for="customer.references.{{ $loop->index }}.phone_number" />
+                                </x-input-group>
 
                             </div>
                         </x-card.content>
