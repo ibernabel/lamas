@@ -117,7 +117,7 @@
                             <x-card.detail-item label="Referencia" :value="$loop->iteration" />
                             <hr class="my-2 w-10/12" />
                             <x-card.detail-item label="Nombre" :value="$reference->name" />
-                            <x-card.detail-item label="Ocupación" :value="$reference->ocupation" />
+                            <x-card.detail-item label="Ocupación" :value="$reference->occupation" />
                             <x-card.detail-item label="Relación" :value="$reference->relationship" />
                             <x-card.detail-item label="Teléfono" :value="$reference->phone_number" />
                         </div>
@@ -156,9 +156,9 @@
       <x-button2 type="button" variant="primary" onclick="window.location.href='{{ route('loan-applications.edit', $loanApplication) }}'">
           {{ __('Edit') }}
       </x-button2>
-      <x-button2 type="button" variant="primary" onclick="window.location.href='{{ route('loan-applications.index') }}'">
+      {{--<x-button2 type="button" variant="primary" onclick="window.location.href='{{ route('loan-applications.index') }}'">
           {{ __('Applications') }}
-      </x-button2>
+      </x-button2>--}}
   </div>
     <x-slot name="footer">
         <p>{{ __('Footer') }}</p>

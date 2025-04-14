@@ -4,7 +4,7 @@
     </x-slot>
 
     <div class="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8">
-        <form action="{{ route('loan-applications.update', $loanApplication) }}" method="POST">
+        <form action="{{ route('loan-applications.update', $loanApplication) }}" method="POST"> {{-- Changed PUT to POST --}}
             @csrf
             @method('PUT')
 
@@ -258,7 +258,8 @@
                             </x-input-group>
                             <x-input-group>
                                 <x-label for="vehicle_year" value="{{ __('Vehicle Year') }}" />
-                                <x-input2 id="vehicle_year" type="number" min="1900" max="{{ date('Y') }}" name="customer[vehicle][vehicle_year]"
+                                <x-input2 id="vehicle_year" type="number" min="1900" max="{{ date('Y') }}"
+                                    name="customer[vehicle][vehicle_year]"
                                     value="{{ old('customer.vehicle.vehicle_year', $loanApplication->customer->vehicle->vehicle_year ?? '') }}" />
                                 <x-input-error for="customer.vehicle.vehicle_year" />
                             </x-input-group>
@@ -352,22 +353,22 @@
                                     value="{{ old('customer.company.name', $loanApplication->customer->company->name) }}" />
                                 <x-input-error for="customer.company.name" />
                             </x-input-group>
-                            
-                            <x-input-group>
-                              <x-label for="company_phone" value="{{ __('Phone') }}" />
-                              <x-input2 id="company_phone" type="tel"
-                                  name="customer[company][phones][0][number]"
-                                  value="{{ old('customer.company.phones.0.number', $loanApplication->customer->company->phones[0]->number ?? '') }}" />
-                              <x-input-error for="customer.company.phones.0.number" />
-                          </x-input-group>
 
                             <x-input-group>
-                              <x-label for="company_address" value="{{ __('Address') }}" />
-                              <x-input2 id="company_address" type="text"
-                                  name="customer[company][addresses][0][street]"
-                                  value="{{ old('customer.company.addresses.0.street', $loanApplication->customer->company->addresses[0]->street ?? '') }}" />
-                              <x-input-error for="customer.company.addresses.0.street" />
-                          </x-input-group>
+                                <x-label for="company_phone" value="{{ __('Phone') }}" />
+                                <x-input2 id="company_phone" type="tel"
+                                    name="customer[company][phones][0][number]"
+                                    value="{{ old('customer.company.phones.0.number', $loanApplication->customer->company->phones[0]->number ?? '') }}" />
+                                <x-input-error for="customer.company.phones.0.number" />
+                            </x-input-group>
+
+                            <x-input-group>
+                                <x-label for="company_address" value="{{ __('Address') }}" />
+                                <x-input2 id="company_address" type="text"
+                                    name="customer[company][addresses][0][street]"
+                                    value="{{ old('customer.company.addresses.0.street', $loanApplication->customer->company->addresses[0]->street ?? '') }}" />
+                                <x-input-error for="customer.company.addresses.0.street" />
+                            </x-input-group>
 
                             <x-input-group>
                                 <x-label for="role" value="{{ __('Role') }}" />
@@ -419,13 +420,13 @@
                                 </x-select>
                                 <x-input-error for="customer.jobInfo.payment_frequency" />
                             </x-input-group>
-                            
+
                             <x-input-group>
-                              <x-label for="payment_bank" value="{{ __('Payment Bank') }}" />
-                              <x-input2 id="payment_bank" type="text" name="customer[jobInfo][payment_bank]"
-                                  value="{{ old('customer.jobInfo.payment_bank', $loanApplication->customer->jobInfo->payment_bank) }}" />
-                              <x-input-error for="customer.jobInfo.payment_bank" />
-                          </x-input-group>
+                                <x-label for="payment_bank" value="{{ __('Payment Bank') }}" />
+                                <x-input2 id="payment_bank" type="text" name="customer[jobInfo][payment_bank]"
+                                    value="{{ old('customer.jobInfo.payment_bank', $loanApplication->customer->jobInfo->payment_bank) }}" />
+                                <x-input-error for="customer.jobInfo.payment_bank" />
+                            </x-input-group>
 
 
                             <x-input-group>
@@ -449,21 +450,74 @@
                             </x-input-group>
 
                             <x-input-group>
-                              <x-label for="supervisor_name" value="{{ __('Supervisor Name') }}" />
-                              <x-input2 id="supervisor_name" type="text"
-                                  name="customer[jobInfo][supervisor_name]"
-                                  value="{{ old('customer.jobInfo.supervisor_name', $loanApplication->customer->jobInfo->supervisor_name) }}" />
-                              <x-input-error for="customer.jobInfo.supervisor_name" />
-                          </x-input-group>
+                                <x-label for="supervisor_name" value="{{ __('Supervisor Name') }}" />
+                                <x-input2 id="supervisor_name" type="text"
+                                    name="customer[jobInfo][supervisor_name]"
+                                    value="{{ old('customer.jobInfo.supervisor_name', $loanApplication->customer->jobInfo->supervisor_name) }}" />
+                                <x-input-error for="customer.jobInfo.supervisor_name" />
+                            </x-input-group>
                         </div>
                     </x-card.content>
                 </x-card>
+
+                {{-- References Section --}}
+                <x-card.header>
+                    <x-card.title>{{ __('References') }}</x-card.title>
+                </x-card.header>
+                <x-card>
+                    @foreach ($loanApplication->customer->references as $reference)
+                        <x-card.content>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <x-input-group>
+                                    <x-card.detail-item label="Referencia" :value="$loop->iteration" />
+                                </x-input-group>
+                                <x-input-group>
+                                </x-input-group>
+                                <x-input-group>
+                                    <x-label for="reference_name" value="{{ __('Name') }}" />
+                                    <x-input2 id="reference_name" type="text"
+                                        name="customer[references][{{ $loop->index }}][name]"
+                                        value="{{ old('customer.references.' . $loop->index . '.name', $reference->name) }}" />
+                                    <x-input-error for="customer.references.{{ $loop->index }}.name" />
+                                </x-input-group>
+
+                                <x-input-group>
+                                    <x-input type="hidden" name="customer[references][{{ $loop->index }}][id]"
+                                        value="{{ $reference->id }}" />
+                                    <x-label for="reference_occupation" value="{{ __('Occupation') }}" />
+                                    <x-input2 id="reference_occupation" type="text"
+                                        name="customer[references][{{ $loop->index }}][occupation]"
+                                        value="{{ old('customer.references.' . $loop->index . '.occupation', $reference->occupation) }}" />
+                                    <x-input-error for="customer.references.{{ $loop->index }}.occupation" />
+                                </x-input-group>
+
+                                <x-input-group>
+                                    <x-label for="reference_relationship" value="{{ __('Relationship') }}" />
+                                    <x-input2 id="reference_relationship" type="text"
+                                        name="customer[references][{{ $loop->index }}][relationship]"
+                                        value="{{ old('customer.references.' . $loop->index . '.relationship', $reference->relationship) }}" />
+                                    <x-input-error for="customer.references.{{ $loop->index }}.relationship" />
+                                </x-input-group>
+
+                                {{-- <x-input-group>
+                                    <x-label for="reference_phone" value="{{ __('Phone') }}" />
+                                    <x-input2 id="reference_phone" type="tel"
+                                        name="customer[references][{{ $loop->index }}][phones][0][number]"
+                                        value="{{ old('customer.references.' . $loop->index . '.phones.0.number', $reference->phones[0]->number) }}" />
+                                    <x-input-error for="customer.references.{{ $loop->index }}.phones.0.number" />
+                                </x-input-group> --}}
+
+                            </div>
+                        </x-card.content>
+                    @endforeach
+                </x-card>
+
 
                 <div class="flex justify-end space-x-4 my-4">
                     <x-button2 type="button" variant="secondary" onclick="window.history.back()">
                         {{ __('Cancel') }}
                     </x-button2>
-                    <x-button2 type="submit" variant="primary" class="text-dark-900">
+                    <x-button2 type="submit" variant="submit">
                         {{ __('Update') }}
                     </x-button2>
                 </div>

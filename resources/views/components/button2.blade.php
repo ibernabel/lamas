@@ -6,7 +6,7 @@
 
 @php
     $variantClasses = [
-        'primary' => 'bg-primary-600 dark:bg-primary-500 hover:bg-primary-700 dark:hover:bg-primary-600 focus:ring-primary-500 dark:focus:ring-primary-400 text-white',
+        'primary' => 'bg-primary-600 dark:bg-primary-500 hover:bg-primary-700 dark:hover:bg-primary-600 focus:ring-primary-500 dark:focus:ring-primary-400',
         'secondary' => 'bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:ring-primary-500 dark:focus:ring-primary-400 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600',
         'danger' => 'bg-red-600 dark:bg-red-500 hover:bg-red-700 dark:hover:bg-red-600 focus:ring-red-500 dark:focus:ring-red-400 text-white',
         'success' => 'bg-green-600 dark:bg-green-500 hover:bg-green-700 dark:hover:bg-green-600 focus:ring-green-500 dark:focus:ring-green-400 text-white',
@@ -25,7 +25,7 @@
         'outline-light' => 'bg-transparent dark:bg-transparent hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-gray-500 dark:focus:ring-gray-400 text-light-600 dark:text-light-500 border border-light-300 dark:border-light-600',
         'outline-dark' => 'bg-transparent dark:bg-transparent hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-gray-500 dark:focus:ring-gray-400 text-dark-600 dark:text-dark-500 border border-dark-300 dark:border-dark-600',
         'outline-link' => 'bg-transparent dark:bg-transparent hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-gray-500 dark:focus:ring-gray-400 text-link-600 dark:text-link-500 border border-link-300 dark:border-link-600',
-        'submit' => 'bg-primary-600 dark:bg-primary-500 hover:bg-primary-700 dark:hover:bg-primary-600 focus:ring-primary-500 dark:focus:ring-primary-400 text-white',
+        'submit' => 'bg-primary-600 dark:bg-primary-500 hover:bg-primary-700 dark:hover:bg-primary-600 focus:ring-primary-500 dark:focus:ring-primary-400',
         'reset' => 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:ring-gray-500 dark:focus:ring-gray-400 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600',
     ][$variant];
 @endphp
@@ -33,10 +33,7 @@
 <button
     type="{{ $type }}"
     {{ $attributes->merge([
-        'class' => 'inline-flex items-center px-4 py-2 border border-transparent 
-                   text-sm font-medium rounded-md shadow-sm 
-                   focus:outline-none focus:ring-2 focus:ring-offset-2
-                   dark:focus:ring-offset-gray-900 ' . $variantClasses
+        'class' => 'inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-900 ' . $variantClasses
     ]) }}
 >
     {{ $slot }}

@@ -68,52 +68,70 @@ class LoanApplicationController extends Controller
   public function store(Request $request)
   {
     try {
-      // Validate the incoming request
+
+      // Validate the incoming request - including nested relationships
       $validatedData = $request->validate([
-        // Personal Details
-        'first_name' => 'required|string|max:100',
-        'last_name' => 'required|string|max:100',
-        'NID' => 'required|unique:customers,NID',
-        'birth_date' => 'required|date|before:-18 years',
-        'mobile_phone' => 'required|string',
-        'home_phone' => 'nullable|string',
-        'email' => 'required|email|unique:customers,email',
-        'marital_status' => 'required|in:single,married,divorced,widowed',
-        'nationality' => 'required|string',
-        'address' => 'required|string',
-        'housing_type' => 'required|in:owned,rented,family',
-        'residence_start_date' => 'required|date',
+        // Loan Details
+        'details.amount' => 'sometimes|numeric|min:0',
+        'details.term' => 'sometimes|integer|min:1',
+        'details.rate' => 'sometimes|numeric|min:0|max:100',
+        'details.frequency' => 'sometimes|in:weekly,biweekly,monthly',
+        'details.purpose' => 'sometimes|string|max:1000',
 
-        // Vehicle Information
-        'own_vehicle' => 'nullable|boolean',
-        'vehicle_financed' => 'nullable|boolean',
-        'vehicle_brand' => 'nullable|string',
-        'vehicle_year' => 'nullable|integer|min:1900|max:' . date('Y'),
+        // Customer Details
+        'customer.NID' => 'sometimes|string|max:50',
+        'customer.details.first_name' => 'sometimes|string|max:100',
+        'customer.details.last_name' => 'sometimes|string|max:100',
+        'customer.details.birthday' => 'sometimes|date',
+        'customer.details.email' => 'sometimes|email|max:255',
+        'customer.details.marital_status' => 'sometimes|in:single,married,divorced,widowed,other',
+        'customer.details.nationality' => 'sometimes|string|max:100',
+        'customer.details.gender' => 'sometimes|in:male,female',
+        'customer.details.education_level' => 'sometimes|in:primary,secondary,high_school,bachelor,postgraduate,master,doctorate,other',
+        'customer.details.housing_type' => 'sometimes|in:owned,rented,mortgaged,other',
+        'customer.details.move_in_date' => 'sometimes|date',
 
-        // Spouse Information
-        'spouse_name' => 'nullable|string',
-        'spouse_phone' => 'nullable|string',
+        // Phones
+        'customer.details.phones.*.number' => 'sometimes|string|max:20',
+        'customer.details.phones.*.type' => 'sometimes|in:mobile,home',
+
+        // Addresses
+        'customer.details.addresses.*.street' => 'sometimes|string|max:255',
+        'customer.details.addresses.*.street2' => 'sometimes|string|max:255',
+        'customer.details.addresses.*.city' => 'sometimes|string|max:100',
+        'customer.details.addresses.*.state' => 'sometimes|string|max:100',
+
+        // Vehicle
+        'customer.vehicle.vehicle_type' => 'sometimes|in:owned,rented,financed,shared,leased,borrowed,none,other',
+        'customer.vehicle.vehicle_brand' => 'sometimes|string|max:100',
+        'customer.vehicle.vehicle_model' => 'sometimes|string|max:100',
+        'customer.vehicle.vehicle_year' => 'sometimes|integer|min:1900|max:2100',
 
         // Job Information
-        'self_employed' => 'nullable|boolean',
-        'company_name' => 'nullable|string',
-        'work_phone' => 'nullable|string',
-        'work_address' => 'nullable|string',
-        'position' => 'nullable|string',
-        'employment_start_date' => 'nullable|date',
-        'monthly_salary' => 'required|numeric|min:0',
-        'other_income' => 'nullable|numeric|min:0',
-        'other_income_description' => 'nullable|string',
-        'supervisor_name' => 'nullable|string',
+        'customer.jobInfo.is_self_employed' => 'sometimes|boolean',
+        'customer.company.name' => 'sometimes|string|max:255',
+        'customer.company.phones.*.number' => 'sometimes|string|max:20',
+        'customer.company.addresses.*.street' => 'sometimes|string|max:255',
+        'customer.jobInfo.role' => 'sometimes|string|max:100',
+        'customer.jobInfo.start_date' => 'sometimes|date',
+        'customer.jobInfo.salary' => 'sometimes|numeric|min:0',
+        'customer.jobInfo.payment_type' => 'sometimes|in:cash,bank_transfer',
+        'customer.jobInfo.payment_frequency' => 'sometimes|in:weekly,biweekly,monthly',
+        'customer.jobInfo.payment_bank' => 'sometimes|string|max:255',
+        'customer.jobInfo.other_incomes' => 'sometimes|numeric|min:0',
+        'customer.jobInfo.other_incomes_source' => 'sometimes|string|max:255',
+        'customer.jobInfo.schedule' => 'sometimes|string|max:255',
+        'customer.jobInfo.supervisor_name' => 'sometimes|string|max:255',
 
         // References
-        'references' => 'required|array|size:2',
-        'references.*.name' => 'required|string',
-        'references.*.occupation' => 'required|string',
-        'references.*.relationship' => 'required|string',
+        'customer.references' => 'required|array|size:2',
+        'customer.references.*.name' => 'required|string|max:255',
+        'customer.references.*.occupation' => 'required|string|max:255',
+        'customer.references.*.relationship' => 'required|string|max:255',
 
         // Acceptance
         'acceptance' => 'accepted'
+
       ]);
 
       DB::beginTransaction();
@@ -172,10 +190,12 @@ class LoanApplicationController extends Controller
 
         // Create Vehicle Info if applicable
         if ($validatedData['own_vehicle']) {
-          $customer->vehicleInfo()->create([
+          $customer->vehicle()->create([
+            'type' => $validatedData['vehicle_type'],
             'brand' => $validatedData['vehicle_brand'],
+            'model' => $validatedData['vehicle_model'],
             'year' => $validatedData['vehicle_year'],
-            'financed' => $validatedData['vehicle_financed'] ?? false
+            //'financed' => $validatedData['vehicle_financed'] ?? false,
           ]);
         }
 
@@ -306,6 +326,12 @@ class LoanApplicationController extends Controller
    */
   public function update(Request $request, int $id)
   {
+    // Log the entire request data for debugging
+    Log::info('Loan Application Update Request', [
+      'request_data' => $request->all(),
+      'references' => $request->input('customer.references', 'NO REFERENCES')
+    ]);
+
     try {
       // Find the loan application with relationships
       $loanApplication = LoanApplication::findOrFail($id);
@@ -363,6 +389,16 @@ class LoanApplicationController extends Controller
         'customer.jobInfo.other_incomes_source' => 'sometimes|string|max:255',
         'customer.jobInfo.schedule' => 'sometimes|string|max:255',
         'customer.jobInfo.supervisor_name' => 'sometimes|string|max:255',
+
+
+        // References
+        'customer.references' => 'required|array|min:1', // Changed size:2 to min:1
+        'customer.references.*.id' => 'required|integer|exists:customer_references,id',
+        'customer.references.*.name' => 'required|string|max:255',
+        'customer.references.*.occupation' => 'sometimes|string|max:255',
+        'customer.references.*.relationship' => 'sometimes|string|max:255',
+        'customer.references.*.phone_number' => 'sometimes|nullable|string|max:20', // Added validation for phone number
+
       ]);
 
       DB::beginTransaction();
@@ -401,15 +437,6 @@ class LoanApplicationController extends Controller
                 $customerDetails->addresses()->create($addressData);
               }
             }
-
-          }
-          
-          // Update Vehicle Info
-          if (isset($validatedData['customer']['vehicle'])) {
-            $customer->vehicle()->updateOrCreate(
-              ['customer_id' => $customer->id],
-              $validatedData['customer']['vehicle']
-            );
           }
 
           // Update Company
@@ -438,6 +465,48 @@ class LoanApplicationController extends Controller
           if (isset($validatedData['customer']['jobInfo'])) {
             $customer->jobInfo()->update($validatedData['customer']['jobInfo']);
           }
+
+          // Update Vehicle Info
+          if (isset($validatedData['customer']['vehicle'])) {
+            $customer->vehicle()->updateOrCreate(
+              ['customer_id' => $customer->id],
+              $validatedData['customer']['vehicle']
+            );
+          }
+
+          // Update References Info
+          Log::info('References Update Started', [
+            'references_data' => $validatedData['customer']['references'] ?? 'NO REFERENCES DATA'
+          ]);
+
+          if (isset($validatedData['customer']['references'])) {
+            foreach ($validatedData['customer']['references'] as $referenceData) {
+              Log::info('Processing Reference', [
+                'reference_data' => $referenceData,
+                'customer_id' => $customer->id
+              ]);
+
+              $reference = $customer->references()->updateOrCreate(
+                ['id' => $referenceData['id']],
+                [
+                  'customer_id' => $customer->id,
+                  'name' => $referenceData['name'],
+                  'occupation' => $referenceData['occupation'] ?? null,
+                  'relationship' => $referenceData['relationship'] ?? null,
+                  'phone_number' => $referenceData['phone_number'] ?? null,
+                ]
+              );
+
+              Log::info('Reference Updated', [
+                'reference_id' => $reference->id,
+                'name' => $reference->name,
+                'occupation' => $reference->occupation,
+                'relationship' => $reference->relationship
+              ]);
+            }
+          } else {
+            Log::warning('No references data found in validated data');
+          }
         }
 
         DB::commit();
@@ -453,6 +522,7 @@ class LoanApplicationController extends Controller
           'customer.company.addresses',
           'customer.jobInfo',
           'customer.vehicle',
+          'customer.references',
         ]);
 
         return redirect()->route('loan-applications.show', $loanApplication->id)
