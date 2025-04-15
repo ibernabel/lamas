@@ -59,7 +59,7 @@ class LoanApplicationController extends Controller
    */
   public function create()
   {
-    return view('loan-applications.create');
+    return view('admin.loan-applications.create');
   }
 
   /**
@@ -204,7 +204,7 @@ class LoanApplicationController extends Controller
           foreach ($validatedData['customer']['details']['phones'] as $phoneData) {
             // Only create phone if number is not null or empty
             if (!empty($phoneData['number'])) {
-                $customerDetail->phones()->create($phoneData);
+              $customerDetail->phones()->create($phoneData);
             }
           }
           Log::info('Customer Phones Created');
@@ -235,7 +235,10 @@ class LoanApplicationController extends Controller
         // 7. Create Company Phones (Optional)
         if (isset($validatedData['customer']['company']['phones'])) {
           foreach ($validatedData['customer']['company']['phones'] as $phoneData) {
-            $company->phones()->create($phoneData);
+            // Only create phone if number is not null or empty
+            if (!empty($phoneData['number'])) {
+              $company->phones()->create($phoneData);
+            }
           }
           Log::info('Company Phones Created');
         }
@@ -276,7 +279,7 @@ class LoanApplicationController extends Controller
         DB::commit();
         Log::info('Transaction Committed Successfully');
 
-        return redirect()->route('admin.loan-applications.show', $loanApplication->id)
+        return redirect()->route('loan-applications.show', $loanApplication->id)
           ->with('success', __('Loan application submitted successfully'));
       } catch (\Exception $e) {
         DB::rollBack();

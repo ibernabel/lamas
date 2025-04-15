@@ -163,21 +163,21 @@
                 </div>
                 
                 <div class="col-md-12">
-                    <h4>Información de Cónyuge</h4>
+                    <h4>Información de Conviviente</h4>
                 </div>
                 
                 <div class="col-md-6">
-                    {{-- Spouse as Reference 0 --}}
+                    {{-- Household Member as Reference 0 --}}
                     <div class="form-group">
-                        <label for="customer_references_0_name">Nombre Cónyuge</label>
+                        <label for="customer_references_0_name">Nombre Conviviente</label>
                         <input type="text" class="form-control" id="customer_references_0_name" name="customer[references][0][name]" value="{{ old('customer.references.0.name') }}">
-                        <input type="hidden" name="customer[references][0][relationship]" value="spouse">
+                        <input type="hidden" name="customer[references][0][relationship]" value="household member"> {{-- Assuming spouse is a household member --}}
                     </div>
                 </div>
                 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="customer_references_0_phone_number">Celular Cónyuge</label>
+                        <label for="customer_references_0_phone_number">Celular Conviviente</label>
                         <input type="tel" class="form-control" id="customer_references_0_phone_number" name="customer[references][0][phone_number]" value="{{ old('customer.references.0.phone_number') }}">
                     </div>
                 </div>
@@ -200,7 +200,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="customer_company_name">Nombre de la Empresa</label>
-                        <input type="text" class="form-control" id="customer_company_name" name="customer[company][name]" value="{{ old('customer.company.name') }}">
+                        <input type="text" class="form-control" id="customer_company_name" name="customer[company][name]" value="{{ old('customer.company.name') }}" required>
                     </div>
                 </div>
 
@@ -225,7 +225,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="customer_company_addresses_0_street">Dirección Trabajo</label>
-                        <input type="text" class="form-control" id="customer_company_addresses_0_street" name="customer[company][addresses][0][street]" value="{{ old('customer.company.addresses.0.street') }}">
+                        <input type="text" class="form-control" id="customer_company_addresses_0_street" name="customer[company][addresses][0][street]" value="{{ old('customer.company.addresses.0.street') }}" required>
                         {{-- Hidden fields for required address components --}}
                         <input type="hidden" name="customer[company][addresses][0][type]" value="work">
                         <input type="hidden" name="customer[company][addresses][0][city]" value="DefaultCity"> {{-- Placeholder --}}
@@ -243,7 +243,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="customer_jobInfo_start_date">Laborando desde</label>
-                        <input type="date" class="form-control" id="customer_jobInfo_start_date" name="customer[jobInfo][start_date]" value="{{ old('customer.jobInfo.start_date') }}">
+                        <input type="date" class="form-control" id="customer_jobInfo_start_date" name="customer[jobInfo][start_date]" value="{{ old('customer.jobInfo.start_date') }}" required>
                     </div>
                 </div>
                 
