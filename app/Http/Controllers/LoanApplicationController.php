@@ -409,6 +409,8 @@ class LoanApplicationController extends Controller
         'details.rate' => 'sometimes|numeric|min:0|max:100',
         'details.frequency' => 'sometimes|in:weekly,biweekly,monthly',
         'details.purpose' => 'sometimes|string|max:1000',
+        'details.quota' => 'sometimes|numeric|min:0',
+        'details.customer_comment' => 'sometimes|string|max:1000',
 
         // Customer Details
         'customer.NID' => 'sometimes|string|max:50',
@@ -418,7 +420,7 @@ class LoanApplicationController extends Controller
         'customer.details.email' => 'sometimes|email|max:255',
         'customer.details.marital_status' => 'sometimes|in:single,married,divorced,widowed,other',
         'customer.details.nationality' => 'sometimes|string|max:100',
-        'customer.details.gender' => 'sometimes|in:male,female',
+        'customer.details.gender' => 'sometimes|nullable|in:male,female',
         'customer.details.education_level' => 'sometimes|in:primary,secondary,high_school,bachelor,postgraduate,master,doctorate,other',
         'customer.details.housing_type' => 'sometimes|in:owned,rented,mortgaged,other',
         'customer.details.move_in_date' => 'sometimes|date',
@@ -450,9 +452,9 @@ class LoanApplicationController extends Controller
         'customer.jobInfo.payment_type' => 'sometimes|in:cash,bank_transfer',
         'customer.jobInfo.payment_frequency' => 'sometimes|in:weekly,biweekly,monthly',
         'customer.jobInfo.payment_bank' => 'sometimes|string|max:255',
-        'customer.jobInfo.other_incomes' => 'sometimes|numeric|min:0',
-        'customer.jobInfo.other_incomes_source' => 'sometimes|string|max:255',
-        'customer.jobInfo.schedule' => 'sometimes|string|max:255',
+        'customer.jobInfo.other_incomes' => 'sometimes|nullable|numeric|min:0',
+        'customer.jobInfo.other_incomes_source' => 'sometimes|nullable|string|max:255',
+        'customer.jobInfo.schedule' => 'sometimes|nullable|string|max:255',
         'customer.jobInfo.supervisor_name' => 'sometimes|string|max:255',
 
 
@@ -466,11 +468,35 @@ class LoanApplicationController extends Controller
 
       ]);
 
+      Log::info('Loan Application Update Validation Passed', ['validated_data' => $validatedData]);
+
       DB::beginTransaction();
       try {
         // Update Loan Application Details
         if (isset($validatedData['details'])) {
-          $loanApplication->details()->update($validatedData['details']);
+          // Get the existing details record and update it directly
+          $details = $loanApplication->details;
+          if ($details) {
+            $details->update($validatedData['details']);
+            Log::info('Loan Application Details Updated', [
+              'loan_application_id' => $loanApplication->id,
+              'data' => $validatedData['details'],
+              'amount' => $details->amount,
+              'term' => $details->term,
+              'rate' => $details->rate,
+              'frequency' => $details->frequency,
+              'purpose' => $details->purpose,
+              'quota' => $details->quota,
+              'customer_comment' => $details->customer_comment,
+            ]);
+          } else {
+            // If no details exist yet, create them
+            $loanApplication->details()->create($validatedData['details']);
+            Log::info('Loan Application Details Created', [
+              'loan_application_id' => $loanApplication->id,
+              'data' => $validatedData['details']
+            ]);
+          }
         }
 
         // Update Customer
@@ -480,12 +506,14 @@ class LoanApplicationController extends Controller
           // Update Customer Basic Info
           if (isset($validatedData['customer']['NID'])) {
             $customer->update(['NID' => $validatedData['customer']['NID']]);
+            Log::info('Customer Basic Info Updated', ['customer_id' => $customer->id]);
           }
 
           // Update Customer Details
           if (isset($validatedData['customer']['details'])) {
             $customerDetails = $customer->details;
             $customerDetails->update($validatedData['customer']['details']);
+            Log::info('Customer Details Updated', ['customer_detail_id' => $customerDetails->id]);
 
             // Update Phones
             if (isset($validatedData['customer']['details']['phones'])) {
@@ -493,6 +521,7 @@ class LoanApplicationController extends Controller
               foreach ($validatedData['customer']['details']['phones'] as $phoneData) {
                 $customerDetails->phones()->create($phoneData);
               }
+              Log::info('Customer Phones Updated');
             }
 
             // Update Addresses
@@ -501,6 +530,7 @@ class LoanApplicationController extends Controller
               foreach ($validatedData['customer']['details']['addresses'] as $addressData) {
                 $customerDetails->addresses()->create($addressData);
               }
+              Log::info('Customer Addresses Updated');
             }
           }
 
@@ -508,6 +538,7 @@ class LoanApplicationController extends Controller
           if (isset($validatedData['customer']['company'])) {
             $company = $customer->company;
             $company->update($validatedData['customer']['company']);
+            Log::info('Company Updated', ['company_id' => $company->id]);
 
             // Update Company Phones
             if (isset($validatedData['customer']['company']['phones'])) {
@@ -515,6 +546,7 @@ class LoanApplicationController extends Controller
               foreach ($validatedData['customer']['company']['phones'] as $phoneData) {
                 $company->phones()->create($phoneData);
               }
+              Log::info('Company Phones Updated');
             }
 
             // Update Company Addresses
@@ -523,12 +555,14 @@ class LoanApplicationController extends Controller
               foreach ($validatedData['customer']['company']['addresses'] as $addressData) {
                 $company->addresses()->create($addressData);
               }
+              Log::info('Company Addresses Updated');
             }
           }
 
           // Update Job Info
           if (isset($validatedData['customer']['jobInfo'])) {
             $customer->jobInfo()->update($validatedData['customer']['jobInfo']);
+            Log::info('Customer Job Info Updated');
           }
 
           // Update Vehicle Info
@@ -537,6 +571,7 @@ class LoanApplicationController extends Controller
               ['customer_id' => $customer->id],
               $validatedData['customer']['vehicle']
             );
+            Log::info('Customer Vehicle Updated');
           }
 
           // Update References Info
@@ -562,7 +597,8 @@ class LoanApplicationController extends Controller
                 ]
               );
 
-              Log::info('Reference Updated', [
+              // Log after successful update or creation
+              Log::info('Reference Updated/Created', [
                 'reference_id' => $reference->id,
                 'name' => $reference->name,
                 'occupation' => $reference->occupation,
@@ -575,6 +611,7 @@ class LoanApplicationController extends Controller
         }
 
         DB::commit();
+        Log::info('Transaction Committed Successfully');
 
         // Reload the model with all relationships
         $loanApplication->load([
@@ -600,6 +637,7 @@ class LoanApplicationController extends Controller
         ]);
       }
     } catch (ValidationException $e) {
+      Log::warning('Loan Application Update Validation Failed', ['errors' => $e->errors()]);
       return back()->withInput()->withErrors($e->errors());
     } catch (\Exception $e) {
       Log::error('Loan Application update failed: ' . $e->getMessage());

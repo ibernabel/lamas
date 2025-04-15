@@ -15,7 +15,7 @@ class LoanApplicationDetail extends Model
     'term',
     'rate',
     'quota',
-    'frecuency',
+    'frequency', // Corrected typo
     'purpose',
     'customer_comment'
 

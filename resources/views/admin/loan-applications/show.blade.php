@@ -66,7 +66,7 @@
     <x-card.detail-item label="Plazo" :value="optional($loanApplication->details)->term ?? 'N/A'" suffix="meses" />
     <x-card.detail-item label="Tasa" :value="optional($loanApplication->details)->rate ?? 'N/A'" suffix="%" />
     <x-card.detail-item label="Cuota" :value="number_format(optional($loanApplication->details)->quota, 2) ?? 'N/A'" prefix="RD$" />
-    <x-card.detail-item label="Frecuencia" :value="optional($loanApplication->details)->frecuency ?? 'N/A'" />
+    <x-card.detail-item label="Frecuencia" :value="optional($loanApplication->details)->frequency ?? 'N/A'" />
     <x-card.detail-item label="Propósito" :value="optional($loanApplication->details)->purpose ?? 'N/A'" />
     <x-card.detail-item label="Comentario del Cliente" :value="optional($loanApplication->details)->customer_comment ?? 'N/A'" />
 </x-card.content>

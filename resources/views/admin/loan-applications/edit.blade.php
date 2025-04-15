@@ -280,21 +280,21 @@
                             <x-input-group>
                                 <x-label for="amount" value="Amount" />
                                 <x-input2 id="amount" type="number" step="0.01" name="details[amount]"
-                                    value="{{ old('details.amount', $loanApplication->details->amount) }}" />
+                                    value="{{ old('details.amount', $loanApplication->details->amount ?? '') }}" />
                                 <x-input-error for="details.amount" />
                             </x-input-group>
 
                             <x-input-group>
                                 <x-label for="term" value="Term (months)" />
                                 <x-input2 id="term" type="number" name="details[term]"
-                                    value="{{ old('details.term', $loanApplication->details->term) }}" />
+                                    value="{{ old('details.term', $loanApplication->details->term ?? '') }}" />
                                 <x-input-error for="details.term" />
                             </x-input-group>
 
                             <x-input-group>
                                 <x-label for="rate" value="Rate (%)" />
                                 <x-input2 id="rate" type="number" step="0.01" name="details[rate]"
-                                    value="{{ old('details.rate', $loanApplication->details->rate) }}" />
+                                    value="{{ old('details.rate', $loanApplication->details->rate ?? '') }}" />
                                 <x-input-error for="details.rate" />
                             </x-input-group>
 
@@ -303,25 +303,39 @@
                                 <x-select id="frequency" name="details[frequency]">
                                     <option value="">{{ __('Select') }}</option>
                                     <option value="weekly"
-                                        {{ old('details.frequency', $loanApplication->details->frequency) == 'weekly' ? 'selected' : '' }}>
+                                        {{ old('details.frequency', $loanApplication->details->frequency ?? '') == 'weekly' ? 'selected' : '' }}>
                                         {{ __('Weekly') }}</option>
                                     <option value="biweekly"
-                                        {{ old('details.frequency', $loanApplication->details->frequency) == 'biweekly' ? 'selected' : '' }}>
+                                        {{ old('details.frequency', $loanApplication->details->frequency ?? '') == 'biweekly' ? 'selected' : '' }}>
                                         {{ __('Biweekly') }}</option>
                                     <option value="monthly"
-                                        {{ old('details.frequency', $loanApplication->details->frequency) == 'monthly' ? 'selected' : '' }}>
+                                        {{ old('details.frequency', $loanApplication->details->frequency ?? '') == 'monthly' ? 'selected' : '' }}>
                                         {{ __('Monthly') }}</option>
                                 </x-select>
                                 <x-input-error for="details.frequency" />
                             </x-input-group>
 
                             <x-input-group>
+                                <x-label for="quota" value="Quota" />
+                                <x-input2 id="quota" type="number" name="details[quota]"
+                                    value="{{ old('details.quota', $loanApplication->details->quota ?? '') }}" />
+                                <x-input-error for="details.quota" />
+                            </x-input-group>
+
+                            <x-input-group>
                                 <x-label for="purpose" value="Purpose" />
                                 <x-textarea id="purpose" name="details[purpose]">
-                                    {{ old('details.purpose', $loanApplication->details->purpose) }}
+                                    {{ old('details.purpose', $loanApplication->details->purpose ?? '') }}
                                 </x-textarea>
                                 <x-input-error for="details.purpose" />
                             </x-input-group>
+                            
+                            <x-input-group>
+                              {{--<x-label for="customer_comment" value="{{ __('Customer Comment') }}" />--}}
+                              <x-input2 type="hidden" name="details[customer_comment]" 
+                                  value="{{ old('details.customer_comment', $loanApplication->details->customer_comment ?? 'N/A') }}" />
+                              {{--<x-input-error for="details.customer_comment" />--}}
+                          </x-input-group>
                         </div>
                     </x-card.content>
                 </x-card>
