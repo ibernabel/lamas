@@ -208,7 +208,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="customer_company_email">Email Empresa</label>
-                        <input type="email" class="form-control" id="customer_company_email" name="customer[company][email]" value="{{ old('customer.company.email') }}" required>
+                        <input type="email" class="form-control" id="customer_company_email" name="customer[company][email]" value="{{ old('customer.company.email') }}">
                     </div>
                 </div>
                 
@@ -236,7 +236,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="customer_jobInfo_role">Posición que Ocupa</label>
-                        <input type="text" class="form-control" id="customer_jobInfo_role" name="customer[jobInfo][role]" value="{{ old('customer.jobInfo.role') }}">
+                        <input type="text" class="form-control" id="customer_jobInfo_role" name="customer[jobInfo][role]" value="{{ old('customer.jobInfo.role') }}" required>
                     </div>
                 </div>
                 
@@ -254,7 +254,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">RD$</span>
                             </div>
-                            <input type="number" class="form-control" id="customer_jobInfo_salary" name="customer[jobInfo][salary]" value="{{ old('customer.jobInfo.salary') }}" required min="0" step="0.01">
+                            <input type="number" class="form-control" id="customer_jobInfo_salary" name="customer[jobInfo][salary]" value="{{ old('customer.jobInfo.salary') }}" required min="0" step="0.01" required>
                         </div>
                     </div>
                 </div>

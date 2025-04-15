@@ -59,7 +59,7 @@ class LoanApplicationController extends Controller
    */
   public function create()
   {
-    return view('admin.loan-applications.create');
+    return view('loan-applications.create');
   }
 
   /**
@@ -96,8 +96,8 @@ class LoanApplicationController extends Controller
 
         // Customer Phones (Required: at least one mobile)
         'customer.details.phones' => 'required|array|min:1',
-        'customer.details.phones.*.number' => 'required|string|max:20',
-        'customer.details.phones.*.type' => 'required|in:mobile,home',
+        'customer.details.phones.*.number' => 'sometimes|nullable|string|max:20',
+        'customer.details.phones.*.type' => 'sometimes|nullable|in:mobile,home',
         'customer.details.phones' => [ // Custom rule to ensure at least one mobile phone
           'required',
           'array',
@@ -142,13 +142,13 @@ class LoanApplicationController extends Controller
         // Job Information (Required fields if employed, company name required)
         'customer.jobInfo.is_self_employed' => 'required|boolean',
         'customer.company.name' => 'required|string|max:255',
-        'customer.company.email' => 'required|email|max:255|unique:companies,email', // Added company email validation
+        'customer.company.email' => 'sometimes|nullable|email|max:255|unique:companies,email', // Added company email validation
         'customer.company.phones.*.number' => 'sometimes|nullable|string|max:20', // Optional company phone
         'customer.company.addresses' => 'required|array|min:1', // Require at least one company address
         'customer.company.addresses.*.street' => 'required|string|max:255',
         'customer.company.addresses.*.street2' => 'sometimes|nullable|string|max:255',
-        'customer.company.addresses.*.city' => 'required|string|max:100',
-        'customer.company.addresses.*.state' => 'required|string|max:100',
+        'customer.company.addresses.*.city' => 'sometimes|string|max:100',
+        'customer.company.addresses.*.state' => 'sometimes|string|max:100',
         'customer.company.addresses.*.type' => 'required|in:home,work,billing,shipping', // Use valid ENUM values
         'customer.jobInfo.role' => 'required|string|max:100',
         'customer.jobInfo.start_date' => 'required|date',
@@ -161,6 +161,7 @@ class LoanApplicationController extends Controller
         'customer.jobInfo.other_incomes' => 'sometimes|nullable|numeric|min:0',
         'customer.jobInfo.other_incomes_source' => 'sometimes|nullable|required_with:customer.jobInfo.other_incomes|string|max:255',
         'customer.jobInfo.schedule' => 'sometimes|nullable|string|max:255',
+        'customer.jobInfo.level' => 'sometimes|nullable|string|max:255',
         'customer.jobInfo.supervisor_name' => 'sometimes|nullable|string|max:255',
 
         // References (Required: at least one, name and relationship required per reference)
@@ -201,7 +202,10 @@ class LoanApplicationController extends Controller
         // 3. Create Customer Phones
         if (isset($validatedData['customer']['details']['phones'])) {
           foreach ($validatedData['customer']['details']['phones'] as $phoneData) {
-            $customerDetail->phones()->create($phoneData);
+            // Only create phone if number is not null or empty
+            if (!empty($phoneData['number'])) {
+                $customerDetail->phones()->create($phoneData);
+            }
           }
           Log::info('Customer Phones Created');
         }

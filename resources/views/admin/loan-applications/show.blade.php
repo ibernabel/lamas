@@ -61,16 +61,16 @@
             </x-card.header>
             <x-card>
 
-                <x-card.content>
-                    <x-card.detail-item label="Monto" :value="number_format($loanApplication->details->amount, 2)" prefix="RD$" />
-                    <x-card.detail-item label="Plazo" :value="$loanApplication->details->term" suffix="meses" />
-                    <x-card.detail-item label="Tasa" :value="$loanApplication->details->rate" suffix="%" />
-                    <x-card.detail-item label="Cuota" :value="number_format($loanApplication->details->quota, 2)" prefix="RD$" />
-                    <x-card.detail-item label="Frecuencia" :value="$loanApplication->details->frecuency" />
-                    <x-card.detail-item label="Propósito" :value="$loanApplication->details->purpose" />
-                    <x-card.detail-item label="Comentario del Cliente" :value="$loanApplication->details->customer_comment" />
-                </x-card.content>
-            </x-card>
+<x-card.content>
+    <x-card.detail-item label="Monto" :value="number_format(optional($loanApplication->details)->amount, 2) ?? 'N/A'" prefix="RD$" />
+    <x-card.detail-item label="Plazo" :value="optional($loanApplication->details)->term ?? 'N/A'" suffix="meses" />
+    <x-card.detail-item label="Tasa" :value="optional($loanApplication->details)->rate ?? 'N/A'" suffix="%" />
+    <x-card.detail-item label="Cuota" :value="number_format(optional($loanApplication->details)->quota, 2) ?? 'N/A'" prefix="RD$" />
+    <x-card.detail-item label="Frecuencia" :value="optional($loanApplication->details)->frecuency ?? 'N/A'" />
+    <x-card.detail-item label="Propósito" :value="optional($loanApplication->details)->purpose ?? 'N/A'" />
+    <x-card.detail-item label="Comentario del Cliente" :value="optional($loanApplication->details)->customer_comment ?? 'N/A'" />
+</x-card.content>
+</x-card>
 
             {{-- Employment Information --}}
             <x-card.header>
