@@ -61,16 +61,16 @@
             </x-card.header>
             <x-card>
 
-<x-card.content>
-    <x-card.detail-item label="Monto" :value="number_format(optional($loanApplication->details)->amount, 2) ?? 'N/A'" prefix="RD$" />
-    <x-card.detail-item label="Plazo" :value="optional($loanApplication->details)->term ?? 'N/A'" suffix="meses" />
-    <x-card.detail-item label="Tasa" :value="optional($loanApplication->details)->rate ?? 'N/A'" suffix="%" />
-    <x-card.detail-item label="Cuota" :value="number_format(optional($loanApplication->details)->quota, 2) ?? 'N/A'" prefix="RD$" />
-    <x-card.detail-item label="Frecuencia" :value="optional($loanApplication->details)->frequency ?? 'N/A'" />
-    <x-card.detail-item label="Propósito" :value="optional($loanApplication->details)->purpose ?? 'N/A'" />
-    <x-card.detail-item label="Comentario del Cliente" :value="optional($loanApplication->details)->customer_comment ?? 'N/A'" />
-</x-card.content>
-</x-card>
+                <x-card.content>
+                    <x-card.detail-item label="Monto" :value="number_format(optional($loanApplication->details)->amount, 2) ?? ''" prefix="RD$" />
+                    <x-card.detail-item label="Plazo" :value="optional($loanApplication->details)->term ?? ''" suffix="meses" />
+                    <x-card.detail-item label="Tasa" :value="optional($loanApplication->details)->rate ?? ''" suffix="%" />
+                    <x-card.detail-item label="Cuota" :value="number_format(optional($loanApplication->details)->quota, 2) ?? ''" prefix="RD$" />
+                    <x-card.detail-item label="Frecuencia" :value="optional($loanApplication->details)->frequency ?? ''" />
+                    <x-card.detail-item label="Propósito" :value="optional($loanApplication->details)->purpose ?? ''" />
+                    <x-card.detail-item label="Comentario del Cliente" :value="optional($loanApplication->details)->customer_comment ?? ''" />
+                </x-card.content>
+            </x-card>
 
             {{-- Employment Information --}}
             <x-card.header>
@@ -153,13 +153,14 @@
     </div>
     <div class="flex justify-end space-x-4 my-4">
 
-      <x-button2 type="button" variant="primary" onclick="window.location.href='{{ route('loan-applications.edit', $loanApplication) }}'">
-          {{ __('Edit') }}
-      </x-button2>
-      {{--<x-button2 type="button" variant="primary" onclick="window.location.href='{{ route('loan-applications.index') }}'">
+        <x-button2 type="button" variant="primary"
+            onclick="window.location.href='{{ route('loan-applications.edit', $loanApplication) }}'">
+            {{ __('Edit') }}
+        </x-button2>
+        {{-- <x-button2 type="button" variant="primary" onclick="window.location.href='{{ route('loan-applications.index') }}'">
           {{ __('Applications') }}
-      </x-button2>--}}
-  </div>
+      </x-button2> --}}
+    </div>
     <x-slot name="footer">
         <p>{{ __('Footer') }}</p>
     </x-slot>
