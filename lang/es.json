@@ -518,7 +518,19 @@
     "Supervisor Phone": "Teléfono del Supervisor",
     "Back to List": "Volver a la lista",
     "Applications": "Solicitudes",
-
+    "New Loan Application": "Nueva Solicitud de Préstamo",
+    "Edit Loan Application": "Editar Solicitud de Préstamo",
+    "View Loan Application": "Ver Solicitud de Préstamo",
+    "Loan Application Details": "Detalles de la Solicitud de Préstamo",
+    "Loan Application Documents": "Documentos de la Solicitud de Préstamo",
+    "Loan Application Status": "Estado de la Solicitud de Préstamo",
+    "Loan Application History": "Historial de Solicitud de Préstamo",
+    "Loan Application Notes": "Notas de la Solicitud de Préstamo",
+    "Loan Application Comments": "Comentarios de la Solicitud de Préstamo",
+    "Loan Application Tasks": "Tareas de la Solicitud de Préstamo",
+    "Loan Application Tasks History": "Historial de Tareas de la Solicitud de Préstamo",
+    "Loan Application Tasks Comments": "Comentarios de las Tareas de la Solicitud de Préstamo",
+    "Loan Application Tasks Attachments": "Adjuntos de las Tareas de la Solicitud de Préstamo",
 
     "Whatever you want": "Lo que quieras"
 }

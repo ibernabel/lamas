@@ -61,7 +61,8 @@
                                 <x-label for="cellular" value="{{ __('Cellular') }}" />
                                 <x-input2 id="cellular" type="tel" name="customer[details][phones][0][number]"
                                     value="{{ old('customer.details.phones.0.number', $loanApplication->customer->details->phones[0]->number) }}" />
-                                <input type="hidden" name="customer[details][phones][0][type]" value="mobile"> {{-- Added type --}}
+                                <input type="hidden" name="customer[details][phones][0][type]" value="mobile">
+                                {{-- Added type --}}
                                 <x-input-error for="customer.details.phones.0.number" />
                                 <x-input-error for="customer.details.phones.0.type" />
                             </x-input-group>
@@ -69,7 +70,8 @@
                                 <x-label for="home_phone" value="{{ __('Home Phone') }}" />
                                 <x-input2 id="home_phone" type="tel" name="customer[details][phones][1][number]"
                                     value="{{ old('customer.details.phones.1.number', $loanApplication->customer->details->phones[1]->number ?? '') }}" />
-                                <input type="hidden" name="customer[details][phones][1][type]" value="home"> {{-- Added type --}}
+                                <input type="hidden" name="customer[details][phones][1][type]" value="home">
+                                {{-- Added type --}}
                                 <x-input-error for="customer.details.phones.1.number" />
                                 <x-input-error for="customer.details.phones.1.type" />
                             </x-input-group>
@@ -172,9 +174,11 @@
                             </x-input-group>
                             <x-input-group>
                                 <x-label for="street" value="{{ __('Street') }}" />
-                                <x-input2 id="street" type="text" name="customer[details][addresses][0][street]"
+                                <x-input2 id="street" type="text"
+                                    name="customer[details][addresses][0][street]"
                                     value="{{ old('customer.details.addresses.0.street', $loanApplication->customer->details->addresses[0]->street ?? '') }}" />
-                                <input type="hidden" name="customer[details][addresses][0][type]" value="home"> {{-- Added type --}}
+                                <input type="hidden" name="customer[details][addresses][0][type]" value="home">
+                                {{-- Added type --}}
                                 <x-input-error for="customer.details.addresses.0.street" />
                                 <x-input-error for="customer.details.addresses.0.type" />
                             </x-input-group>
@@ -347,13 +351,13 @@
                                 </x-textarea>
                                 <x-input-error for="details.purpose" />
                             </x-input-group>
-                            
+
                             <x-input-group>
-                              {{--<x-label for="customer_comment" value="{{ __('Customer Comment') }}" />--}}
-                              <x-input2 type="hidden" name="details[customer_comment]" 
-                                  value="{{ old('details.customer_comment', $loanApplication->details->customer_comment ?? ' ') }}" />
-                              {{--<x-input-error for="details.customer_comment" />--}}
-                          </x-input-group>
+                                {{-- <x-label for="customer_comment" value="{{ __('Customer Comment') }}" /> --}}
+                                <x-input2 type="hidden" name="details[customer_comment]"
+                                    value="{{ old('details.customer_comment', $loanApplication->details->customer_comment ?? ' ') }}" />
+                                {{-- <x-input-error for="details.customer_comment" /> --}}
+                            </x-input-group>
                         </div>
                     </x-card.content>
                 </x-card>
@@ -391,7 +395,8 @@
                                 <x-input2 id="company_phone" type="tel"
                                     name="customer[company][phones][0][number]"
                                     value="{{ old('customer.company.phones.0.number', $loanApplication->customer->company->phones[0]->number ?? '') }}" />
-                                <input type="hidden" name="customer[company][phones][0][type]" value="work"> {{-- Added type --}}
+                                <input type="hidden" name="customer[company][phones][0][type]" value="work">
+                                {{-- Added type --}}
                                 <x-input-error for="customer.company.phones.0.number" />
                                 <x-input-error for="customer.company.phones.0.type" />
                             </x-input-group>
@@ -401,7 +406,8 @@
                                 <x-input2 id="company_address" type="text"
                                     name="customer[company][addresses][0][street]"
                                     value="{{ old('customer.company.addresses.0.street', $loanApplication->customer->company->addresses[0]->street ?? '') }}" />
-                                <input type="hidden" name="customer[company][addresses][0][type]" value="work"> {{-- Added type --}}
+                                <input type="hidden" name="customer[company][addresses][0][type]" value="work">
+                                {{-- Added type --}}
                                 <x-input-error for="customer.company.addresses.0.street" />
                                 <x-input-error for="customer.company.addresses.0.type" />
                             </x-input-group>
