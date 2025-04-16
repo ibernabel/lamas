@@ -69,6 +69,7 @@ class LoanApplicationRequest extends FormRequest
       'customer.NID' => [
         $this->isMethod('POST') ? 'required' : 'sometimes',
         'string',
+        'min:11',
         'max:50',
         // Use the customer ID from the route model binding for ignoring
         Rule::unique('customers', 'NID')->ignore($customerIdToIgnore)
@@ -83,9 +84,9 @@ class LoanApplicationRequest extends FormRequest
         // Use the customer detail ID from the route model binding for ignoring
         Rule::unique('customer_details', 'email')->ignore($customerDetailIdToIgnore)
       ],
-      'customer.details.marital_status' => 'sometimes|in:single,married,divorced,widowed,other',
+      'customer.details.marital_status' => [$this->isMethod('POST') ? 'required' : 'sometimes', 'in:single,married,divorced,widowed,other'],
       'customer.details.nationality' => 'sometimes|string|max:100',
-      'customer.details.housing_type' => 'sometimes|in:owned,rented,mortgaged,other',
+      'customer.details.housing_type' => [$this->isMethod('POST') ? 'required' : 'sometimes', 'in:owned,rented,mortgaged,other'],
 
       // Customer Optional Info
       'customer.details.gender' => 'sometimes|nullable|in:male,female',
@@ -125,8 +126,8 @@ class LoanApplicationRequest extends FormRequest
       ],
       'customer.details.addresses.*.street' => 'required|string|max:255',
       'customer.details.addresses.*.street2' => 'sometimes|nullable|string|max:255',
-      'customer.details.addresses.*.city' => 'sometimes|string|max:100',
-      'customer.details.addresses.*.state' => 'sometimes|string|max:100',
+      'customer.details.addresses.*.city' => 'sometimes|string|min:0|max:100',
+      'customer.details.addresses.*.state' => 'sometimes|string|min:0|max:100',
       'customer.details.addresses.*.type' => 'sometimes|in:home,work,billing,shipping',
 
       // Vehicle (Optional)
@@ -177,6 +178,7 @@ class LoanApplicationRequest extends FormRequest
       'customer.references.*.relationship' => 'required|string|max:255',
       'customer.references.*.occupation' => 'sometimes|nullable|string|max:255',
       'customer.references.*.phone_number' => 'sometimes|nullable|string|max:20',
+      'terms' => ['accepted'], // Renamed from 'acceptance' to match form field name
     ];
 
     // Add specific rules for update method
@@ -186,13 +188,11 @@ class LoanApplicationRequest extends FormRequest
         // Handle case where loan application is not found, maybe throw an exception or add a general error
         // For now, let's assume route model binding handles this.
       }
-      $rules['customer.references.*.id'] = 'required|integer|exists:customer_references,id';
+      $rules['customer.references.*.id'] = 'sometimes|integer|exists:customer_references,id';
+      // Remove terms requirement for update
+      unset($rules['terms']);
     }
 
-    // Add acceptance rule only for store method
-    if ($this->isMethod('POST')) {
-      $rules['acceptance'] = 'accepted';
-    }
 
     return $rules;
   }
@@ -207,8 +207,8 @@ class LoanApplicationRequest extends FormRequest
       'customer.details.email.unique' => __('validation.unique', ['attribute' => __('Email')]),
       'customer.details.phones.mobile_required' => __('A mobile phone number is required.'),
       'customer.details.addresses.home_required' => __('A home address is required.'),
-      'acceptance.accepted' => __('You must accept the terms and conditions.'),
-      'customer.references.*.id.required' => __('Reference ID is required for updates.'),
+      'terms.accepted' => __('You must accept the terms and conditions.'), // Changed from acceptance.accepted
+      // 'customer.references.*.id.required' => __('Reference ID is required for updates.'), // Removed as it's now sometimes
       'customer.references.*.id.exists' => __('Invalid reference ID provided.'),
     ];
   }

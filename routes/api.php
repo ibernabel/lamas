@@ -9,7 +9,5 @@ use App\Http\Controllers\Api\V1\LoanApplicationController as ApiLoanApplicationC
 Route::prefix('v1')->group(function () {
 
     // API Resource routes for loan applications
-    Route::Resource('loan-applications', ApiLoanApplicationController::class)
-        ->only(['index', 'show', 'store']);
+    Route::apiResource('loan-applications', ApiLoanApplicationController::class); // Use apiResource for standard API methods
 });
-

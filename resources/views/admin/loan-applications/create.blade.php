@@ -45,7 +45,7 @@
 
                             <x-input-group>
                                 <x-label for="NID" value="{{ __('NID') }}" />
-                                <x-input2 id="NID" type="text" name="customer.NID"
+                                <x-input2 id="NID" type="text" name="customer[NID]"
                                     value="{{ old('customer.NID') }}" required />
                                 <x-input-error for="customer.NID" />
                             </x-input-group>
@@ -85,7 +85,7 @@
 
                             <x-input-group>
                                 <x-label for="marital_status" value="{{ __('Marital Status') }}" />
-                                <x-select id="marital_status" name="customer[details][marital_status]">
+                                <x-select id="marital_status" name="customer[details][marital_status]" required>
                                     <option value="">{{ __('Select') }}</option>
                                     <option value="single"
                                         {{ old('customer.details.marital_status') == 'single' ? 'selected' : '' }}>
@@ -113,7 +113,7 @@
                             </x-input-group>
                             <x-input-group>
                                 <x-label for="nationality" value="{{ __('Nationality') }}" />
-                                <x-input2 id="nationality" type="text" name="customer.details.nationality"
+                                <x-input2 id="nationality" type="text" name="customer[details][nationality]"
                                     value="{{ old('customer.details.nationality') }}" required />
                                 <x-input-error for="customer.details.nationality" />
                             </x-input-group>
@@ -183,7 +183,7 @@
                                 <x-label for="street" value="{{ __('Street') }}" />
                                 <x-input2 id="street" type="text"
                                     name="customer[details][addresses][0][street]"
-                                    value="{{ old('customer.details.addresses.0.street') }}" />
+                                    value="{{ old('customer.details.addresses.0.street') }}" required />
                                 <input type="hidden" name="customer[details][addresses][0][type]" value="home">
                                 {{-- Added type --}}
                                 <x-input-error for="customer.details.addresses.0.street" />
@@ -214,7 +214,7 @@
 
                             <x-input-group>
                                 <x-label for="housing_type" value="{{ __('Housing Type') }}" />
-                                <x-select id="housing_type" name="customer[details][housing_type]">
+                                <x-select id="housing_type" name="customer[details][housing_type]" required >
                                     <option value="">{{ __('Select housing type') }}</option>
                                     <option value="owned"
                                         {{ old('customer.details.housing_type') == 'owned' ? 'selected' : '' }}>
@@ -383,7 +383,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <x-input-group>
                                 <x-label for="is_self_employed" value="{{ __('Self Employed') }}" />
-                                <x-select id="is_self_employed" name="customer[jobInfo][is_self_employed]">
+                                <x-select id="is_self_employed" name="customer[jobInfo][is_self_employed]" required>
                                     <option value="">{{ __('Select') }}</option>
                                     <option value="1"
                                         {{ old('customer.jobInfo.is_self_employed') == '1' ? 'selected' : '' }}>
@@ -397,7 +397,7 @@
                             <x-input-group>
                                 <x-label for="company_name" value="{{ __('Company') }}" />
                                 <x-input2 id="company_name" type="text" name="customer[company][name]"
-                                    value="{{ old('customer.company.name') }}" />
+                                    value="{{ old('customer.company.name') }}" required />
                                 <x-input-error for="customer.company.name" />
                             </x-input-group>
 
@@ -416,7 +416,7 @@
                                 <x-label for="company_address" value="{{ __('Address') }}" />
                                 <x-input2 id="company_address" type="text"
                                     name="customer[company][addresses][0][street]"
-                                    value="{{ old('customer.company.addresses.0.street') }}" />
+                                    value="{{ old('customer.company.addresses.0.street') }}" required />
                                 <input type="hidden" name="customer[company][addresses][0][type]" value="work">
                                 {{-- Added type --}}
                                 <x-input-error for="customer.company.addresses.0.street" />
@@ -426,20 +426,20 @@
                             <x-input-group>
                                 <x-label for="role" value="{{ __('Role') }}" />
                                 <x-input2 id="role" type="text" name="customer[jobInfo][role]"
-                                    value="{{ old('customer.jobInfo.role') }}" />
+                                    value="{{ old('customer.jobInfo.role') }}" required />
                                 <x-input-error for="customer.jobInfo.role" />
                             </x-input-group>
                             <x-input-group>
                                 <x-label for="start_date" value="{{ __('Start Date') }}" />
                                 <x-input2 id="start_date" type="date" name="customer[jobInfo][start_date]"
-                                    value="{{ old('customer.jobInfo.start_date') }}" />
+                                    value="{{ old('customer.jobInfo.start_date') }}" required />
                                 <x-input-error for="customer.jobInfo.start_date" />
                             </x-input-group>
                             <x-input-group>
                                 <x-label for="salary" value="{{ __('Salary') }}" />
                                 <x-input2 id="salary" type="number" step="0.01"
                                     name="customer[jobInfo][salary]"
-                                    value="{{ old('customer.jobInfo.salary') }}" />
+                                    value="{{ old('customer.jobInfo.salary') }}" required />
                                 <x-input-error for="customer.jobInfo.salary" />
                             </x-input-group>
 
@@ -526,7 +526,7 @@
                                 <x-label for="reference_name" value="{{ __('Name') }}" />
                                 <x-input2 id="reference_name" type="text"
                                     name="customer[references][0][name]"
-                                    value="{{ old('customer.references.0.name') }}" />
+                                    value="{{ old('customer.references.0.name') }}" required />
                                 <x-input-error for="customer.references.0.name" />
                             </x-input-group>
 
@@ -542,7 +542,7 @@
                                 <x-label for="reference_relationship" value="{{ __('Relationship') }}" />
                                 <x-input2 id="reference_relationship" type="text"
                                     name="customer[references][0][relationship]"
-                                    value="{{ old('customer.references.0.relationship') }}" />
+                                    value="{{ old('customer.references.0.relationship') }}" required />
                                 <x-input-error for="customer.references.0.relationship" />
                             </x-input-group>
 
@@ -555,6 +555,22 @@
                             </x-input-group>
 
                         </div>
+                    </x-card.content>
+                </x-card>
+
+                {{-- Terms and Conditions --}}
+                 <x-card>
+                    <x-card.content>
+                        <div class="flex items-center">
+                            <x-checkbox id="terms" name="terms" required />
+                            <label for="terms" class="ml-2 block text-sm text-gray-900">
+                                {!! __('I accept the :terms_of_service and :privacy_policy', [
+                                        'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Terms of Service').'</a>',
+                                        'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Privacy Policy').'</a>',
+                                ]) !!}
+                            </label>
+                        </div>
+                         <x-input-error for="terms" />
                     </x-card.content>
                 </x-card>
 

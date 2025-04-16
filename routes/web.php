@@ -9,6 +9,12 @@ use Spatie\Permission\Models\Role;
 Route::get('/', function () {
   return view('welcome');
 });
+Route::get('/terms', function () {
+  return view('terms');
+})->name('terms.show');
+Route::get('/policy', function () {
+  return view('policy');
+})->name('policy.show');
 
 Route::middleware([
   'auth:sanctum',
