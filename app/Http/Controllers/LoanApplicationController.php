@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\LoanApplication;
-use Illuminate\Http\Request;
+use App\Http\Requests\LoanApplicationRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -65,123 +65,12 @@ class LoanApplicationController extends Controller
   /**
    * Store a newly created resource in storage.
    */
-  public function store(Request $request)
+  public function store(LoanApplicationRequest $request)
   {
     Log::info('Loan Application Store Request Received', ['request_data' => $request->all()]);
 
     try {
-      // Validate the incoming request using nested structure
-      $validatedData = $request->validate([
-        // Loan Details (Optional at creation)
-        'details.amount' => 'sometimes|nullable|numeric|min:0',
-        'details.term' => 'sometimes|nullable|integer|min:1',
-        'details.rate' => 'sometimes|nullable|numeric|min:0|max:100',
-        'details.frequency' => 'sometimes|nullable|in:weekly,biweekly,monthly',
-        'details.purpose' => 'sometimes|nullable|string|max:1000',
-
-        // Customer Core Info (Required)
-        'customer.NID' => 'required|string|max:50|unique:customers,NID', // Ensure NID is unique
-        'customer.details.first_name' => 'required|string|max:100',
-        'customer.details.last_name' => 'required|string|max:100',
-        'customer.details.birthday' => 'required|date',
-        'customer.details.email' => 'required|email|max:255|unique:customer_details,email', // Ensure email is unique
-        'customer.details.marital_status' => 'required|in:single,married,divorced,widowed,other',
-        'customer.details.nationality' => 'required|string|max:100',
-        'customer.details.housing_type' => 'required|in:owned,rented,mortgaged,other',
-
-        // Customer Optional Info
-        'customer.details.gender' => 'sometimes|nullable|in:male,female',
-        'customer.details.education_level' => 'sometimes|nullable|in:primary,secondary,high_school,bachelor,postgraduate,master,doctorate,other',
-        'customer.details.move_in_date' => 'sometimes|nullable|date',
-
-        // Customer Phones (Required: at least one mobile)
-        'customer.details.phones' => 'required|array|min:1',
-        'customer.details.phones.*.number' => 'sometimes|nullable|string|max:20',
-        'customer.details.phones.*.type' => 'sometimes|nullable|in:mobile,home',
-        'customer.details.phones' => [ // Custom rule to ensure at least one mobile phone
-          'required',
-          'array',
-          'min:1',
-          function ($attribute, $value, $fail) {
-            $hasMobile = collect($value)->contains(function ($phone) {
-              return isset($phone['type']) && $phone['type'] === 'mobile' && !empty($phone['number']);
-            });
-            if (!$hasMobile) {
-              $fail(__('validation.custom.customer.details.phones.mobile_required'));
-            }
-          },
-        ],
-
-        // Customer Addresses (Required: at least one primary)
-        'customer.details.addresses' => 'required|array|min:1',
-        'customer.details.addresses.*.street' => 'required|string|max:255',
-        'customer.details.addresses.*.street2' => 'sometimes|nullable|string|max:255',
-        'customer.details.addresses.*.city' => 'required|string|max:100',
-        'customer.details.addresses.*.state' => 'required|string|max:100',
-        'customer.details.addresses.*.type' => 'required|in:home,work,billing,shipping', // Use valid ENUM values
-        'customer.details.addresses' => [ // Custom rule to ensure at least one 'home' address (assuming this is primary)
-          'required',
-          'array',
-          'min:1',
-          function ($attribute, $value, $fail) {
-            $hasHome = collect($value)->contains(function ($address) {
-              return isset($address['type']) && $address['type'] === 'home' && !empty($address['street']); // Check for 'home' type
-            });
-            if (!$hasHome) {
-              $fail(__('validation.custom.customer.details.addresses.home_required')); // Adjust message key if needed
-            }
-          },
-        ],
-
-        // Vehicle (Optional)
-        'customer.vehicle.vehicle_type' => 'sometimes|nullable|required_with:customer.vehicle.vehicle_brand|in:owned,rented,financed,shared,leased,borrowed,none,other',
-        'customer.vehicle.vehicle_brand' => 'sometimes|nullable|string|max:100',
-        'customer.vehicle.vehicle_model' => 'sometimes|nullable|string|max:100',
-        'customer.vehicle.vehicle_year' => 'sometimes|nullable|integer|min:1900|max:' . date('Y') + 1, // Max current year + 1
-
-        // Job Information (Required fields if employed, company name required)
-        'customer.jobInfo.is_self_employed' => 'required|boolean',
-        'customer.company.name' => 'required|string|max:255',
-        'customer.company.email' => 'sometimes|nullable|email|max:255|unique:companies,email', // Added company email validation
-        'customer.company.phones.*.number' => 'sometimes|nullable|string|max:20', // Optional company phone
-        'customer.company.addresses' => 'required|array|min:1', // Require at least one company address
-        'customer.company.addresses.*.street' => 'required|string|max:255',
-        'customer.company.addresses.*.street2' => 'sometimes|nullable|string|max:255',
-        'customer.company.addresses.*.city' => 'sometimes|string|max:100',
-        'customer.company.addresses.*.state' => 'sometimes|string|max:100',
-        'customer.company.addresses.*.type' => 'required|in:home,work,billing,shipping', // Use valid ENUM values
-        'customer.jobInfo.role' => 'required|string|max:100',
-        'customer.jobInfo.start_date' => 'required|date',
-        'customer.jobInfo.salary' => 'required|numeric|min:0',
-
-        // Job Information (Optional)
-        'customer.jobInfo.payment_type' => 'sometimes|nullable|in:cash,bank_transfer',
-        'customer.jobInfo.payment_frequency' => 'sometimes|nullable|in:weekly,biweekly,monthly',
-        'customer.jobInfo.payment_bank' => 'sometimes|nullable|string|max:255',
-        'customer.jobInfo.other_incomes' => 'sometimes|nullable|numeric|min:0',
-        'customer.jobInfo.other_incomes_source' => 'sometimes|nullable|required_with:customer.jobInfo.other_incomes|string|max:255',
-        'customer.jobInfo.schedule' => 'sometimes|nullable|string|max:255',
-        'customer.jobInfo.level' => 'sometimes|nullable|string|max:255',
-        'customer.jobInfo.supervisor_name' => 'sometimes|nullable|string|max:255',
-
-        // References (Required: at least one, name and relationship required per reference)
-        // Spouse info should be submitted as a reference with relationship 'spouse' or similar
-        'customer.references' => 'required|array|min:1',
-        'customer.references.*.name' => 'required|string|max:255',
-        'customer.references.*.relationship' => 'required|string|max:255',
-        'customer.references.*.occupation' => 'sometimes|nullable|string|max:255',
-        'customer.references.*.phone_number' => 'sometimes|nullable|string|max:20',
-
-        // Acceptance (Required)
-        'acceptance' => 'accepted'
-      ], [
-        // Custom validation messages (optional, but good practice)
-        'customer.NID.unique' => __('validation.unique', ['attribute' => __('NID')]),
-        'customer.details.email.unique' => __('validation.unique', ['attribute' => __('Email')]),
-        'customer.details.phones.mobile_required' => __('A mobile phone number is required.'),
-        'customer.details.addresses.home_required' => __('A home address is required.'), // Adjusted message key
-        'acceptance.accepted' => __('You must accept the terms and conditions.'),
-      ]);
+      $validatedData = $request->validated();
 
       Log::info('Loan Application Store Validation Passed', ['validated_data' => $validatedData]);
 
@@ -272,6 +161,10 @@ class LoanApplicationController extends Controller
 
         // 12. Create Loan Application Details (Optional)
         if (isset($validatedData['details']) && !empty(array_filter($validatedData['details']))) {
+          // Check if amount is null
+          if (isset($validatedData['details']['amount']) && $validatedData['details']['amount'] === null) {
+            $validatedData['details']['amount'] = 0; // Set a default value like 0
+          }
           $loanApplication->details()->create($validatedData['details']);
           Log::info('Loan Application Details Created');
         }
@@ -392,7 +285,7 @@ class LoanApplicationController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, int $id)
+  public function update(LoanApplicationRequest $request, int $id)
   {
     // Log the entire request data for debugging
     Log::info('Loan Application Update Request', [
@@ -404,72 +297,7 @@ class LoanApplicationController extends Controller
       // Find the loan application with relationships
       $loanApplication = LoanApplication::findOrFail($id);
 
-      // Validate the incoming request - including nested relationships
-      $validatedData = $request->validate([
-        // Loan Details
-        'details.amount' => 'sometimes|numeric|min:0',
-        'details.term' => 'sometimes|integer|min:1',
-        'details.rate' => 'sometimes|numeric|min:0|max:100',
-        'details.frequency' => 'sometimes|in:weekly,biweekly,monthly',
-        'details.purpose' => 'sometimes|string|max:1000',
-        'details.quota' => 'sometimes|numeric|min:0',
-        'details.customer_comment' => 'sometimes|string|max:1000',
-
-        // Customer Details
-        'customer.NID' => 'sometimes|string|max:50',
-        'customer.details.first_name' => 'sometimes|string|max:100',
-        'customer.details.last_name' => 'sometimes|string|max:100',
-        'customer.details.birthday' => 'sometimes|date',
-        'customer.details.email' => 'sometimes|email|max:255',
-        'customer.details.marital_status' => 'sometimes|in:single,married,divorced,widowed,other',
-        'customer.details.nationality' => 'sometimes|string|max:100',
-        'customer.details.gender' => 'sometimes|nullable|in:male,female',
-        'customer.details.education_level' => 'sometimes|in:primary,secondary,high_school,bachelor,postgraduate,master,doctorate,other',
-        'customer.details.housing_type' => 'sometimes|in:owned,rented,mortgaged,other',
-        'customer.details.move_in_date' => 'sometimes|date',
-
-        // Phones
-        'customer.details.phones.*.number' => 'sometimes|string|max:20',
-        'customer.details.phones.*.type' => 'sometimes|in:mobile,home',
-
-        // Addresses
-        'customer.details.addresses.*.street' => 'sometimes|string|max:255',
-        'customer.details.addresses.*.street2' => 'sometimes|string|max:255',
-        'customer.details.addresses.*.city' => 'sometimes|string|max:100',
-        'customer.details.addresses.*.state' => 'sometimes|string|max:100',
-
-        // Vehicle
-        'customer.vehicle.vehicle_type' => 'sometimes|in:owned,rented,financed,shared,leased,borrowed,none,other',
-        'customer.vehicle.vehicle_brand' => 'sometimes|string|max:100',
-        'customer.vehicle.vehicle_model' => 'sometimes|string|max:100',
-        'customer.vehicle.vehicle_year' => 'sometimes|integer|min:1900|max:2100',
-
-        // Job Information
-        'customer.jobInfo.is_self_employed' => 'sometimes|boolean',
-        'customer.company.name' => 'sometimes|string|max:255',
-        'customer.company.phones.*.number' => 'sometimes|string|max:20',
-        'customer.company.addresses.*.street' => 'sometimes|string|max:255',
-        'customer.jobInfo.role' => 'sometimes|string|max:100',
-        'customer.jobInfo.start_date' => 'sometimes|date',
-        'customer.jobInfo.salary' => 'sometimes|numeric|min:0',
-        'customer.jobInfo.payment_type' => 'sometimes|in:cash,bank_transfer',
-        'customer.jobInfo.payment_frequency' => 'sometimes|in:weekly,biweekly,monthly',
-        'customer.jobInfo.payment_bank' => 'sometimes|string|max:255',
-        'customer.jobInfo.other_incomes' => 'sometimes|nullable|numeric|min:0',
-        'customer.jobInfo.other_incomes_source' => 'sometimes|nullable|string|max:255',
-        'customer.jobInfo.schedule' => 'sometimes|nullable|string|max:255',
-        'customer.jobInfo.supervisor_name' => 'sometimes|string|max:255',
-
-
-        // References
-        'customer.references' => 'required|array|min:1', // Changed size:2 to min:1
-        'customer.references.*.id' => 'required|integer|exists:customer_references,id',
-        'customer.references.*.name' => 'required|string|max:255',
-        'customer.references.*.occupation' => 'sometimes|string|max:255',
-        'customer.references.*.relationship' => 'sometimes|string|max:255',
-        'customer.references.*.phone_number' => 'sometimes|nullable|string|max:20', // Added validation for phone number
-
-      ]);
+      $validatedData = $request->validated();
 
       Log::info('Loan Application Update Validation Passed', ['validated_data' => $validatedData]);
 
@@ -477,27 +305,35 @@ class LoanApplicationController extends Controller
       try {
         // Update Loan Application Details
         if (isset($validatedData['details'])) {
+          // Check if amount is null
+          if (isset($validatedData['details']['amount']) && $validatedData['details']['amount'] === null) {
+            $validatedData['details']['amount'] = 0;
+          }
+          if (isset($validatedData['details']['term']) && $validatedData['details']['term'] === null) {
+            $validatedData['details']['term'] = 1; // Set a default value for term
+          }
+          if (isset($validatedData['details']['rate']) && $validatedData['details']['rate'] === null) {
+            $validatedData['details']['rate'] = 0; // Set a default value for rate
+          }
+          if (isset($validatedData['details']['frequency']) && $validatedData['details']['frequency'] === null) {
+            $validatedData['details']['frequency'] = 'monthly'; // Set a default value for frequency
+          }
           // Get the existing details record and update it directly
           $details = $loanApplication->details;
           if ($details) {
             $details->update($validatedData['details']);
             Log::info('Loan Application Details Updated', [
+              'method' => 'update',
               'loan_application_id' => $loanApplication->id,
-              'data' => $validatedData['details'],
-              'amount' => $details->amount,
-              'term' => $details->term,
-              'rate' => $details->rate,
-              'frequency' => $details->frequency,
-              'purpose' => $details->purpose,
-              'quota' => $details->quota,
-              'customer_comment' => $details->customer_comment,
+              'details' => $validatedData['details'],
             ]);
           } else {
             // If no details exist yet, create them
             $loanApplication->details()->create($validatedData['details']);
             Log::info('Loan Application Details Created', [
+              'method' => 'create',
               'loan_application_id' => $loanApplication->id,
-              'data' => $validatedData['details']
+              'details' => $validatedData['details']
             ]);
           }
         }

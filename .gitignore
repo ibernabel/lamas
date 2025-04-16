@@ -110,3 +110,6 @@ Thumbs.db
 *.key
 *.crt
 *.csr
+
+LOAN_APPLICATION_VALIDATION_MIGRATION_PLAN.md
+app/Http/Controllers/LoanApplicationController.old.php
