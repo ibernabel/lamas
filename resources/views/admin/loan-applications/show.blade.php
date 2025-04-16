@@ -151,7 +151,7 @@
             @endif
         </div>
     </div>
-    <div class="flex justify-end space-x-4 my-4">
+    <div class="sticky bottom-0 bg-white border-t border-gray-200 p-4 flex justify-end space-x-4 my-4">
 
         <x-button2 type="button" variant="primary"
             onclick="window.location.href='{{ route('loan-applications.edit', $loanApplication) }}'">
