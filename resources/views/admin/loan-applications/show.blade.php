@@ -157,9 +157,9 @@
             onclick="window.location.href='{{ route('loan-applications.edit', $loanApplication) }}'">
             {{ __('Edit') }}
         </x-button2>
-        {{-- <x-button2 type="button" variant="primary" onclick="window.location.href='{{ route('loan-applications.index') }}'">
-          {{ __('Applications') }}
-      </x-button2> --}}
+        <x-button2 type="button" variant="primary" onclick="window.location.href='{{ route('loan-applications.index') }}'">
+          {{ __('Home') }}
+      </x-button2>
     </div>
     <x-slot name="footer">
         <p>{{ __('Footer') }}</p>

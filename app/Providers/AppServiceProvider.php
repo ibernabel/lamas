@@ -20,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
    */
   public function boot(): void
   {
+      $this->app['view']->addNamespace('adminlte', resource_path('views/partials/navbar'));
       Blade::component('loan-status', \App\View\Components\LoanStatus::class);
   }
 }

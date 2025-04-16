@@ -135,7 +135,7 @@ return [
 
     'usermenu_enabled' => true,
     'usermenu_header' => true,
-    'usermenu_header_class' => 'bg-info',
+    'usermenu_header_class' => 'bg-gray-600',
     'usermenu_image' => true,
     'usermenu_desc' => true,
     'usermenu_profile_url' => true,
@@ -193,13 +193,13 @@ return [
     'classes_body' => '',
     'classes_brand' => '',
     'classes_brand_text' => '',
-    'classes_content_wrapper' => 'dark:bg-gray-800 bg-white ',
+    'classes_content_wrapper' => 'bg-white ',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+    'classes_sidebar' => 'sidebar-light-primary elevation-4',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
-    'classes_topnav_nav' => 'navbar-expand',
+    'classes_topnav_nav' => 'navbar-expand ',
     'classes_topnav_container' => 'container',
 
     /*
@@ -214,7 +214,7 @@ return [
     |
     */
 
-    'sidebar_mini' => 'lg',
+    'sidebar_mini' => 'md',
     'sidebar_collapse' => true,
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
@@ -316,20 +316,34 @@ return [
             'text' => 'search',
         ],
         [
-            'text' => 'blog',
-            'url' => 'admin/blog',
+            //'text' => 'blog',
+            //'url' => 'admin/blog',
             //'can' => 'manage-blog',
         ],
         [
-            'text' => 'pages',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
+            //'text' => 'pages',
+            //'url' => 'admin/pages',
+            //'icon' => 'far fa-fw fa-file',
+            //'label' => 4,
+            //'label_color' => 'success',
         ],
         [
-            'text' => 'Solicitudes',
+            'text' => 'Dashboard',
+            'url' => 'admin',
+            'icon' => 'fas fa-fw fa-home',
+ 
+        ],
+        ['header' => 'APPLICATIONS'],
+        [
+            'text' => 'Applications Listing',
             'route' => 'loan-applications.index',
+            'icon' => 'far fa-fw fa-file',
+            //'label' => 4,
+            //'label_color' => 'success',
+        ],
+        [
+            'text' => 'Create Application',
+            'route' => 'loan-applications.create',
             'icon' => 'far fa-fw fa-file',
             //'label' => 4,
             //'label_color' => 'success',
@@ -482,7 +496,7 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',

@@ -20,7 +20,7 @@
 @stop
 
 @section('content_header')
-    {{ $content_header ?? '' }}
+    {{ $content_header ?? 'Default Header' }}
 @stop
 
 @section('content')
