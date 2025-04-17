@@ -192,6 +192,8 @@ class LoanApplicationController extends Controller
         try {
             $loanApplication->load([
                 'details',
+                'customer',
+                'customer.details',
                 'customer.details.phones',
                 'customer.details.addresses',
                 'customer.vehicle',

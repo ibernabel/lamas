@@ -33,7 +33,7 @@ return [
     |
     */
 
-    'guard' => ['web'],
+    'guard' => [], // Removed 'web' to prevent checking session guard before token for API requests
 
     /*
     |--------------------------------------------------------------------------

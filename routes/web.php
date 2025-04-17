@@ -14,7 +14,7 @@ Route::get('/terms', function () {
 })->name('terms.show');
 Route::get('/policy', function () {
   return view('policy');
-})->name('policy.show');
+  })->name('policy.show');
 
 Route::middleware([
   'auth:sanctum',
