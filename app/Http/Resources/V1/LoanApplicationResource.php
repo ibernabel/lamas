@@ -24,8 +24,8 @@ class LoanApplicationResource extends JsonResource
       'id' => $this->id,
       'status' => $this->status,
       'status_display' => __($this->status), // Include translated status
-      'created_at' => $this->created_at->toISOString(), // Format date as ISO 8601
-      'updated_at' => $this->updated_at->toISOString(),
+      'created_at' => $this->created_at ? $this->created_at->toISOString() : null, // Format date as ISO 8601 or null
+      'updated_at' => $this->updated_at ? $this->updated_at->toISOString() : null,
 
       // Conditionally load relationships if they are present on the model instance
       'details' => $this->whenLoaded('details', function () {
@@ -41,10 +41,11 @@ class LoanApplicationResource extends JsonResource
           'purpose' => $this->details->purpose,
           'customer_comment' => $this->details->customer_comment,
           'loan_application_id' => $this->details->loan_application_id,
-          'created_at' => $this->details->created_at->toISOString(),
-          'updated_at' => $this->details->updated_at->toISOString(),
+          'created_at' => $this->details->created_at ? $this->details->created_at->toISOString() : null,
+          'updated_at' => $this->details->updated_at ? $this->details->updated_at->toISOString() : null,
           // Include any other fields from the details relationship as needed
           // Add other detail fields as necessary
+
         ];
       }),
 
@@ -63,8 +64,8 @@ class LoanApplicationResource extends JsonResource
           'promoter_id' => $this->customer->promoter_id,
           'is_assigned' => $this->customer->is_assigned,
           'assigned_at' => $this->customer->assigned_at,
-          'created_at' => $this->customer->created_at->toISOString(),
-          'updated_at' => $this->customer->updated_at->toISOString(),
+          'created_at' => $this->customer->created_at ? $this->customer->created_at->toISOString() : null,
+          'updated_at' => $this->customer->updated_at ? $this->customer->updated_at->toISOString() : null,
           // Include other customer fields as needed
           // The controller already eager-loads 'customer.details',
           // so we just need to check if it's not null before accessing properties.
@@ -186,8 +187,8 @@ class LoanApplicationResource extends JsonResource
           'content' => $note->note,
           'user_id' => $note->user_id, // Consider adding user name if needed
           'loan_application_id' => $note->loan_application_id,
-          'created_at' => $note->created_at->toISOString(),
-          'updated_at' => $note->updated_at->toISOString(),
+          'created_at' => $note->created_at ? $note->created_at->toISOString() : null,
+          'updated_at' => $note->updated_at ? $note->updated_at->toISOString() : null,
         ]);
       }),
 
@@ -206,7 +207,7 @@ class LoanApplicationResource extends JsonResource
         'id' => $this->id,
         'status' => $this->status,
         'status_display' => __($this->status),
-        'created_at' => $this->created_at->toISOString(),
+        'created_at' => $this->created_at ? $this->created_at->toISOString() : null,
         'customer_name' => $this->whenLoaded('customer.details', fn() => $this->customer->details->first_name . ' ' . $this->customer->details->last_name),
         'amount' => $this->whenLoaded('details', fn() => (float) $this->details?->amount), // Use optional chaining
       ];
