@@ -23,7 +23,8 @@ Route::middleware([
 ])->group(function () {
 
   Route::get('/dashboard', function () {
-    return view('admin.admin');
+    //return view('admin.admin');
+    return view('admin.loan-applications.index');
   })->name('dashboard');
 
 

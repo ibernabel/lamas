@@ -16,4 +16,6 @@ return [
     'important' => 'Importante',
     'warning' => 'Advertencia',
     'information' => 'Información',
+    'applications' => 'SOLICITUDES DE PRÉSTAMO',
+    'create_application' => 'Crear Solicitud',
 ];
