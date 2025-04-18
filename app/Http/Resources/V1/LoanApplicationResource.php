@@ -207,9 +207,10 @@ class LoanApplicationResource extends JsonResource
         'id' => $this->id,
         'status' => $this->status,
         'status_display' => __($this->status),
-        'created_at' => $this->created_at ? $this->created_at->toISOString() : null,
-        'customer_name' => $this->whenLoaded('customer.details', fn() => $this->customer->details->first_name . ' ' . $this->customer->details->last_name),
         'amount' => $this->whenLoaded('details', fn() => (float) $this->details?->amount), // Use optional chaining
+        'customer_name' => ($this->customer && $this->customer->details) ? $this->customer->details->first_name . ' ' . $this->customer->details->last_name : null,
+        'customer_NID' => ($this->customer) ? $this->customer->NID : null,
+        'created_at' => $this->created_at ? $this->created_at->toISOString() : null,
       ];
     }
 

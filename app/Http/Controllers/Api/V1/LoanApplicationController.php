@@ -170,7 +170,6 @@ class LoanApplicationController extends Controller
             return (new LoanApplicationResource($loanApplication))
                 ->response()
                 ->setStatusCode(Response::HTTP_CREATED);
-
         } catch (ValidationException $e) {
             Log::warning('API Loan Application Store Validation Failed', ['errors' => $e->errors()]);
             return response()->json(['message' => 'Validation Failed', 'errors' => $e->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -264,9 +263,9 @@ class LoanApplicationController extends Controller
                             if (isset($validatedData['customer']['details']['phones'])) {
                                 $customerDetails->phones()->delete();
                                 foreach ($validatedData['customer']['details']['phones'] as $phoneData) {
-                                     if (!empty($phoneData['number'])) {
+                                    if (!empty($phoneData['number'])) {
                                         $customerDetails->phones()->create($phoneData);
-                                     }
+                                    }
                                 }
                                 Log::info('API Customer Phones Updated');
                             }
@@ -280,10 +279,10 @@ class LoanApplicationController extends Controller
                                 Log::info('API Customer Addresses Updated');
                             }
                         } else {
-                             // Create if not exists
-                             $customerDetails = $customer->details()->create($validatedData['customer']['details']);
-                             Log::info('API Customer Details Created', ['customer_detail_id' => $customerDetails->id]);
-                             // Handle phones/addresses creation similar to above if needed
+                            // Create if not exists
+                            $customerDetails = $customer->details()->create($validatedData['customer']['details']);
+                            Log::info('API Customer Details Created', ['customer_detail_id' => $customerDetails->id]);
+                            // Handle phones/addresses creation similar to above if needed
                         }
                     }
 
@@ -298,9 +297,9 @@ class LoanApplicationController extends Controller
                             if (isset($validatedData['customer']['company']['phones'])) {
                                 $company->phones()->delete();
                                 foreach ($validatedData['customer']['company']['phones'] as $phoneData) {
-                                     if (!empty($phoneData['number'])) {
+                                    if (!empty($phoneData['number'])) {
                                         $company->phones()->create($phoneData);
-                                     }
+                                    }
                                 }
                                 Log::info('API Company Phones Updated');
                             }
@@ -333,17 +332,17 @@ class LoanApplicationController extends Controller
 
                     // Update Vehicle Info
                     if (isset($validatedData['customer']['vehicle'])) {
-                         if (!empty($validatedData['customer']['vehicle']['vehicle_brand'])) {
+                        if (!empty($validatedData['customer']['vehicle']['vehicle_brand'])) {
                             $customer->vehicle()->updateOrCreate(
                                 ['customer_id' => $customer->id],
                                 $validatedData['customer']['vehicle']
                             );
                             Log::info('API Customer Vehicle Updated/Created');
-                         } else {
-                             // If brand is empty, potentially delete existing vehicle info
-                             $customer->vehicle()->delete();
-                             Log::info('API Customer Vehicle Deleted due to empty data');
-                         }
+                        } else {
+                            // If brand is empty, potentially delete existing vehicle info
+                            $customer->vehicle()->delete();
+                            Log::info('API Customer Vehicle Deleted due to empty data');
+                        }
                     }
 
                     // Update References Info (Replace existing based on ID or create new)
@@ -371,7 +370,7 @@ class LoanApplicationController extends Controller
                                 ]
                             );
                         }
-                         Log::info('API Customer References Updated/Created');
+                        Log::info('API Customer References Updated/Created');
                     } else {
                         // If no references array is sent, maybe delete all existing? Or do nothing?
                         // Current: Do nothing if 'references' key is missing. Uncomment to delete all.
@@ -400,15 +399,14 @@ class LoanApplicationController extends Controller
             ]);
 
             return new LoanApplicationResource($updatedLoanApplication);
-
         } catch (ValidationException $e) {
             Log::warning('API Loan Application Update Validation Failed', ['errors' => $e->errors()]);
             return response()->json(['message' => 'Validation Failed', 'errors' => $e->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
         } catch (\Exception $e) {
             DB::rollBack(); // Ensure rollback
             Log::error('API Loan Application update failed: ' . $e->getMessage(), [
-                 'exception' => $e,
-                 'trace' => $e->getTraceAsString()
+                'exception' => $e,
+                'trace' => $e->getTraceAsString()
             ]);
             return response()->json(['message' => 'Failed to update loan application.'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -425,7 +423,7 @@ class LoanApplicationController extends Controller
 
             // Check if the loan application can be deleted (e.g., only 'received' status)
             if ($loanApplication->status !== 'received') {
-                 Log::warning('API Loan Application Deletion Denied - Incorrect Status', ['id' => $loanApplication->id, 'status' => $loanApplication->status]);
+                Log::warning('API Loan Application Deletion Denied - Incorrect Status', ['id' => $loanApplication->id, 'status' => $loanApplication->status]);
                 return response()->json([
                     'message' => 'Only loan applications with "received" status can be deleted.'
                 ], Response::HTTP_FORBIDDEN); // 403 Forbidden is appropriate
