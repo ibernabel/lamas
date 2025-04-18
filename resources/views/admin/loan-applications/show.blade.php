@@ -9,11 +9,12 @@
 </x-slot> --}}
     <div class="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8">
         {{-- Header Section --}}
-        <div class="grid grid-cols-2 gap-x-2 mb-6 items-center">
+        <div class="grid grid-cols-2 gap-x-2 grid-rows-2 mb-6 items-center">
             <h3 class="text-lg font-semibold text-gray-400">
                 {{ __('Loan Application') }} #{{ $loanApplication->id }}
             </h3>
             <x-loan-status :status="$loanApplication->status" />
+            <small class="text-secondary">{{ __('Date created')  }}: {{ $loanApplication->created_at->format('d/m/Y') }}</small>
         </div>
 
         <div class="space-y-6">
@@ -47,10 +48,11 @@
 
                     <x-card.detail-item label="Tipo de vivienda" :value="$loanApplication->customer->details->housing_type" />
                     <x-card.detail-item label="Reside desde" :value="$loanApplication->customer->details->move_in_date" />
-                    <x-card.detail-item label="Género" :value="$loanApplication->customer->details->gender" />
+                    <x-card.detail-item label="Género" :value="__($loanApplication->customer->details->gender)" />
                     <x-card.detail-item label="Educación" :value="$loanApplication->customer->details->education_level" />
                     <x-card.detail-item label="Vehículo" :value="$loanApplication->customer->vehicle->vehicle_type ?? ''" />
                     <x-card.detail-item label="Marca" :value="$loanApplication->customer->vehicle->vehicle_brand ?? ''" />
+                    <x-card.detail-item label="Modelo" :value="$loanApplication->customer->vehicle->vehicle_model ?? ''" />
                     <x-card.detail-item label="Año" :value="$loanApplication->customer->vehicle->vehicle_year ?? ''" />
                 </x-card.content>
             </x-card>

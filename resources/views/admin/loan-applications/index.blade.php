@@ -87,8 +87,9 @@
 
                     "columns": [{
                             data: "created_at",
-                            render: function(data) {
+                            "render": function(data) {
                                 return timeAgo(data);
+                                //return data; // Return the raw data
                             }
                         },
                         {
@@ -118,7 +119,7 @@
                         {
                             data: "status",
                             "render": function(data) {
-                                if (!data) return data; // Check for empty string  
+                                if (!data) return data; // Check for empty string
                                 return data.charAt(0).toUpperCase() + data.slice(1).toLowerCase();
                             }
                         },
