@@ -2,11 +2,11 @@
     <x-slot name="title">
         {{ __('Loan Application') }}
     </x-slot>
-    {{--<x-slot name="content_header">
+    {{-- <x-slot name="content_header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Loan Application') }}
         </h2>
-    </x-slot>--}}
+    </x-slot> --}}
     <div class="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8">
         {{-- Header Section --}}
         <div class="grid grid-cols-2 gap-x-2 grid-rows-2 mb-6 items-center">
@@ -142,14 +142,11 @@
                                     <div class="flex justify-end col-span-1 flex-shrink-0">
                                         <x-card.avatar :user="$note?->user" class="h-10 w-10" />
                                     </div>
-                                    <div class="flex justify-start col-span-3">
-                                        <x-card.detail-item label="{{ $note?->user?->name }}: " :value="$note?->note" />
-                                        <span>
-                                            <small class="text-gray-500">
-                                                {{ $note?->created_at?->diffForHumans() }}
-                                            </small>
-                                        </span>
-
+                                    <div class="col-span-3">
+                                        <x-card.detail-item2 label="{{ $note?->user?->name }}: " :value="$note?->note" />
+                                        <small class="text-gray-500">
+                                            {{ $note?->created_at?->diffForHumans() }}
+                                        </small>
                                     </div>
                                 </div>
                             @endforeach
@@ -161,8 +158,7 @@
     </div>
     <div class="sticky bottom-0 bg-white border-t border-gray-200 p-2 flex justify-end space-x-4 my-2">
 
-        <x-button2 type="button" variant="light"
-            onclick="window.print()">
+        <x-button2 type="button" variant="light" onclick="window.print()">
             {{ __('Print') }}
         </x-button2>
         <x-button2 type="button" variant="warning"
