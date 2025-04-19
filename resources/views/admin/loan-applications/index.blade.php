@@ -12,7 +12,7 @@
 
 
     <x-slot name="content_header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Loan Applications') }}
         </h2>
     </x-slot>
@@ -85,25 +85,34 @@
                         }
                     },
 
-                    "columns": [{
-                            data: "created_at",
-                            "render": function(data) {
-                                return timeAgo(data);
-                                //return data; // Return the raw data
+                    "columns": [
+                        {
+                            data: "created_at_formated",
+                            name: "created_at_formated", // Add name for server-side sorting/filtering if needed
+                            render: function(data) {
+                                return data.split(' ')[0] + "<br>" + data.split(' ')[1] + " " + data.split(' ')[2]; // Return the raw date for server-side processing
+                                //return timeAgo(data); // Use the timeAgo function
                             }
                         },
                         {
-                            data: null,
-                            "render": function(data) {
-                                return `${data.customer.details.first_name} ${data.customer.details.last_name}`;
-                            }
+                            data: "name", // Use the 'name' key returned by the server
+                            name: "name",   // Name for server-side filtering
+                            searchable: true,
+                            orderable: true,
                         },
                         {
-                            data: "customer.company.name"
+                            data: "company", // Use the 'company' key
+                            name: "customer.company.name", // Specify related column for potential server-side sorting/filtering
+                            searchable: true,
+                            orderable: true,
                         },
                         {
-                            data: "details.amount",
-                            "render": function(data) {
+                            data: "amount", // Use the 'amount' key
+                            name: "details.amount", // Specify related column
+                            searchable: true,
+                            orderable: true,
+                            render: function(data) {
+                                // Client-side formatting for currency
                                 return new Intl.NumberFormat('en-US', {
                                     style: 'currency',
                                     currency: 'USD',
@@ -112,43 +121,55 @@
                                 }).format(data);
                             }
                         },
-
                         {
-                            data: "customer.portfolio.broker.user.name"
+                            data: "broker", // Use the 'broker' key
+                            name: "customer.portfolio.broker.user.name", // Specify related column
+                            searchable: true,
+                            orderable: true,
                         },
                         {
                             data: "status",
-                            "render": function(data) {
-                                if (!data) return data; // Check for empty string
+                            name: "status",
+                            searchable: true,
+                            orderable: true,
+                            render: function(data) {
+                                if (!data) return data;
                                 return data.charAt(0).toUpperCase() + data.slice(1).toLowerCase();
                             }
                         },
                         {
-                            data: "id",
-                            render: function(data) {
-                                const baseUrl = '{{ route('loan-applications.show', ':id') }}'.replace(
-                                    ':id', data);
-                                return `<a class="btn btn-info" href="${baseUrl}">{{ __('View') }}</a>`;
-                            }
+                            data: "actions", // Use the 'actions' key returned by the server
+                            name: "actions",
+                            orderable: false, // Actions column usually isn't orderable
+                            searchable: false // Actions column usually isn't searchable
+                        },
+                        {
+                            data: "created_at", // Use the raw created_at key for potential server-side filtering
+                            name: "created_at", // Name for server-side filtering (use actual DB column)
+                            visible: false // Hide the created_at_raw column if not needed in the UI
+
                         }
                     ],
+                    "order": [
+                        [7, "asc"] // Default order by created_at in ascending order
+                    ],
+                    "lengthMenu": [
+                        [10, 25, 50, 100, -1],
+                        [10, 25, 50, 100, "Todos"]
+                    ],
+                    //"iDisplayLength": 10,
+                    "pageLength": 10,
                     "responsive": true,
                     "processing": true,
                     "serverSide": true,
-                    "pageLength": 10,
                     "language": {
-                        "lengthMenu": "Mostrar " +
-                            `<select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                    <option value="-1">Todos</option>
-                </select>` + " registros por página",
+                        "lengthMenu": "Mostrar _MENU_ registros por página",
                         "info": 'Mostrando la página _PAGE_ de _PAGES_',
                         "infoEmpty": 'No hay registros disponibles',
                         "infoFiltered": '(filtrado de _MAX_ registros totales)',
-                        "zeroRecords": 'No se ha encontrado nada - lo siento',
+                        "loadingRecords": "Cargando...",
+                        "processing": "Procesando...",
+                        "zeroRecords": 'No se han encontrado registros',
                         "search": 'Buscar:',
                         "paginate": {
                             "next": 'Siguiente',
