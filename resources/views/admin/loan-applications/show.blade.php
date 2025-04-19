@@ -2,11 +2,11 @@
     <x-slot name="title">
         {{ __('Loan Application') }}
     </x-slot>
-    {{-- <x-slot name="content_header">
-    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-        {{ __('Loan Application') }}
-    </h2>
-</x-slot> --}}
+    {{--<x-slot name="content_header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Loan Application') }}
+        </h2>
+    </x-slot>--}}
     <div class="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8">
         {{-- Header Section --}}
         <div class="grid grid-cols-2 gap-x-2 grid-rows-2 mb-6 items-center">
@@ -14,7 +14,8 @@
                 {{ __('Loan Application') }} #{{ $loanApplication->id }}
             </h3>
             <x-loan-status :status="$loanApplication->status" />
-            <small class="text-secondary">{{ __('Date created')  }}: {{ $loanApplication->created_at->format('d/m/Y') }}</small>
+            <small class="text-secondary">{{ __('Date created') }}:
+                {{ $loanApplication->created_at->format('d/m/Y') }}</small>
         </div>
 
         <div class="space-y-6">
@@ -25,7 +26,9 @@
             <x-card>
 
                 <x-card.content>
-                    <x-card.detail-item label="Nombre" :value="$loanApplication?->customer?->details?->first_name . ' ' . $loanApplication?->customer?->details?->last_name" />
+                    <x-card.detail-item label="Nombre" :value="$loanApplication?->customer?->details?->first_name .
+                        ' ' .
+                        $loanApplication?->customer?->details?->last_name" />
                     <x-card.detail-item label="Cédula" :value="$loanApplication?->customer?->NID" />
                     <x-card.detail-item label="Fecha de Nacimiento" :value="$loanApplication?->customer?->details?->birthday" />
                     <x-card.detail-item label="Celular" :value="$loanApplication?->customer?->details?->phones[0]?->number" />
@@ -141,6 +144,11 @@
                                     </div>
                                     <div class="flex justify-start col-span-3">
                                         <x-card.detail-item label="{{ $note?->user?->name }}: " :value="$note?->note" />
+                                        <span>
+                                            <small class="text-gray-500">
+                                                {{ $note?->created_at?->diffForHumans() }}
+                                            </small>
+                                        </span>
 
                                     </div>
                                 </div>
@@ -151,15 +159,20 @@
             @endif
         </div>
     </div>
-    <div class="sticky bottom-0 bg-white border-t border-gray-200 p-4 flex justify-end space-x-4 my-4">
+    <div class="sticky bottom-0 bg-white border-t border-gray-200 p-2 flex justify-end space-x-4 my-2">
 
-        <x-button2 type="button" variant="primary"
+        <x-button2 type="button" variant="light"
+            onclick="window.print()">
+            {{ __('Print') }}
+        </x-button2>
+        <x-button2 type="button" variant="warning"
             onclick="window.location.href='{{ route('loan-applications.edit', $loanApplication) }}'">
             {{ __('Edit') }}
         </x-button2>
-        <x-button2 type="button" variant="primary" onclick="window.location.href='{{ route('loan-applications.index') }}'">
-          {{ __('Home') }}
-      </x-button2>
+        <x-button2 type="button" variant="info"
+            onclick="window.location.href='{{ route('loan-applications.index') }}'">
+            {{ __('Home') }}
+        </x-button2>
     </div>
     <x-slot name="footer">
         <p>{{ __('Footer') }}</p>

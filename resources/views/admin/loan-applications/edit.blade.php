@@ -554,16 +554,19 @@
                     @endforeach
                 </x-card>
 
-
-                <div class="sticky bottom-0 bg-white border-t border-gray-200 p-4 flex justify-end space-x-4 my-4">
-                  <x-button2 type="button" variant="secondary" onclick="window.history.back()">
-                    {{ __('Cancel') }}
-                  </x-button2>
-                  <x-button2 type="submit" variant="submit">
-                    {{ __('Update') }}
-                  </x-button2>
-                </div>
             </div>
-        </form>
     </div>
+
+    <div class="sticky bottom-0 bg-white border-t border-gray-200 p-2 flex justify-end space-x-4 my-2">
+        <x-button2 type="button" variant="secondary" onclick="window.history.back()">
+            {{ __('Cancel') }}
+        </x-button2>
+        <x-button2 type="submit" variant="success">
+            {{ __('Update') }}
+        </x-button2>
+    </div>
+    </form>
+    <x-slot name="footer">
+        <p>{{ __('Footer') }}</p>
+    </x-slot>
 </x-admin.app-layout>
