@@ -15,6 +15,11 @@ Route::prefix('v1')->middleware([
   Route::apiResource('loan-applications', ApiLoanApplicationController::class);
 });
 
+// Authentication routes
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
 
+// Routes requiring authentication
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/tokenStatus', [AuthController::class, 'tokenStatus']); // Updated to use tokenStatus method
+});
