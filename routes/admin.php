@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoanApplicationController;
+use App\Http\Controllers\CostumerController; // Add this line
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 
@@ -29,4 +30,14 @@ Route::middleware([
   Route::get('/loan-applications/{id}/edit', [LoanApplicationController::class, 'edit'])->name('loan-applications.edit');
   Route::put('/loan-applications/{id}', [LoanApplicationController::class, 'update'])->name('loan-applications.update');
   Route::delete('/loan-applications/{id}', [LoanApplicationController::class, 'destroy'])->name('loan-applications.destroy');
+
+  // Customer Routes (Using 'customers' as the resource name based on controller comments)
+  Route::get('/customers', [CostumerController::class, 'index'])->name('customers.index');
+  Route::get('/customers/datatable', [CostumerController::class, 'datatable'])->name('customers.datatable');
+  Route::get('/customers/create', [CostumerController::class, 'create'])->name('customers.create');
+  Route::post('/customers', [CostumerController::class, 'store'])->name('customers.store');
+  Route::get('/customers/{id}', [CostumerController::class, 'show'])->name('customers.show');
+  Route::get('/customers/{id}/edit', [CostumerController::class, 'edit'])->name('customers.edit');
+  Route::put('/customers/{id}', [CostumerController::class, 'update'])->name('customers.update');
+  Route::delete('/customers/{id}', [CostumerController::class, 'destroy'])->name('customers.destroy');
 });

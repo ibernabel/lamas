@@ -18,4 +18,7 @@ return [
     'information' => 'Información',
     'applications' => 'SOLICITUDES DE PRÉSTAMO',
     'create_application' => 'Crear Solicitud',
+    'customers' => 'CLIENTES',
+    'customer_list' => 'Lista de Clientes',
+    'create_customer' => 'Crear Cliente',
 ];

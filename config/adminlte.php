@@ -336,6 +336,22 @@ return [
             //'label' => 4,
             //'label_color' => 'success',
         ],
+        ['header' => 'customers'],
+        [
+            'text' => 'customer_list',
+            'route' => 'customers.index',
+            'icon' => 'far fa-fw fa-file',
+            //'label' => 4,
+            //'label_color' => 'success',
+        ],
+        [
+            'text' => 'create_customer',
+            'route' => 'customers.create',
+            'icon' => 'far fa-fw fa-file',
+            //'label' => 4,
+            //'label_color' => 'success',
+        ],
+
         //['header' => 'account_settings'],
         //[
         //    'text' => 'profile',

@@ -555,7 +555,13 @@
     "master": "maestría",
     "doctorate": "doctorado",
     "Print": "Imprimir",
+    "Customer": "Cliente",
+    "Customers": "Clientes",
+    "Create Customer": "Crear Cliente",
+    "References": "Referencias",
+    "Relationship": "Relación",
 
-
+    "Loading": "Cargando",
+    "Loading...": "Cargando...",
     "Whatever you want": "Lo que quieras"
 }
