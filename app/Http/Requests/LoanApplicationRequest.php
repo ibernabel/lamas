@@ -126,8 +126,8 @@ class LoanApplicationRequest extends FormRequest
       ],
       'customer.details.addresses.*.street' => 'required|string|max:255',
       'customer.details.addresses.*.street2' => 'sometimes|nullable|string|max:255',
-      'customer.details.addresses.*.city' => 'sometimes|string|min:0|max:100',
-      'customer.details.addresses.*.state' => 'sometimes|string|min:0|max:100',
+      'customer.details.addresses.*.city' => 'sometimes|nullable|string|max:100',
+      'customer.details.addresses.*.state' => 'sometimes|nullable|string|max:100',
       'customer.details.addresses.*.type' => 'sometimes|in:home,work,billing,shipping',
 
       // Vehicle (Optional)

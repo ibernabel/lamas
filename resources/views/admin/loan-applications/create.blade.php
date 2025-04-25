@@ -562,13 +562,14 @@
                  <x-card>
                     <x-card.content>
                         <div class="flex items-center">
-                            <x-checkbox id="terms" name="terms" required />
+                            {{--<x-checkbox id="terms" name="terms" required />
                             <label for="terms" class="ml-2 block text-sm text-gray-900">
                                 {!! __('I accept the :terms_of_service and :privacy_policy', [
                                         'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Terms of Service').'</a>',
                                         'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Privacy Policy').'</a>',
                                 ]) !!}
-                            </label>
+                            </label>--}}
+                            <input type="hidden" name="terms" value="accepted">
                         </div>
                          <x-input-error for="terms" />
                     </x-card.content>
