@@ -20,6 +20,8 @@ Route::prefix('v1')->middleware([
 
     // Route to check if customer NID exists (keep this custom route)
     Route::post('/customers/nid/exists', [CustomerController::class, 'checkNidExists'])->name('api.v1.customers.nid.exists');
+    // Route to create a customer with minimal data
+    Route::post('/customers/simple', [CustomerController::class, 'simpleStore'])->name('api.v1.customers.simple.store');
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/tokenStatus', [AuthController::class, 'tokenStatus']); // Updated to use tokenStatus method
 });
