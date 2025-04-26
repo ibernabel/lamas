@@ -169,34 +169,43 @@ class CustomerController extends Controller
     {
         Log::info('API Customer Simple Store Request Received', ['request_data' => $request->all()]);
 
+        Log::info('API Customer Simple Store Request Received', ['request_data' => $request->all()]);
+
         try {
             // 1. Validate incoming data
             $validator = Validator::make($request->all(), [
-                'NID' => ['required', 'string', 'regex:/^[0-9]{11}$/', 'unique:customers,NID'],
-                'first_name' => ['required', 'string', 'max:255'],
-                'last_name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:customer_details,email'],
-                'phone' => ['required', 'string', 'max:20'], // Assuming phone number format
+                'customer.NID' => ['required', 'string', 'regex:/^[0-9]{11}$/', 'unique:customers,NID'],
+                'customer.details.first_name' => ['required', 'string', 'max:255'],
+                'customer.details.last_name' => ['required', 'string', 'max:255'],
+                'customer.details.email' => ['required', 'string', 'email', 'max:255', 'unique:customer_details,email'],
+                'customer.details.phones' => ['required', 'array', 'min:1'], // Ensure phones is an array with at least one item
+                'customer.details.phones.*.number' => ['required', 'string', 'max:20'], // Validate each phone number
+                'customer.details.phones.*.type' => ['nullable', 'string', 'max:20'], // Validate each phone type (optional)
             ],
             [
-                'NID.required' => 'El NID es requerido.',
-                'NID.string' => 'El NID debe ser una cadena de texto.',
-                'NID.regex' => 'El NID debe contener exactamente 11 dígitos numéricos.',
-                'NID.unique' => 'El NID ya existe.',
-                'first_name.required' => 'El nombre es requerido.',
-                'first_name.string' => 'El nombre debe ser una cadena de texto.',
-                'first_name.max' => 'El nombre no debe exceder los :max caracteres.',
-                'last_name.required' => 'El apellido es requerido.',
-                'last_name.string' => 'El apellido debe ser una cadena de texto.',
-                'last_name.max' => 'El apellido no debe exceder los :max caracteres.',
-                'email.required' => 'El correo electrónico es requerido.',
-                'email.string' => 'El correo electrónico debe ser una cadena de texto.',
-                'email.email' => 'El correo electrónico debe ser una dirección de correo válida.',
-                'email.max' => 'El correo electrónico no debe exceder los :max caracteres.',
-                'email.unique' => 'El correo electrónico ya existe.',
-                'phone.required' => 'El número de teléfono es requerido.',
-                'phone.string' => 'El número de teléfono debe ser una cadena de texto.',
-                'phone.max' => 'El número de teléfono no debe exceder los :max caracteres.',
+                'customer.NID.required' => 'El NID es requerido.',
+                'customer.NID.string' => 'El NID debe ser una cadena de texto.',
+                'customer.NID.regex' => 'El NID debe contener exactamente 11 dígitos numéricos.',
+                'customer.NID.unique' => 'El NID ya existe.',
+                'customer.details.first_name.required' => 'El nombre es requerido.',
+                'customer.details.first_name.string' => 'El nombre debe ser una cadena de texto.',
+                'customer.details.first_name.max' => 'El nombre no debe exceder los :max caracteres.',
+                'customer.details.last_name.required' => 'El apellido es requerido.',
+                'customer.details.last_name.string' => 'El apellido debe ser una cadena de texto.',
+                'customer.details.last_name.max' => 'El apellido no debe exceder los :max caracteres.',
+                'customer.details.email.required' => 'El correo electrónico es requerido.',
+                'customer.details.email.string' => 'El correo electrónico debe ser una cadena de texto.',
+                'customer.details.email.email' => 'El correo electrónico debe ser una dirección de correo válida.',
+                'customer.details.email.max' => 'El correo electrónico no debe exceder los :max caracteres.',
+                'customer.details.email.unique' => 'El correo electrónico ya existe.',
+                'customer.details.phones.required' => 'Se requiere al menos un número de teléfono.',
+                'customer.details.phones.array' => 'Los teléfonos deben ser proporcionados como una lista.',
+                'customer.details.phones.min' => 'Se requiere al menos un número de teléfono.',
+                'customer.details.phones.*.number.required' => 'El número de teléfono es requerido.',
+                'customer.details.phones.*.number.string' => 'El número de teléfono debe ser una cadena de texto.',
+                'customer.details.phones.*.number.max' => 'El número de teléfono no debe exceder los :max caracteres.',
+                'customer.details.phones.*.type.string' => 'El tipo de teléfono debe ser una cadena de texto.',
+                'customer.details.phones.*.type.max' => 'El tipo de teléfono no debe exceder los :max caracteres.',
             ]);
 
             if ($validator->fails()) {
@@ -206,32 +215,35 @@ class CustomerController extends Controller
 
             $validatedData = $validator->validated();
 
+            // Extract nested data
+            $customerData = $validatedData['customer'];
+            $detailsData = $customerData['details'];
+            $phonesData = $detailsData['phones'] ?? []; // Use ?? [] for safety
+
             // 2. Create Customer and related data in a transaction
-            $customer = DB::transaction(function () use ($validatedData) {
+            $customer = DB::transaction(function () use ($customerData, $detailsData, $phonesData) {
                 // Create Customer
                 $customer = Customer::create([
-                    'NID' => $validatedData['NID'],
+                    'NID' => $customerData['NID'],
                     'lead_channel' => 'api', // User requested 'api'
                 ]);
                 Log::info('API Simple Customer Created', ['customer_id' => $customer->id]);
 
-                // Create Customer Details
-                $customerDetail = $customer->details()->create([
-                    'first_name' => $validatedData['first_name'],
-                    'last_name' => $validatedData['last_name'],
-                    'email' => $validatedData['email'],
-                    // Add other minimal details if necessary, based on schema
-                ]);
+                // Create Customer Details (remove phones before creating details)
+                unset($detailsData['phones']);
+                $customerDetail = $customer->details()->create($detailsData);
                 Log::info('API Simple Customer Details Created', ['customer_detail_id' => $customerDetail->id]);
 
-                // Create Customer Phone (type 'mobile')
-                if (!empty($validatedData['phone'])) {
-                    $customerDetail->phones()->create([
-                        'number' => $validatedData['phone'],
-                        'type' => 'mobile', // User requested 'mobile'
-                    ]);
-                    Log::info('API Simple Customer Phone Created');
+                // Create Customer Phones
+                foreach ($phonesData as $phoneData) {
+                    if (!empty($phoneData['number'])) {
+                        $customerDetail->phones()->create([
+                            'number' => $phoneData['number'],
+                            'type' => $phoneData['type'] ?? 'mobile', // Default to 'mobile' if type is not provided
+                        ]);
+                    }
                 }
+                Log::info('API Simple Customer Phones Created');
 
                 return $customer;
             });
