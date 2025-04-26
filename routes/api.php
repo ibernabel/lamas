@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\V1\CustomerController; // Add this line
 
 // Group related routes with common middleware
 Route::prefix('v1')->middleware([
-    //  'auth:sanctum'
+      'auth:sanctum'
 ])->group(function () {
     // API Resource routes for loan applications
     // Use apiResource for standard API methods
@@ -19,7 +19,7 @@ Route::prefix('v1')->middleware([
     Route::apiResource('customers', CustomerController::class)->except(['create', 'edit']); // Exclude web-specific routes
 
     // Route to check if customer NID exists (keep this custom route)
-    Route::get('/customers/nid/{nid}/exists', [CustomerController::class, 'checkNidExists'])->name('api.v1.customers.nid.exists');
+    Route::post('/customers/nid/exists', [CustomerController::class, 'checkNidExists'])->name('api.v1.customers.nid.exists');
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/tokenStatus', [AuthController::class, 'tokenStatus']); // Updated to use tokenStatus method
 });

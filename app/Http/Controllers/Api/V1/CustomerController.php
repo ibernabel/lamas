@@ -424,14 +424,14 @@ class CustomerController extends Controller
     /**
      * Check if a customer NID exists.
      *
-     * @param  string  $nid
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function checkNidExists(string $nid): JsonResponse
+    public function checkNidExists(Request $request): JsonResponse
     {
         // Validate the NID: must be exactly 11 digits
-        $validator = Validator::make(['nid' => $nid], [
-            'nid' => ['required', 'string', 'regex:/^[0-9]{11}$/'],
+        $validator = Validator::make($request->only('NID'), [
+            'NID' => ['required', 'string', 'regex:/^[0-9]{11}$/'],
         ],
         [
             'nid.required' => 'El NID es requerido.',
@@ -447,9 +447,12 @@ class CustomerController extends Controller
             ], 400); // Bad Request
         }
 
+        $nid = $request->input('NID'); // Get NID from request body
+
         // Check if customer exists using the validated NID
         $customerExists = Customer::where('nid', $nid)->exists();
 
+        $customer = null; // Initialize customer variable
         if ($customerExists) {
             $customer = Customer::where('nid', $nid)->first();
         }
