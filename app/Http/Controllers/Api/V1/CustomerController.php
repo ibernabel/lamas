@@ -450,10 +450,21 @@ class CustomerController extends Controller
         // Check if customer exists using the validated NID
         $customerExists = Customer::where('nid', $nid)->exists();
 
+        if ($customerExists) {
+            $customer = Customer::where('nid', $nid)->first();
+        }
+
         return response()->json([
             'exists' => $customerExists,
-            'message' => $customerExists ? 'El NID del cliente fue encontrado.' : 'El NID del cliente no fue encontrado.',
-            'customer' => $customerExists ? Customer::where('nid', $nid)->first(['id', 'nid']) : null,
+            'message' => $customerExists ? __('The client\'s NID was found.') : __('The client\'s NID was not found.'),
+            'customer' => $customerExists ? [
+                'NID' => $customer->NID,
+                'id' => $customer->id,
+                'details' => $customer->details ? [
+                    'first_name' => $customer->details->first_name,
+                    'last_name' => $customer->details->last_name,
+                ] : null,
+            ] : null,
         ]);
     }
 }

@@ -560,7 +560,14 @@
     "Create Customer": "Crear Cliente",
     "References": "Referencias",
     "Relationship": "Relación",
+    "The client's NID was found.": "Se encontró la cédula del cliente.",
+    "The client's NID was not found.": "No se encontró la cédula del cliente.",
 
+
+
+
+
+    
     "Loading": "Cargando",
     "Loading...": "Cargando...",
     "Whatever you want": "Lo que quieras"
