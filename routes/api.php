@@ -14,6 +14,7 @@ Route::prefix('v1')->middleware([
     // Use apiResource for standard API methods
     //->only(['index', 'show', 'store', 'update', 'destroy']);
     Route::apiResource('loan-applications', ApiLoanApplicationController::class);
+    Route::post('/loan-applications/simple', [ApiLoanApplicationController::class, 'simpleLoanApplication'])->name('api.v1.loan-applications.simple.store'); // Added route for simple store
 
     // API Resource routes for customers
     Route::apiResource('customers', CustomerController::class)->except(['create', 'edit']); // Exclude web-specific routes

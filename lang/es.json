@@ -562,12 +562,13 @@
     "Relationship": "Relación",
     "The client's NID was found.": "Se encontró la cédula del cliente.",
     "The client's NID was not found.": "No se encontró la cédula del cliente.",
+    "No references available.": "No hay referencias disponibles.",
 
 
 
 
 
-    
+
     "Loading": "Cargando",
     "Loading...": "Cargando...",
     "Whatever you want": "Lo que quieras"

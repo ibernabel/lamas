@@ -12,6 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator; // Added Validator
 use Illuminate\Validation\ValidationException;
 
 class LoanApplicationController extends Controller
@@ -439,6 +440,83 @@ class LoanApplicationController extends Controller
         } catch (\Exception $e) {
             Log::error('API Loan Application deletion failed: ' . $e->getMessage(), ['id' => $loanApplication->id]);
             return response()->json(['message' => 'Failed to delete loan application.'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Store a simplified loan application for an existing customer.
+     */
+    public function simpleLoanApplication(Request $request)
+    {
+        Log::info('API Simple Loan Application Request Received', ['request_data' => $request->all()]);
+
+        $validator = Validator::make($request->all(), [
+            'customer_id' => 'required|exists:customers,id',
+            'details' => 'required|array',
+            'details.amount' => 'required|numeric|min:0',
+            'details.term' => 'required|integer|min:1',
+            'details.rate' => 'required|numeric|min:0',
+            'details.frequency' => 'required|string|max:255',
+            'details.purpose' => 'required|string|max:255',
+            'details.quota' => 'required|numeric|min:0',
+            'details.customer_comment' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            Log::warning('API Simple Loan Application Validation Failed', ['errors' => $validator->errors()]);
+            return response()->json(['message' => 'Validation Failed', 'errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $validatedData = $validator->validated();
+
+        try {
+            $customer = Customer::find($validatedData['customer_id']);
+            // Redundant check due to 'exists' rule, but good practice
+            if (!$customer) {
+                 Log::warning('API Simple Loan Application Customer Not Found', ['customer_id' => $validatedData['customer_id']]);
+                 return response()->json(['message' => 'Customer not found.'], Response::HTTP_NOT_FOUND);
+            }
+
+            $loanApplication = DB::transaction(function () use ($validatedData, $customer) {
+                // 1. Create Loan Application
+                $loanApplicationData = [
+                    'customer_id' => $customer->id,
+                    'status' => 'received',
+                    'is_answered' => false,
+                    'is_approved' => false,
+                    'is_rejected' => false,
+                    'is_archived' => false,
+                    'is_new' => true,
+                    'user_id' => Auth::guard('sanctum')->id(), // Associate with the authenticated API user
+                ];
+                $loanApplication = LoanApplication::create($loanApplicationData);
+                Log::info('API Simple Loan Application Created', ['loan_application_id' => $loanApplication->id]);
+
+                // 2. Create Loan Application Details
+                $detailsData = $validatedData['details'];
+                // Ensure defaults or handle potential missing optional fields if necessary
+                $loanApplication->details()->create($detailsData);
+                Log::info('API Simple Loan Application Details Created', ['loan_application_id' => $loanApplication->id]);
+
+                return $loanApplication;
+            });
+
+            Log::info('API Simple Loan Application Transaction Committed Successfully');
+
+            // Load relationships needed for the resource response
+            $loanApplication->load(['details', 'customer:id,NID']); // Load basic customer info
+
+            return (new LoanApplicationResource($loanApplication))
+                ->response()
+                ->setStatusCode(Response::HTTP_CREATED);
+
+        } catch (\Exception $e) {
+            // DB::rollBack(); // Transaction should handle rollback automatically
+            Log::error('API Simple Loan Application creation failed: ' . $e->getMessage(), [
+                'exception' => $e,
+                'trace' => $e->getTraceAsString()
+            ]);
+            return response()->json(['message' => 'Failed to submit simple loan application.'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
