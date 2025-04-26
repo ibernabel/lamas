@@ -463,6 +463,7 @@ class CustomerController extends Controller
                 'details' => $customer->details ? [
                     'first_name' => $customer->details->first_name,
                     'last_name' => $customer->details->last_name,
+                    'email' => $customer->details->email,
                 ] : null,
             ] : null,
         ]);
