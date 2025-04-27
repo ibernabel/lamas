@@ -463,7 +463,7 @@
                                     <x-label for="reference_phone_{{ $loop->index }}" value="{{ __('Phone') }}" />
                                         <x-input2 id="reference_phone" type="tel"
                                         name="customer[references][{{ $loop->index }}][phones][0][number]"
-                                        value="{{ old('customer.references.' . $loop->index . '.phones.0.number', $reference->phone_number ?? '') }}" />
+                                        value="{{ old('customer.references.' . $loop->index . '.phones.0.number', $reference->phones[0]?->number ?? '') }}" />
                                     <input type="hidden"
                                         name="customer[references][{{ $loop->index }}][phones][0][type]"
                                         value="mobile">
