@@ -91,14 +91,16 @@
             </x-card.header>
             <x-card>
                 <x-card.content>
-                    @forelse ($customer?->references ?? [] as $reference) {{-- Use forelse for empty check --}}
+                    @forelse ($customer?->references ?? [] as $reference)
+                        {{-- Use forelse for empty check --}}
                         <div class="mb-4 last:mb-0">
                             <x-card.detail-item label="Referencia" :value="$loop->iteration" />
                             <hr class="my-2 w-10/12" />
                             <x-card.detail-item label="Nombre" :value="$reference->name" />
                             <x-card.detail-item label="Ocupación" :value="$reference->occupation" />
                             <x-card.detail-item label="Relación" :value="$reference->relationship" />
-                            <x-card.detail-item label="Teléfono" :value="$reference->phone_number" />
+                            <x-card.detail-item label="Teléfono" :value="$reference->phones[0]?->number ?? ''" />
+
                         </div>
                     @empty
                         <p>{{ __('No references available.') }}</p>
@@ -118,8 +120,8 @@
             onclick="window.location.href='{{ route('customers.edit', $customer->id) }}'"> {{-- Changed Route --}}
             {{ __('Edit') }}
         </x-button2>
-        <x-button2 type="button" variant="info"
-            onclick="window.location.href='{{ route('customers.index') }}'"> {{-- Changed Route --}}
+        <x-button2 type="button" variant="info" onclick="window.location.href='{{ route('customers.index') }}'">
+            {{-- Changed Route --}}
             {{ __('Back to List') }} {{-- Changed Text --}}
         </x-button2>
     </div>

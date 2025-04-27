@@ -156,7 +156,13 @@ class LoanApplicationResource extends JsonResource
           'references' => $this->customer->references->isNotEmpty() ? $this->customer->references->map(fn($ref) => [ // Check if references collection is loaded and not empty
             'id' => $ref->id,
             'name' => $ref->name,
-            'phone_number' => $ref->phone_number,
+            'phones' => $ref->phones->map(function ($phone) {
+                return [
+                    'id' => $phone->id,
+                    'number' => $phone->number,
+                    'type' => $phone->type,
+                ];
+            }),
             'reference_email' => $ref->reference_email,
             'relationship' => $ref->relationship,
             'occupation' => $ref->occupation,

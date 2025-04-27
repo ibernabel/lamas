@@ -461,9 +461,12 @@
 
                                 <x-input-group>
                                     <x-label for="reference_phone_{{ $loop->index }}" value="{{ __('Phone') }}" />
-                                    <x-input2 id="reference_phone_{{ $loop->index }}" type="tel"
-                                        name="customer[references][{{ $loop->index }}][phone_number]"
-                                        value="{{ old('customer.references.' . $loop->index . '.phone_number', $reference->phone_number ?? '') }}" />
+                                        <x-input2 id="reference_phone" type="tel"
+                                        name="customer[references][{{ $loop->index }}][phones][0][number]"
+                                        value="{{ old('customer.references.' . $loop->index . '.phones.0.number', $reference->phone_number ?? '') }}" />
+                                    <input type="hidden"
+                                        name="customer[references][{{ $loop->index }}][phones][0][type]"
+                                        value="mobile">
                                     <x-input-error for="customer.references.{{ $loop->index }}.phone_number" />
                                 </x-input-group>
                             </div>

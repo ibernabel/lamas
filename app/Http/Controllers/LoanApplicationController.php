@@ -278,6 +278,13 @@ class LoanApplicationController extends Controller
                 'customer.jobInfo',
                 'customer.financialInfo',
                 'customer.references',
+                'customer.references.phones',
+                'customer.references.phones' => function ($query) {
+                    $query->limit(1);
+                },
+                'customer.references.addresses' => function ($query) {
+                    $query->limit(1);
+                },
                 'customer.portfolio.broker.user',
                 'risks',
                 'notes'

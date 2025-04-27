@@ -22,7 +22,7 @@ class CustomerResource extends JsonResource
             'company.addresses',
             'jobInfo',
             'vehicle',
-            'references',
+            'references.phones',
             'portfolio.broker.user:id,name', // Example of nested relationship
         ]);
 
@@ -121,7 +121,13 @@ class CustomerResource extends JsonResource
                         'name' => $reference->name,
                         'relationship' => $reference->relationship,
                         'occupation' => $reference->occupation,
-                        'phoneNumber' => $reference->phone_number,
+                        'phones' => $reference->phones->map(function ($phone) {
+                            return [
+                                'id' => $phone->id,
+                                'number' => $phone->number,
+                                'type' => $phone->type,
+                            ];
+                        }),
                     ];
                 });
             }),

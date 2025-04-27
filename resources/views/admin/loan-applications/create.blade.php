@@ -549,9 +549,12 @@
                             <x-input-group>
                                 <x-label for="reference_phone" value="{{ __('Phone') }}" />
                                 <x-input2 id="reference_phone" type="tel"
-                                    name="customer[references][0][phone_number]"
-                                    value="{{ old('customer.references.0.phone_number') }}" />
-                                <x-input-error for="customer.references.0.phone_number" />
+                                    name="customer[references][0][phones][0][number]"
+                                    value="{{ old('customer.references.0.phones.0.number') }}" />
+                                <input type="hidden" name="customer[references][0][phones][0][type]"
+                                    value="mobile">
+                                {{-- Added type --}}
+                                <x-input-error for="customer.references.0.phones.0.number" />
                             </x-input-group>
 
                         </div>

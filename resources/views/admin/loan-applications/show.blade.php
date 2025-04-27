@@ -122,7 +122,7 @@
                             <x-card.detail-item label="Nombre" :value="$reference->name" />
                             <x-card.detail-item label="Ocupación" :value="$reference->occupation" />
                             <x-card.detail-item label="Relación" :value="$reference->relationship" />
-                            <x-card.detail-item label="Teléfono" :value="$reference->phone_number" />
+                            <x-card.detail-item label="Teléfono" :value="$reference->phones[0]?->number ?? ''" />
                         </div>
                     @endforeach
                 </x-card.content>
