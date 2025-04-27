@@ -563,6 +563,8 @@
     "The client's NID was found.": "Se encontró la cédula del cliente.",
     "The client's NID was not found.": "No se encontró la cédula del cliente.",
     "No references available.": "No hay referencias disponibles.",
+    "No references found for this customer.": "No se encontraron referencias para este cliente.",
+    "No references found.": "No se encontraron referencias.",
 
 
 
