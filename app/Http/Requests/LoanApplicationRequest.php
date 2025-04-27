@@ -177,7 +177,10 @@ class LoanApplicationRequest extends FormRequest
       'customer.references.*.name' => 'required|string|max:255',
       'customer.references.*.relationship' => 'required|string|max:255',
       'customer.references.*.occupation' => 'sometimes|nullable|string|max:255',
-      'customer.references.*.phone_number' => 'sometimes|nullable|string|max:20',
+      // 'customer.references.*.phone_number' => 'sometimes|nullable|string|max:20', // Removed old rule
+      'customer.references.*.phones' => 'required|array|min:1', // Require phones array
+      'customer.references.*.phones.*.number' => 'required|string|max:20', // Require number within phones
+      'customer.references.*.phones.*.type' => 'required|in:mobile,home', // Require type within phones
       'terms' => ['accepted'], // Renamed from 'acceptance' to match form field name
     ];
 

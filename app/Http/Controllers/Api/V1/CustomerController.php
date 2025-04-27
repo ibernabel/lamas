@@ -124,9 +124,21 @@ class CustomerController extends Controller
 
                 // 10. Create References
                 foreach ($referencesData as $referenceData) {
-                    $customer->references()->create($referenceData);
+                    // Separate phone data
+                    $phonesData = $referenceData['phones'] ?? [];
+                    unset($referenceData['phones']); // Remove phones from main data
+
+                    // Create the reference without the phone number field
+                    $reference = $customer->references()->create($referenceData);
+
+                    // Create associated phones
+                    foreach ($phonesData as $phoneData) {
+                        if (!empty($phoneData['number'])) {
+                            $reference->phones()->create($phoneData); // Create phone linked to the reference
+                        }
+                    }
                 }
-                Log::info('API Customer References Created');
+                Log::info('API Customer References and Phones Created'); // Update log message
 
                 return $customer;
             });
@@ -427,19 +439,34 @@ class CustomerController extends Controller
                 // Update or Create references
                 foreach ($referencesData as $referenceData) {
                     $referenceId = $referenceData['id'] ?? null;
-                    // Prepare data, removing 'id' if it's null for creation
-                    $updateData = [
+                    // Separate phone data
+                    $phonesData = $referenceData['phones'] ?? [];
+                    unset($referenceData['phones']); // Remove phones from main data
+                    unset($referenceData['phone_number']); // Ensure old field is not present
+
+                    // Prepare data for updateOrCreate (without phone_number)
+                    $referenceUpdateData = [
                         'name' => $referenceData['name'],
                         'relationship' => $referenceData['relationship'],
                         'occupation' => $referenceData['occupation'] ?? null,
-                        'phone_number' => $referenceData['phone_number'] ?? null,
+                        // Removed 'phone_number'
                     ];
-                    $customer->references()->updateOrCreate(
-                        ['id' => $referenceId, 'customer_id' => $customer->id], // Match by id if exists, always ensure customer_id
-                        $updateData
+
+                    // Update or create the reference itself
+                    $reference = $customer->references()->updateOrCreate(
+                        ['id' => $referenceId, 'customer_id' => $customer->id], // Match criteria
+                        $referenceUpdateData // Data to update/create with
                     );
+
+                    // Update phones (delete existing, create new)
+                    $reference->phones()->delete(); // Remove old phones for this reference
+                    foreach ($phonesData as $phoneData) {
+                        if (!empty($phoneData['number'])) {
+                            $reference->phones()->create($phoneData); // Create new phones
+                        }
+                    }
                 }
-                Log::info('API Customer References Updated/Created');
+                Log::info('API Customer References and Phones Updated/Created'); // Update log message
 
 
                 // Reload the customer to get fresh data after updates

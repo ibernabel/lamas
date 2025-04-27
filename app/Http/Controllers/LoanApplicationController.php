@@ -190,9 +190,21 @@ class LoanApplicationController extends Controller
                 // 10. Create References
                 if (isset($validatedData['customer']['references'])) {
                     foreach ($validatedData['customer']['references'] as $referenceData) {
-                        $customer->references()->create($referenceData);
+                        // Separate phone data
+                        $phonesData = $referenceData['phones'] ?? [];
+                        unset($referenceData['phones']); // Remove phones from main data
+
+                        // Create the reference without the phone number field
+                        $reference = $customer->references()->create($referenceData);
+
+                        // Create associated phones
+                        foreach ($phonesData as $phoneData) {
+                            if (!empty($phoneData['number'])) {
+                                $reference->phones()->create($phoneData); // Create phone linked to the reference
+                            }
+                        }
                     }
-                    Log::info('Customer References Created');
+                    Log::info('Customer References and Phones Created'); // Update log message
                 }
 
                 // 11. Create Loan Application
@@ -466,23 +478,41 @@ class LoanApplicationController extends Controller
                     if (isset($validatedData['customer']['references'])) {
                         foreach ($validatedData['customer']['references'] as $referenceData) {
                             Log::info('Processing Reference', [
-                                'reference_data' => $referenceData,
+                                'reference_data' => $referenceData, // Keep original log data for context
                                 'customer_id' => $customer->id
                             ]);
 
+                            $referenceId = $referenceData['id'] ?? null;
+                            // Separate phone data
+                            $phonesData = $referenceData['phones'] ?? [];
+                            unset($referenceData['phones']); // Remove phones from main data
+                            unset($referenceData['phone_number']); // Ensure old field is not present
+
+                            // Data for updateOrCreate (without phone_number)
+                            $referenceUpdateData = [
+                                'customer_id' => $customer->id, // Ensure customer_id is set
+                                'name' => $referenceData['name'],
+                                'occupation' => $referenceData['occupation'] ?? null,
+                                'relationship' => $referenceData['relationship'] ?? null,
+                                // Removed 'phone_number'
+                            ];
+
+                            // Update or create the reference itself
                             $reference = $customer->references()->updateOrCreate(
-                                ['id' => $referenceData['id']],
-                                [
-                                    'customer_id' => $customer->id,
-                                    'name' => $referenceData['name'],
-                                    'occupation' => $referenceData['occupation'] ?? null,
-                                    'relationship' => $referenceData['relationship'] ?? null,
-                                    'phone_number' => $referenceData['phone_number'] ?? null,
-                                ]
+                                ['id' => $referenceId], // Match criteria by ID only
+                                $referenceUpdateData // Data to update/create with
                             );
 
+                            // Update phones (delete existing, create new)
+                            $reference->phones()->delete(); // Remove old phones for this reference
+                            foreach ($phonesData as $phoneData) {
+                                if (!empty($phoneData['number'])) {
+                                    $reference->phones()->create($phoneData); // Create new phones
+                                }
+                            }
+
                             // Log after successful update or creation
-                            Log::info('Reference Updated/Created', [
+                            Log::info('Reference and Phones Updated/Created', [
                                 'reference_id' => $reference->id,
                                 'name' => $reference->name,
                                 'occupation' => $reference->occupation,

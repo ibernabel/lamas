@@ -140,11 +140,14 @@ class CustomerRequest extends FormRequest
 
             // References
             'customer.references' => 'required|array|min:1',
-            'customer.references.*.name' => 'required|string|max:255',
-            'customer.references.*.relationship' => 'required|string|max:255',
-            'customer.references.*.occupation' => 'sometimes|nullable|string|max:255',
-            'customer.references.*.phone_number' => 'sometimes|nullable|string|max:20',
-        ];
+      'customer.references.*.name' => 'required|string|max:255',
+      'customer.references.*.relationship' => 'required|string|max:255',
+      'customer.references.*.occupation' => 'sometimes|nullable|string|max:255',
+      // 'customer.references.*.phone_number' => 'sometimes|nullable|string|max:20', // Removed old rule
+      'customer.references.*.phones' => 'required|array|min:1', // Require phones array
+      'customer.references.*.phones.*.number' => 'required|string|max:20', // Require number within phones
+      'customer.references.*.phones.*.type' => 'required|in:mobile,home', // Require type within phones
+    ];
 
         // Add specific rules for update method (PUT/PATCH)
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
