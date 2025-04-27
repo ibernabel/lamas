@@ -15,7 +15,11 @@
             </h3>
             <x-loan-status :status="$loanApplication->status" />
             <small class="text-secondary">{{ __('Date created') }}:
-                {{ $loanApplication->created_at->format('d/m/Y') }}</small>
+                {{ $loanApplication->created_at->format('d/m/Y h:m:s a') }}
+            </small>
+            <small>
+                {{ __('Lead channel') }}: {{ $loanApplication->customer->lead_channel ?? __('No channel') }}
+            </small>
         </div>
 
         <div class="space-y-6">

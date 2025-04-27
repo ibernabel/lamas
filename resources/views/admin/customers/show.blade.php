@@ -11,7 +11,7 @@
             </h3>
             {{-- Removed Loan Status --}}
             <small class="text-secondary text-right">{{-- Added text-right --}}
-                {{ __('Date created') }}: {{ $customer->created_at->format('d/m/Y') }} {{-- Use $customer --}}
+                {{ __('Date created') }}: {{ $customer->created_at->format('d/m/Y h:m:s a') }} {{-- Use $customer --}}
             </small>
         </div>
 
