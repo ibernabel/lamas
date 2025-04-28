@@ -188,11 +188,18 @@ class CustomerController extends Controller
             $validator = Validator::make($request->all(), [
                 'customer.NID' => ['required', 'string', 'regex:/^[0-9]{11}$/', 'unique:customers,NID'],
                 'customer.details.first_name' => ['required', 'string', 'max:255'],
-                'customer.details.last_name' => ['required', 'string', 'max:255'],
+                'customer.details.last_name' => ['nullable', 'string', 'min:0', 'max:255'],
                 'customer.details.email' => ['required', 'string', 'email', 'max:255', 'unique:customer_details,email'],
                 'customer.details.phones' => ['required', 'array', 'min:1'], // Ensure phones is an array with at least one item
                 'customer.details.phones.*.number' => ['required', 'string', 'max:20'], // Validate each phone number
                 'customer.details.phones.*.type' => ['nullable', 'string', 'max:20'], // Validate each phone type (optional)
+                'customer.references' => ['nullable', 'array'],
+                'customer.references.*.name' => ['required', 'string', 'max:255'],
+                'customer.references.*.relationship' => ['required', 'string', 'max:255'],
+                'customer.references.*.occupation' => ['nullable', 'string', 'max:255'],
+                'customer.references.*.phones' => ['required', 'array', 'min:1'], // Require phones array
+                'customer.references.*.phones.*.number' => ['required', 'string', 'max:20'], // Require number within phones
+                'customer.references.*.phones.*.type' => ['required', 'in:mobile,home'], // Require type within phones
             ],
             [
                 'customer.NID.required' => 'El NID es requerido.',
@@ -218,6 +225,15 @@ class CustomerController extends Controller
                 'customer.details.phones.*.number.max' => 'El número de teléfono no debe exceder los :max caracteres.',
                 'customer.details.phones.*.type.string' => 'El tipo de teléfono debe ser una cadena de texto.',
                 'customer.details.phones.*.type.max' => 'El tipo de teléfono no debe exceder los :max caracteres.',
+                'customer.references.*.name.required' => 'El nombre de la referencia es requerido.',
+                'customer.references.*.relationship.required' => 'La relación de la referencia es requerida.',
+                'customer.references.*.phones.required' => 'Se requiere al menos un número de teléfono para la referencia.',
+                'customer.references.*.phones.array' => 'Los teléfonos de la referencia deben ser proporcionados como una lista.',
+                'customer.references.*.phones.min' => 'Se requiere al menos un número de teléfono para la referencia.',
+                'customer.references.*.phones.*.number.required' => 'El número de teléfono de la referencia es requerido.',
+                'customer.references.*.phones.*.number.max' => 'El número de teléfono de la referencia no debe exceder los :max caracteres.',
+                'customer.references.*.phones.*.type.required' => 'El tipo de teléfono de la referencia es requerido.',
+                'customer.references.*.phones.*.type.in' => 'El tipo de teléfono de la referencia debe ser uno de: mobile, home.',
             ]);
 
             if ($validator->fails()) {
@@ -231,9 +247,10 @@ class CustomerController extends Controller
             $customerData = $validatedData['customer'];
             $detailsData = $customerData['details'];
             $phonesData = $detailsData['phones'] ?? []; // Use ?? [] for safety
+            $customerReferencesData = $customerData['references'] ?? []; // Use ?? [] for safety
 
             // 2. Create Customer and related data in a transaction
-            $customer = DB::transaction(function () use ($customerData, $detailsData, $phonesData) {
+            $customer = DB::transaction(function () use ($customerData, $detailsData, $phonesData, $customerReferencesData) {
                 // Create Customer
                 $customer = Customer::create([
                     'NID' => $customerData['NID'],
@@ -256,6 +273,23 @@ class CustomerController extends Controller
                     }
                 }
                 Log::info('API Simple Customer Phones Created');
+                // Create Customer References
+                foreach ($customerReferencesData as $referenceData) {
+
+                    $phonesData = $referenceData['phones'] ?? [];
+                    unset($referenceData['phones']);
+
+
+                    $reference = $customer->references()->create($referenceData);
+
+
+                    foreach ($phonesData as $phoneData) {
+                        if (!empty($phoneData['number'])) {
+                            $reference->phones()->create($phoneData);
+                        }
+                    }
+                }
+                Log::info('API Customer References and Phones Created');
 
                 return $customer;
             });
@@ -265,6 +299,7 @@ class CustomerController extends Controller
             // Load relationships needed for the resource response
             $customer->load([
                 'details.phones',
+                'references.phones',
             ]);
 
             return (new CustomerResource($customer))
