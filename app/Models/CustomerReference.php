@@ -14,7 +14,6 @@ class CustomerReference extends Model
 
     protected $fillable = [
         'name',
-        'phone_number',
         'relationship',
         'is_who_referred',
         'reference_email',
@@ -22,6 +21,13 @@ class CustomerReference extends Model
         'is_active',
         'occupation',
         'customer_id',
+        'type',
+        'nid',
+        'address',
+        'addresses',
+        'phones',
+        'phones.*.number',
+        'phones.*.type',
     ];
 
     public function customer()
