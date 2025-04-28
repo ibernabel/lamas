@@ -1,66 +1,137 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<!-- Replace with your project's badges -->
+<img src="https://img.shields.io/badge/Built%20with-Laravel-ff2d20?style=flat-square&logo=laravel" alt="Built with Laravel">
+<img src="https://img.shields.io/badge/PHP-%3E%3D8.2-777BB4?style=flat-square&logo=php" alt="PHP Version">
+<!-- Add more relevant badges like build status, license, etc. -->
 </p>
 
-## About Laravel
+# Loan Applications Managemet System - LAMaS
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Description
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This project is a comprehensive web application built using the Laravel framework, designed to streamline and manage the loan application process. It provides a robust system for handling customer information, tracking loan details, assessing credit risk, and managing related entities such as brokers, promoters, and financial portfolios. The application includes both API endpoints for integration and potentially a web interface for administrative tasks and user interaction.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Key functionalities include:
 
-## Learning Laravel
+* **Customer Management:** Detailed profiles, contact information, references, and financial/job details.
+* **Loan Application Processing:** Creation, tracking, and management of loan applications.
+* **Credit Risk Assessment:** Integration with credit risk categories and specific risk factors.
+* **Entity Management:** Handling of brokers, promoters, companies, and portfolios associated with loan applications.
+* **Address and Phone Management:** Polymorphic relationships for associating addresses and phone numbers with various entities.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Documentation
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Installation and Setup
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Clone the repository:**
 
-## Laravel Sponsors
+```bash
+git clone https://github.com/ibernabel/lamas.git
+cd lamas
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2. **Install PHP dependencies:**
 
-### Premium Partners
+```bash
+composer install
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+3. **Install JavaScript dependencies:**
 
-## Contributing
+```bash
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. **Copy the example environment file and configure it:**
 
-## Code of Conduct
+```bash
+cp .env.example .env
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Edit the `.env` file to set your database credentials and other environment variables.
 
-## Security Vulnerabilities
+5. **Generate an application key:**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan key:generate
+```
 
-## License
+6. **Run database migrations:**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan migrate
+```
+
+7. **Seed the database (optional):**
+
+```bash
+php artisan db:seed
+```
+
+8. **Link storage (if necessary):**
+
+```bash
+php artisan storage:link
+```
+
+9. **Build assets:**
+
+```bash
+npm run dev # or npm run build for production
+```
+
+10. **Start the local development server:**
+
+```bash
+php artisan serve
+```
+
+The application will be available at `http://localhost:8000`.
+
+### Project Structure
+
+The project follows the standard Laravel directory structure. Key directories and files include:
+
+* `app/Models/`: Contains Eloquent models representing the database tables (Customer, LoanApplication, Broker, Promoter, Portfolio, CreditRisk, etc.).
+* `app/Http/Controllers/`: Houses the application's controllers, including API controllers (`Api/V1/CustomerController.php`).
+* `app/Http/Requests/`: Contains form request classes for validation (`CustomerRequest.php`).
+* `database/migrations/`: Defines the database schema and modifications.
+* `database/seeders/`: Contains classes for seeding the database with test data.
+* `routes/`: Defines application routes (`web.php`, `api.php`, `admin.php`).
+* `resources/views/`: Contains Blade templates for the web interface.
+* `config/`: Configuration files for various services and modules.
+
+### Key Features
+
+* **User Authentication and Authorization:** (Inferred from Jetstream/Fortify presence)
+* **Role and Permission Management:** (Inferred from Spatie Permission migration)
+* **Customer Data Management:** Comprehensive fields for customer details.
+* **Loan Application Workflow:** Structured data for tracking applications.
+* **Relational Data:** Models and migrations define relationships between entities (customers, loans, brokers, etc.).
+* **API Endpoints:** (Specific endpoints need to be documented based on the actual API routes defined in `routes/api.php`. You might list key endpoints and their purpose here.)
+
+Example (placeholder):
+
+* `GET /api/v1/customers`: List all customers.
+* `POST /api/v1/customers`: Create a new customer.
+* `GET /api/v1/customers/{id}`: Get details for a specific customer.
+* `PUT /api/v1/customers/{id}`: Update a specific customer.
+* `DELETE /api/v1/customers/{id}`: Delete a specific customer.
+* `POST /api/v1/loan-applications`: Create a new loan application.
+* ... (List other relevant API endpoints)
+
+### Database Schema
+
+The database schema is defined by the migration files in `database/migrations/`. Key tables include `users`, `customers`, `loan_applications`, `brokers`, `promoters`, `portfolios`, `credit_risks`, `companies`, `phones`, `addresses`, etc. Relationships between tables are defined in the migration files and reflected in the Eloquent models.
+
+### Contributing
+
+Please check [CONTRIBUTING.md](https://github.com/ibernabel/lamas/blob/main/CONTRIBUTING.md) for contributions.
+
+### License
+
+The Laravel framework is open-sourced software licensed under the [Apache-2.0 license](https://github.com/ibernabel/lamas/blob/main/LICENSE).
+
+---
