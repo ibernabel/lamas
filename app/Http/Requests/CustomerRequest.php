@@ -23,12 +23,17 @@ class CustomerRequest extends FormRequest
     public function rules(): array
     {
         // Get the Customer model instance from the route parameter if it exists (for updates)
-        $customerId = $this->route('id'); // Assuming route parameter is 'id' for customer
-        $customer = $customerId ? Customer::with(['details', 'company'])->find($customerId) : null;
+        // Laravel's apiResource typically uses the singular resource name as the parameter
+        $customer = $this->route('customer'); // Get the customer model instance directly if route model binding is used, or the ID
 
         // Get IDs to ignore for unique rules during updates
+        $customerIdToIgnore = $customer instanceof Customer ? $customer->id : $customer; // Get ID whether it's a model or just the ID
+        // Reload customer with relations if we only got the ID
+        if ($customer && !($customer instanceof Customer)) {
+             $customer = Customer::with(['details', 'company'])->find($customerIdToIgnore);
+        }
+
         $customerDetailIdToIgnore = $customer?->details?->id;
-        $customerIdToIgnore = $customer?->id;
         $companyIdToIgnore = $customer?->company?->id;
 
         $rules = [
