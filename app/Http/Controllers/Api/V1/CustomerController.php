@@ -197,9 +197,11 @@ class CustomerController extends Controller
                 'customer.references.*.name' => ['required', 'string', 'max:255'],
                 'customer.references.*.relationship' => ['required', 'string', 'max:255'],
                 'customer.references.*.occupation' => ['nullable', 'string', 'max:255'],
+
                 'customer.references.*.phones' => ['required', 'array', 'min:1'], // Require phones array
                 'customer.references.*.phones.*.number' => ['required', 'string', 'max:20'], // Require number within phones
                 'customer.references.*.phones.*.type' => ['required', 'in:mobile,home'], // Require type within phones
+                'customer.references.*.type' => ['nullable', 'string', 'max:255'],
             ],
             [
                 'customer.NID.required' => 'El NID es requerido.',
@@ -234,6 +236,7 @@ class CustomerController extends Controller
                 'customer.references.*.phones.*.number.max' => 'El número de teléfono de la referencia no debe exceder los :max caracteres.',
                 'customer.references.*.phones.*.type.required' => 'El tipo de teléfono de la referencia es requerido.',
                 'customer.references.*.phones.*.type.in' => 'El tipo de teléfono de la referencia debe ser uno de: mobile, home.',
+                'customer.references.*.type.string' => 'El tipo de referencia debe ser una cadena de texto.',
             ]);
 
             if ($validator->fails()) {

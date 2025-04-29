@@ -127,6 +127,7 @@
                             <x-card.detail-item label="Ocupación" :value="$reference->occupation" />
                             <x-card.detail-item label="Relación" :value="$reference->relationship" />
                             <x-card.detail-item label="Teléfono" :value="$reference->phones[0]?->number ?? ''" />
+                            <x-card.detail-item label="{{__('Type')}}" :value="$reference->type ?? ''" /> {{-- Added Type --}}
                         </div>
                     @endforeach
                 </x-card.content>
