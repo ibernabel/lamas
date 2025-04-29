@@ -1,0 +1,39 @@
+/* Custom styles for AdminLTE user menu */
+
+/* Target the user menu dropdown */
+.user-menu .dropdown-menu {
+    border: none; /* Remove card border */
+    border-radius: 10px; /* Add rounded corners to the card */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); /* Adjust or remove shadow if needed */
+}
+
+/* Target the user image container */
+.user-menu .user-panel .image {
+    /* Remove shadow behind the image - may need adjustment based on exact HTML structure */
+    box-shadow: none;
+}
+
+/* Target the user image */
+.user-menu .user-panel .image img {
+    object-fit: cover; /* Prevent image stretching */
+    width: 100%; /* Ensure image fills its container */
+    height: 100%; /* Ensure image fills its container */
+}
+
+/* Target the buttons in the user menu */
+.user-menu .dropdown-menu .btn {
+    border-radius: 5px; /* Add rounded corners to buttons */
+}
+
+/* You can add more specific styles here if needed,
+   for example, targeting the header specifically: */
+
+.user-menu .dropdown-menu .user-header {
+    background-color: #f8f9fa !important; // Example: change header background
+    color: #333 !important; // Example: change header text color
+}
+/*
+.user-header {
+    background-color: #3490dc !important;
+}
+*/

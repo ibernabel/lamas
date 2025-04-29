@@ -20,7 +20,7 @@
     <a href="#" class="nav-link dropdown-toggle custom-user-menu" data-toggle="dropdown">
         @if(config('adminlte.usermenu_image'))
             <img src="{{ Auth::user()->adminlte_image() }}"
-                 class="user-image img-circle elevation-2"
+                 class="user-image elevation-2 object-cover"
                  alt="{{ Auth::user()->name }}">
         @endif
         {{--<span @if(config('adminlte.usermenu_image')) class="d-none d-md-inline" @endif>
@@ -29,7 +29,9 @@
     </a>
 
     {{-- User menu dropdown --}}
-    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right rounded-lg shadow-2xl border-0 mr-4 bg-white">
+
+        {{-- User menu image --}}
 
         {{-- User menu header --}}
         @if(!View::hasSection('usermenu_header') && config('adminlte.usermenu_header'))
@@ -37,10 +39,10 @@
                 @if(!config('adminlte.usermenu_image')) h-auto @endif">
                 @if(config('adminlte.usermenu_image'))
                     <img src="{{ Auth::user()->adminlte_image() }}"
-                         class="img-circle elevation-4"
+                         class="w-10 h-10 rounded-full object-cover shadow-md"
                          alt="{{ Auth::user()->name }}">
                 @endif
-                <p class="@if(!config('adminlte.usermenu_image')) mt-0 @endif">
+                <p class="@if(!config('adminlte.usermenu_image')) mt-1 @endif">
                     {{ Auth::user()->name }}
                     @if(config('adminlte.usermenu_desc'))
                         <small>{{ Auth::user()->adminlte_desc() }}</small>
@@ -65,14 +67,14 @@
         @endif
 
         {{-- User menu footer --}}
-        <li class="user-footer">
+        <li class="user-footer rounded-lg">
             @if($profile_url)
-                <a href="{{ $profile_url }}" class="nav-link btn btn-default btn-flat d-inline-block">
+                <a href="{{ $profile_url }}" class="nav-link btn btn-default btn-flat d-inline-block rounded-lg shadow-xs">
                     <i class="fa fa-fw fa-user text-lightblue"></i>
                     {{ __('adminlte::menu.profile') }}
                 </a>
             @endif
-            <a class="btn btn-default btn-flat float-right @if(!$profile_url) btn-block @endif"
+            <a class="btn btn-default btn-flat float-right rounded-lg shadow-xs @if(!$profile_url) btn-block @endif"
                href="logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="fa fa-fw fa-power-off text-red"></i>
                 {{ __('adminlte::adminlte.log_out') }}

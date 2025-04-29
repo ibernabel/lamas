@@ -6,14 +6,4 @@
     display: none;
 }
 
-/*
-.custom-user-menu {
-    background-color: #f0f0f0;
-    color: #333;
-    border-radius: 5px;
-}
-
-.user-header {
-    background-color: #3490dc !important;
-}
-*/
+@import './custom.css';

@@ -17,6 +17,7 @@ return [
     'warning' => 'Advertencia',
     'information' => 'Información',
     'applications' => 'SOLICITUDES DE PRÉSTAMO',
+    'applications_listing' => 'Lista de Solicitudes',
     'create_application' => 'Crear Solicitud',
     'customers' => 'CLIENTES',
     'customer_list' => 'Lista de Clientes',

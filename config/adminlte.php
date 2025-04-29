@@ -135,7 +135,7 @@ return [
 
     'usermenu_enabled' => true,
     'usermenu_header' => true,
-    'usermenu_header_class' => 'bg-white-600',
+    'usermenu_header_class' => '',
     'usermenu_image' => true,
     'usermenu_desc' => true,
     'usermenu_profile_url' => true,
@@ -323,7 +323,7 @@ return [
         ],
         ['header' => 'applications'],
         [
-            'text' => 'Applications Listing',
+            'text' => 'applications_listing',
             'route' => 'loan-applications.index',
             'icon' => 'far fa-fw fa-file',
             //'label' => 4,
