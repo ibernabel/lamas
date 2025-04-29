@@ -115,15 +115,18 @@
     <div class="sticky bottom-0 bg-white border-t border-gray-200 p-2 flex justify-end space-x-4 my-2">
 
         <x-button2 type="button" variant="light" onclick="window.print()">
+            <i class="fas fa-print mr-2"></i>
             {{ __('Print') }}
         </x-button2>
         <x-button2 type="button" variant="warning"
             onclick="window.location.href='{{ route('customers.edit', $customer->id) }}'"> {{-- Changed Route --}}
+            <i class="fas fa-pencil-alt mr-2"></i>
             {{ __('Edit') }}
         </x-button2>
         <x-button2 type="button" variant="info" onclick="window.location.href='{{ route('customers.index') }}'">
             {{-- Changed Route --}}
-            {{ __('Back to List') }} {{-- Changed Text --}}
+            <i class="fas fa-home mr-2"></i>
+            {{ __('Back to') }} {{-- Changed Text --}}
         </x-button2>
     </div>
     <x-slot name="footer">

@@ -32,7 +32,7 @@
 @stop
 
 @section('footer')
-    {{ $footer ?? 'Footer' }}
+    {{ $footer ?? '' }}
 @stop
 @section('js')
     @vite('resources/js/app.js')

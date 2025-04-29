@@ -9,13 +9,15 @@
     </x-slot>
     <div class="card">
         <div class="card-body">
-            <p>Contenido Espectacular</p>
-                {{ Auth::user()->name }}
-                {{ Auth::user()->email }}
-                {{ Auth::user()->role }}
+            <h3 class="h4">{{ __('Admin Dashboard') }}</h3>
+                <p>{{ __('User') . ': ' . Auth::user()->name }}</p>
+                <p>{{ __('Email') . ': ' . Auth::user()->email }}</p>
+                <p>{{ __('Role') . ': ' . Auth::user()->role }}</p>
+                <p>{{ __('Last Login') . ': ' . Auth::user()->last_login }}</p>
+                <p>{{ __('Account Status') . ': ' . Auth::user()->status }}</p>
         </div>
     </div>
     <x-slot name="footer">
-        <p>{{ __('Footer') }}</p>
+        <p>{{ __('Lamas') }}</p>
     </x-slot>
 </x-admin.app-layout>

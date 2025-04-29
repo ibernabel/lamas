@@ -53,7 +53,7 @@ class LoanApplicationController extends Controller
                 ->addColumn('actions', function ($row) {
                     // Generate action buttons (e.g., View)
                     $viewUrl = route('loan-applications.show', $row->id);
-                    return '<a class="btn btn-info" href="' . $viewUrl . '">' . __('View') . '</a>';
+                    return '<a class="btn btn-primary" href="' . $viewUrl . '">' . __('View') . '</a>';
                 })
                 ->addColumn('created_at', function ($row) {
                     return $row->created_at;

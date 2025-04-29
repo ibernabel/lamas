@@ -214,7 +214,7 @@
 
                             <x-input-group>
                                 <x-label for="housing_type" value="{{ __('Housing Type') }}" />
-                                <x-select id="housing_type" name="customer[details][housing_type]" required >
+                                <x-select id="housing_type" name="customer[details][housing_type]" required>
                                     <option value="">{{ __('Select housing type') }}</option>
                                     <option value="owned"
                                         {{ old('customer.details.housing_type') == 'owned' ? 'selected' : '' }}>
@@ -369,8 +369,8 @@
                             <x-input-group>
                                 <x-label for="salary" value="{{ __('Salary') }}" />
                                 <x-input2 id="salary" type="number" step="0.01"
-                                    name="customer[jobInfo][salary]"
-                                    value="{{ old('customer.jobInfo.salary') }}" required />
+                                    name="customer[jobInfo][salary]" value="{{ old('customer.jobInfo.salary') }}"
+                                    required />
                                 <x-input-error for="customer.jobInfo.salary" />
                             </x-input-group>
 
@@ -453,8 +453,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <x-input-group>
                                 <x-label for="reference_name" value="{{ __('Name') }}" />
-                                <x-input2 id="reference_name" type="text"
-                                    name="customer[references][0][name]"
+                                <x-input2 id="reference_name" type="text" name="customer[references][0][name]"
                                     value="{{ old('customer.references.0.name') }}" required />
                                 <x-input-error for="customer.references.0.name" />
                             </x-input-group>
@@ -480,8 +479,7 @@
                                 <x-input2 id="reference_phone" type="tel"
                                     name="customer[references][0][phones][0][number]"
                                     value="{{ old('customer.references.0.phones.0.number') }}" />
-                                <input type="hidden" name="customer[references][0][phones][0][type]"
-                                    value="mobile">
+                                <input type="hidden" name="customer[references][0][phones][0][type]" value="mobile">
                                 <x-input-error for="customer.references.0.phones.0.number" />
                             </x-input-group>
 
@@ -493,9 +491,11 @@
 
                 <div class="sticky bottom-0 bg-white border-t border-gray-200 p-4 flex justify-end space-x-4 my-4">
                     <x-button2 type="button" variant="secondary" onclick="window.history.back()">
+                        <i class="fas fa-times mr-2"></i>
                         {{ __('Cancel') }}
                     </x-button2>
                     <x-button2 type="submit" variant="submit">
+                    <i class="fas fa-save mr-2"></i>
                         {{ __('Create Customer') }} {{-- Changed Button Text --}}
                     </x-button2>
                 </div>

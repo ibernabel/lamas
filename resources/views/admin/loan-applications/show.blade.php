@@ -164,14 +164,17 @@
     <div class="sticky bottom-0 bg-white border-t border-gray-200 p-2 flex justify-end space-x-4 my-2">
 
         <x-button2 type="button" variant="light" onclick="window.print()">
+            <i class="fas fa-print mr-2"></i>
             {{ __('Print') }}
         </x-button2>
         <x-button2 type="button" variant="warning"
             onclick="window.location.href='{{ route('loan-applications.edit', $loanApplication) }}'">
+            <i class="fas fa-pencil-alt mr-2"></i>
             {{ __('Edit') }}
         </x-button2>
         <x-button2 type="button" variant="info"
             onclick="window.location.href='{{ route('loan-applications.index') }}'">
+            <i class="fas fa-home mr-2"></i>
             {{ __('Home') }}
         </x-button2>
     </div>

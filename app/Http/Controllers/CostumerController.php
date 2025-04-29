@@ -54,8 +54,7 @@ class CostumerController extends Controller // Renamed class
                     // Generate action buttons (e.g., View, Edit)
                     $viewUrl = route('customers.show', $row->id); // Changed route name
                     $editUrl = route('customers.edit', $row->id); // Changed route name
-                    return '<a class="btn btn-info btn-sm" href="' . $viewUrl . '">' . __('View') . '</a> ' .
-                           '<a class="btn btn-warning btn-sm" href="' . $editUrl . '">' . __('Edit') . '</a>';
+                    return '<a class="btn btn-primary" href="' . $viewUrl . '">' . __('View') . '</a> ';
                 })
                  ->addColumn('created_at', function ($row) {
                     return $row->created_at;

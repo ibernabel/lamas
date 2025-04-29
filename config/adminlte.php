@@ -64,8 +64,9 @@ return [
     */
 
     'logo' => '<b>Lamas</b>',
-    'logo_img' => 'img/logo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo_img' => 'img/coins-solid.svg',
+    'logo_img_class' => 'brand-image mr-2',
+    //'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Lamas Admin',
