@@ -27,5 +27,8 @@ Route::middleware([
     return view('admin.loan-applications.index');
   })->name('dashboard');
 
-
+  Route::get('/dashboard-raw', function () {
+    //return view('admin.admin');
+    return view('dashboard');
+  })->name('dashboard-raw');
 });
