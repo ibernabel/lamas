@@ -29,11 +29,47 @@
    for example, targeting the header specifically: */
 
 .user-menu .dropdown-menu .user-header {
-    background-color: #f8f9fa !important; // Example: change header background
-    color: #333 !important; // Example: change header text color
+    background-color: #f8f9fa !important; /* Example: change header background */
+    color: #333 !important; /* Example: change header text color */
 }
-/*
+
 .user-header {
     background-color: #3490dc !important;
 }
-*/
+
+/* Apply Nunito font to the body to try and override default styles */
+body {
+    font-family: 'Nunito', sans-serif !important;
+}
+
+/* Custom Sidebar Background */
+.main-sidebar, .main-sidebar > .brand-link {
+    background-color: #264ec1 !important;
+}
+.main-sidebar > .brand-link {
+    color: #ffffff !important; /* White text */
+
+}
+/* Adjust text color for custom dark background */
+.nav-sidebar > .nav-item > .nav-link, .nav-header {
+    color: #ffffff !important; /* White text */
+}
+
+/* Adjust icon color */
+.nav-sidebar > .nav-item > .nav-link .nav-icon {
+    color: #ffffff !important; /* White icons */
+}
+
+/* Adjust active link background and text color */
+.nav-sidebar > .nav-item > .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2) !important; /* Slightly lighter background for active */
+    color: #ffffff !important; /* White text for active */
+}
+
+/* Adjust hover link background and text color */
+.nav-sidebar > .nav-item > .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important; /* Slightly lighter background on hover */
+    color: #ffffff !important; /* White text on hover */
+}
+
+

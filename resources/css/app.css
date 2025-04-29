@@ -1,3 +1,5 @@
+@import './custom.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,5 +7,3 @@
 [x-cloak] {
     display: none;
 }
-
-@import './custom.css';

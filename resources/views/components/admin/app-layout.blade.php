@@ -14,11 +14,13 @@
 @section('css')
     @vite('resources/css/app.css')
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Raleway:ital,wght@0,100..900;1,100..900&family=Staatliches&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
     </style>
-    {{$css ?? ''}}
+    {{--<style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Raleway:ital,wght@0,100..900;1,100..900&family=Staatliches&display=swap');
+    </style>--}}
+    {{ $css ?? '' }}
 @stop
-
 @section('content_header')
     {{ $content_header ?? '' }}
 @stop
@@ -36,5 +38,5 @@
     @vite('resources/js/app.js')
     {{-- uiball.com preloaders --}}
     <script type="module" src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/tailChase.js"></script>
-    {{$js ?? ''}}
+    {{ $js ?? '' }}
 @endsection

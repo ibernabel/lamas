@@ -15,11 +15,11 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Open Sans', ...defaultTheme.fontFamily.sans],
+                sans: ['Nunito',...defaultTheme.fontFamily.sans],
             },
             colors: {
-                gray: colors.coolGray,
-                blue: colors.lightBlue,
+                gray: colors.gray,
+                blue: colors.sky,
                 red: colors.rose,
                 pink: colors.fuchsia,
                 yellow: colors.amber,
@@ -31,6 +31,8 @@ export default {
                 white: colors.white,
                 black: colors.black,
                 transparent: colors.transparent,
+                ghostWhite: '#f8f9fc', // blanco casi fantasmal 👻✨
+                royalBlue: '#264ec1', // azul real 👑 💙
             },
         },
     },

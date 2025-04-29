@@ -111,11 +111,11 @@ return [
 
     'preloader' => [
         'enabled' => true,
-        'mode' => 'fullscreen',
+        'mode' => 'cwrapper', //  fullscreen or cwrapper
         'img' => [
             'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
             'alt' => 'AdminLTE Preloader Image',
-            'effect' => 'animation__shake',
+            'effect' => 'animation__wobble', // animation__shake or animation__wobble
             'width' => 60,
             'height' => 60,
         ],
@@ -193,12 +193,12 @@ return [
     'classes_body' => '',
     'classes_brand' => '',
     'classes_brand_text' => '',
-    'classes_content_wrapper' => 'bg-white ',
+    'classes_content_wrapper' => 'bg-ghostWhite ',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-light-primary elevation-4',
+    'classes_sidebar' => 'sidebar-light-secondary elevation-2', // Changed for consistency with custom CSS
     'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-white navbar-light',
+    'classes_topnav' => 'navbar-white navbar-light shadow-md',
     'classes_topnav_nav' => 'navbar-expand ',
     'classes_topnav_container' => 'container',
 
@@ -315,6 +315,7 @@ return [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
+
         [
             'text' => 'Dashboard',
             'url' => 'admin',
@@ -325,14 +326,14 @@ return [
         [
             'text' => 'applications_listing',
             'route' => 'loan-applications.index',
-            'icon' => 'far fa-fw fa-file',
+            'icon' => 'fas fa-fw fa-table',
             //'label' => 4,
             //'label_color' => 'success',
         ],
         [
             'text' => 'create_application',
             'route' => 'loan-applications.create',
-            'icon' => 'far fa-fw fa-file',
+            'icon' => 'fas fa-fw fa-folder-plus',
             //'label' => 4,
             //'label_color' => 'success',
         ],
@@ -340,14 +341,14 @@ return [
         [
             'text' => 'customer_list',
             'route' => 'customers.index',
-            'icon' => 'far fa-fw fa-file',
+            'icon' => 'fas fa-fw fa-users',
             //'label' => 4,
             //'label_color' => 'success',
         ],
         [
             'text' => 'create_customer',
             'route' => 'customers.create',
-            'icon' => 'far fa-fw fa-file',
+            'icon' => 'fas fa-fw fa-user-plus',
             //'label' => 4,
             //'label_color' => 'success',
         ],
