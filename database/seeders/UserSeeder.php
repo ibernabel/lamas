@@ -19,6 +19,12 @@ class UserSeeder extends Seeder
             'password' => bcrypt('Zd/sK3iD/u53/QM'),
         ])->assignRole('admin');
 
+        User::create([
+            'name' => 'Solufime Support',
+            'email' => 'support.solufime@gmail.com',
+            'password' => bcrypt('Solu122436'),
+        ])->assignRole('admin');
+
         User::factory(10)->withPersonalTeam()->create();
     }
 }

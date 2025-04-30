@@ -18,7 +18,7 @@ class CustomerFactory extends Factory
     {
         return [
             'NID' => $this->faker->unique()->numerify('###########'),
-            'lead_channel' => $this->faker->randomElement(['Facebook', 'Instagram', 'Twitter', 'LinkedIn', 'WhatsApp', 'Telegram', 'Email', 'Phone', 'SMS', 'Other']),
+            'lead_channel' => $this->faker->randomElement(['Website', 'API', 'Facebook', 'Instagram', 'Twitter', 'LinkedIn', 'WhatsApp', 'Telegram', 'Email', 'Phone', 'SMS', 'Other']),
             'is_referred' => $this->faker->boolean(),
             'referred_by' => $this->faker->optional()->numerify('############'),
             'is_active' => $this->faker->boolean(),

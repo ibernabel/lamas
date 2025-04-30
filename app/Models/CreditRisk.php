@@ -9,24 +9,26 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class CreditRisk extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  protected $fillable = [
-    'risk_category_id',
-    'risk',
-    'description',
-  ];
-  protected $hidden = [
-    'created_at',
-    'updated_at'
-  ];
+    protected $table = 'credit_risk_loan_application';
 
-  public function loanApplication(): BelongsToMany
-  {
-    return $this->belongsToMany(LoanApplication::class);
-  }
-  public function riskCategory(): BelongsTo
-  {
-    return $this->belongsTo(CreditRiskCategory::class);
-  }
+    protected $fillable = [
+        'risk_category_id',
+        'risk',
+        'description',
+    ];
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
+    public function loanApplication(): BelongsToMany
+    {
+        return $this->belongsToMany(LoanApplication::class);
+    }
+    public function riskCategory(): BelongsTo
+    {
+        return $this->belongsTo(CreditRiskCategory::class);
+    }
 }

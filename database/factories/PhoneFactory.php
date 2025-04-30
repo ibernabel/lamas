@@ -20,8 +20,8 @@ class PhoneFactory extends Factory
             'country_area' => $this->faker->countryCode(),
             'number' => $this->faker->phoneNumber(),
             'extension' => $this->faker->optional()->randomDigit(),
-            'type' => $this->faker->randomElement(['home', 'work', 'mobile']),
-            
+            'type' => $this->faker->randomElement(['home', 'work', 'mobile', 'fax', 'other']),
+
         ];
     }
 }
