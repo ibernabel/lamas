@@ -32,35 +32,35 @@
                             <x-input-group>
                                 <x-label for="first_name" value="{{ __('First Name') }}" />
                                 <x-input2 id="first_name" type="text" name="customer[details][first_name]"
-                                    value="{{ old('customer.details.first_name', $loanApplication->customer->details->first_name) }}" />
+                                    value="{{ old('customer.details.first_name', $loanApplication->customer->details->first_name ?? '') }}" />
                                 <x-input-error for="customer.details.first_name" />
                             </x-input-group>
 
                             <x-input-group>
                                 <x-label for="last_name" value="{{ __('Last Name') }}" />
                                 <x-input2 id="last_name" type="text" name="customer[details][last_name]"
-                                    value="{{ old('customer.details.last_name', $loanApplication->customer->details->last_name) }}" />
+                                    value="{{ old('customer.details.last_name', $loanApplication->customer->details->last_name ?? '') }}" />
                                 <x-input-error for="customer.details.last_name" />
                             </x-input-group>
 
                             <x-input-group>
                                 <x-label for="NID" value="{{ __('NID') }}" />
                                 <x-input2 id="NID" type="text" name="customer.NID"
-                                    value="{{ old('customer.NID', $loanApplication->customer->NID) }}" />
+                                    value="{{ old('customer.NID', $loanApplication->customer->NID ?? '') }}" />
                                 <x-input-error for="customer.NID" />
                             </x-input-group>
 
                             <x-input-group>
                                 <x-label for="birthday" value="{{ __('Birthday') }}" />
                                 <x-input2 id="birthday" type="date" name="customer[details][birthday]"
-                                    value="{{ old('customer.details.birthday', $loanApplication->customer->details->birthday) }}" />
+                                    value="{{ old('customer.details.birthday', $loanApplication->customer->details->birthday ?? '') }}" />
                                 <x-input-error for="customer.details.birthday" />
                             </x-input-group>
 
                             <x-input-group>
                                 <x-label for="cellular" value="{{ __('Cellular') }}" />
                                 <x-input2 id="cellular" type="tel" name="customer[details][phones][0][number]"
-                                    value="{{ old('customer.details.phones.0.number', $loanApplication->customer->details->phones[0]->number) }}" />
+                                    value="{{ old('customer.details.phones.0.number', $loanApplication->customer->details->phones[0]->number ?? '') }}" />
                                 <input type="hidden" name="customer[details][phones][0][type]" value="mobile">
                                 {{-- Added type --}}
                                 <x-input-error for="customer.details.phones.0.number" />
@@ -79,7 +79,7 @@
                             <x-input-group>
                                 <x-label for="email" value="{{ __('Email') }}" />
                                 <x-input2 id="email" type="email" name="customer[details][email]"
-                                    value="{{ old('customer.details.email', $loanApplication->customer->details->email) }}" />
+                                    value="{{ old('customer.details.email', $loanApplication->customer->details->email ?? '') }}" />
                                 <x-input-error for="customer.details.email" />
                             </x-input-group>
 
@@ -109,7 +109,7 @@
                             <x-input-group>
                                 <x-label for="nationality" value="{{ __('Nationality') }}" />
                                 <x-input2 id="nationality" type="text" name="customer.details.nationality"
-                                    value="{{ old('customer.details.nationality', $loanApplication->customer->details->nationality) }}" />
+                                    value="{{ old('customer.details.nationality', $loanApplication->customer->details->nationality ?? '') }}" />
                                 <x-input-error for="customer.details.nationality" />
                             </x-input-group>
 
@@ -302,21 +302,21 @@
                             <x-input-group>
                                 <x-label for="amount" value="Amount" />
                                 <x-input2 id="amount" type="number" step="0.01" name="details[amount]"
-                                    value="{{ old('details.amount', $loanApplication->details->amount ?? null) }}" />
+                                    value="{{ old('details.amount', $loanApplication->details->amount ?? '') }}" />
                                 <x-input-error for="details.amount" />
                             </x-input-group>
 
                             <x-input-group>
                                 <x-label for="term" value="Term (months)" />
                                 <x-input2 id="term" type="number" name="details[term]"
-                                    value="{{ old('details.term', $loanApplication->details->term ?? null) }}" />
+                                    value="{{ old('details.term', $loanApplication->details->term ?? '') }}" />
                                 <x-input-error for="details.term" />
                             </x-input-group>
 
                             <x-input-group>
                                 <x-label for="rate" value="Rate (%)" />
                                 <x-input2 id="rate" type="number" step="0.01" name="details[rate]"
-                                    value="{{ old('details.rate', $loanApplication->details->rate ?? null) }}" />
+                                    value="{{ old('details.rate', $loanApplication->details->rate ?? '') }}" />
                                 <x-input-error for="details.rate" />
                             </x-input-group>
 
@@ -325,13 +325,13 @@
                                 <x-select id="frequency" name="details[frequency]">
                                     <option value="">{{ __('Select') }}</option>
                                     <option value="weekly"
-                                        {{ old('details.frequency', $loanApplication->details->frequency ?? null) == 'weekly' ? 'selected' : '' }}>
+                                        {{ old('details.frequency', $loanApplication->details->frequency) == 'weekly' ? 'selected' : '' }}>
                                         {{ __('Weekly') }}</option>
                                     <option value="biweekly"
-                                        {{ old('details.frequency', $loanApplication->details->frequency ?? null) == 'biweekly' ? 'selected' : '' }}>
+                                        {{ old('details.frequency', $loanApplication->details->frequency) == 'biweekly' ? 'selected' : '' }}>
                                         {{ __('Biweekly') }}</option>
                                     <option value="monthly"
-                                        {{ old('details.frequency', $loanApplication->details->frequency ?? null) == 'monthly' ? 'selected' : '' }}>
+                                        {{ old('details.frequency', $loanApplication->details->frequency) == 'monthly' ? 'selected' : '' }}>
                                         {{ __('Monthly') }}</option>
                                 </x-select>
                                 <x-input-error for="details.frequency" />
@@ -340,14 +340,14 @@
                             <x-input-group>
                                 <x-label for="quota" value="Quota" />
                                 <x-input2 id="quota" type="number" name="details[quota]"
-                                    value="{{ old('details.quota', $loanApplication->details->quota ?? null) }}" />
+                                    value="{{ old('details.quota', $loanApplication->details->quota ?? '') }}" />
                                 <x-input-error for="details.quota" />
                             </x-input-group>
 
                             <x-input-group>
                                 <x-label for="purpose" value="Purpose" />
                                 <x-textarea id="purpose" name="details[purpose]">
-                                    {{ old('details.purpose', $loanApplication->details->purpose ?? null) }}
+                                    {{ old('details.purpose', $loanApplication->details->purpose ?? '') }}
                                 </x-textarea>
                                 <x-input-error for="details.purpose" />
                             </x-input-group>
@@ -355,7 +355,7 @@
                             <x-input-group>
                                 {{-- <x-label for="customer_comment" value="{{ __('Customer Comment') }}" /> --}}
                                 <x-input2 type="hidden" name="details[customer_comment]"
-                                    value="{{ old('details.customer_comment', $loanApplication->details->customer_comment ?? ' ') }}" />
+                                    value="{{ old('details.customer_comment', $loanApplication->details->customer_comment ?? '') }}" />
                                 {{-- <x-input-error for="details.customer_comment" /> --}}
                             </x-input-group>
                         </div>
@@ -375,10 +375,10 @@
                                 <x-select id="is_self_employed" name="customer[jobInfo][is_self_employed]">
                                     <option value="">{{ __('Select') }}</option>
                                     <option value="1"
-                                        {{ old('customer.jobInfo.is_self_employed', $loanApplication->customer->jobInfo->is_self_employed ?? '') == 1 ? 'selected' : '' }}>
+                                        {{ old('customer.jobInfo.is_self_employed', $loanApplication->customer->jobInfo->is_self_employed) == 1 ? 'selected' : '' }}>
                                         {{ __('Yes') }}</option>
                                     <option value="0"
-                                        {{ old('customer.jobInfo.is_self_employed', $loanApplication->customer->jobInfo->is_self_employed ?? '') == 0 ? 'selected' : '' }}>
+                                        {{ old('customer.jobInfo.is_self_employed', $loanApplication->customer->jobInfo->is_self_employed) == 0 ? 'selected' : '' }}>
                                         {{ __('No') }}</option>
                                 </x-select>
                                 <x-input-error for="customer.jobInfo.is_self_employed" />
@@ -437,10 +437,10 @@
                                 <x-select id="payment_type" name="customer[jobInfo][payment_type]">
                                     <option value="">{{ __('Select') }}</option>
                                     <option value="cash"
-                                        {{ old('customer.jobInfo.payment_type', $loanApplication->customer->jobInfo->payment_type ?? '') == 'cash' ? 'selected' : '' }}>
+                                        {{ old('customer.jobInfo.payment_type', $loanApplication->customer->jobInfo->payment_type) == 'cash' ? 'selected' : '' }}>
                                         {{ __('Cash') }}</option>
                                     <option value="bank_transfer"
-                                        {{ old('customer.jobInfo.payment_type', $loanApplication->customer->jobInfo->payment_type ?? '') == 'bank_transfer' ? 'selected' : '' }}>
+                                        {{ old('customer.jobInfo.payment_type', $loanApplication->customer->jobInfo->payment_type) == 'bank_transfer' ? 'selected' : '' }}>
                                         {{ __('Bank Transfer') }}</option>
                                 </x-select>
                                 <x-input-error for="customer.jobInfo.payment_type" />
@@ -451,13 +451,13 @@
                                 <x-select id="payment_frequency" name="customer[jobInfo][payment_frequency]">
                                     <option value="">{{ __('Select') }}</option>
                                     <option value="weekly"
-                                        {{ old('customer.jobInfo.payment_frequency', $loanApplication->customer->jobInfo->payment_frequency ?? '') == 'weekly' ? 'selected' : '' }}>
+                                        {{ old('customer.jobInfo.payment_frequency', $loanApplication->customer->jobInfo->payment_frequency) == 'weekly' ? 'selected' : '' }}>
                                         {{ __('Weekly') }}</option>
                                     <option value="biweekly"
-                                        {{ old('customer.jobInfo.payment_frequency', $loanApplication->customer->jobInfo->payment_frequency ?? '') == 'biweekly' ? 'selected' : '' }}>
+                                        {{ old('customer.jobInfo.payment_frequency', $loanApplication->customer->jobInfo->payment_frequency) == 'biweekly' ? 'selected' : '' }}>
                                         {{ __('Biweekly') }}</option>
                                     <option value="monthly"
-                                        {{ old('customer.jobInfo.payment_frequency', $loanApplication->customer->jobInfo->payment_frequency ?? '') == 'monthly' ? 'selected' : '' }}>
+                                        {{ old('customer.jobInfo.payment_frequency', $loanApplication->customer->jobInfo->payment_frequency) == 'monthly' ? 'selected' : '' }}>
                                         {{ __('Monthly') }}</option>
                                 </x-select>
                                 <x-input-error for="customer.jobInfo.payment_frequency" />
@@ -519,7 +519,7 @@
                                     <x-label for="reference_name" value="{{ __('Name') }}" />
                                     <x-input2 id="reference_name" type="text"
                                         name="customer[references][{{ $loop->index }}][name]"
-                                        value="{{ old('customer.references.' . $loop->index . '.name', $reference->name) }}" />
+                                        value="{{ old('customer.references.' . $loop->index . '.name', $reference->name ?? '') }}" />
                                     <x-input-error for="customer.references.{{ $loop->index }}.name" />
                                 </x-input-group>
 
@@ -529,7 +529,7 @@
                                     <x-label for="reference_occupation" value="{{ __('Occupation') }}" />
                                     <x-input2 id="reference_occupation" type="text"
                                         name="customer[references][{{ $loop->index }}][occupation]"
-                                        value="{{ old('customer.references.' . $loop->index . '.occupation', $reference->occupation) }}" />
+                                        value="{{ old('customer.references.' . $loop->index . '.occupation', $reference->occupation ?? '') }}" />
                                     <x-input-error for="customer.references.{{ $loop->index }}.occupation" />
                                 </x-input-group>
 
@@ -537,7 +537,7 @@
                                     <x-label for="reference_relationship" value="{{ __('Relationship') }}" />
                                     <x-input2 id="reference_relationship" type="text"
                                         name="customer[references][{{ $loop->index }}][relationship]"
-                                        value="{{ old('customer.references.' . $loop->index . '.relationship', $reference->relationship) }}" />
+                                        value="{{ old('customer.references.' . $loop->index . '.relationship', $reference->relationship ?? '') }}" />
                                     <x-input-error for="customer.references.{{ $loop->index }}.relationship" />
                                 </x-input-group>
 

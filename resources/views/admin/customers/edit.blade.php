@@ -31,7 +31,7 @@
                             <x-input-group>
                                 <x-label for="first_name" value="{{ __('First Name') }}" />
                                 <x-input2 id="first_name" type="text" name="customer[details][first_name]"
-                                    value="{{ old('customer.details.first_name', $customer->details?->first_name) }}" />
+                                    value="{{ old('customer.details.first_name', $customer->details?->first_name ?? '') }}" />
                                 {{-- Use $customer --}}
                                 <x-input-error for="customer.details.first_name" />
                             </x-input-group>
@@ -39,7 +39,7 @@
                             <x-input-group>
                                 <x-label for="last_name" value="{{ __('Last Name') }}" />
                                 <x-input2 id="last_name" type="text" name="customer[details][last_name]"
-                                    value="{{ old('customer.details.last_name', $customer->details?->last_name) }}" />
+                                    value="{{ old('customer.details.last_name', $customer->details?->last_name ?? '') }}" />
                                 {{-- Use $customer --}}
                                 <x-input-error for="customer.details.last_name" />
                             </x-input-group>
@@ -47,14 +47,14 @@
                             <x-input-group>
                                 <x-label for="NID" value="{{ __('NID') }}" />
                                 <x-input2 id="NID" type="text" name="customer[NID]"
-                                    value="{{ old('customer.NID', $customer->NID) }}" /> {{-- Use $customer --}}
+                                    value="{{ old('customer.NID', $customer->NID ?? '') }}" /> {{-- Use $customer --}}
                                 <x-input-error for="customer.NID" />
                             </x-input-group>
 
                             <x-input-group>
                                 <x-label for="birthday" value="{{ __('Birthday') }}" />
                                 <x-input2 id="birthday" type="date" name="customer[details][birthday]"
-                                    value="{{ old('customer.details.birthday', $customer->details?->birthday) }}" />
+                                    value="{{ old('customer.details.birthday', $customer->details?->birthday ?? '') }}" />
                                 {{-- Use $customer --}}
                                 <x-input-error for="customer.details.birthday" />
                             </x-input-group>
@@ -81,7 +81,7 @@
                             <x-input-group>
                                 <x-label for="email" value="{{ __('Email') }}" />
                                 <x-input2 id="email" type="email" name="customer[details][email]"
-                                    value="{{ old('customer.details.email', $customer->details?->email) }}" />
+                                    value="{{ old('customer.details.email', $customer->details?->email ?? '') }}" />
                                 {{-- Use $customer --}}
                                 <x-input-error for="customer.details.email" />
                             </x-input-group>
@@ -117,7 +117,7 @@
                             <x-input-group>
                                 <x-label for="nationality" value="{{ __('Nationality') }}" />
                                 <x-input2 id="nationality" type="text" name="customer[details][nationality]"
-                                    value="{{ old('customer.details.nationality', $customer->details?->nationality) }}" />
+                                    value="{{ old('customer.details.nationality', $customer->details?->nationality ?? '') }}" />
                                 {{-- Use $customer --}}
                                 <x-input-error for="customer.details.nationality" />
                             </x-input-group>
@@ -351,7 +351,7 @@
                             <x-input-group>
                                 <x-label for="company_name" value="{{ __('Company') }}" />
                                 <x-input2 id="company_name" type="text" name="customer[company][name]"
-                                    value="{{ old('customer.company.name', $customer->company?->name) }}" />
+                                    value="{{ old('customer.company.name', $customer->company?->name ?? '') }}" />
                                 {{-- Use $customer --}}
                                 <x-input-error for="customer.company.name" />
                             </x-input-group>
@@ -381,14 +381,14 @@
                             <x-input-group>
                                 <x-label for="role" value="{{ __('Role') }}" />
                                 <x-input2 id="role" type="text" name="customer[jobInfo][role]"
-                                    value="{{ old('customer.jobInfo.role', $customer->jobInfo?->role) }}" />
+                                    value="{{ old('customer.jobInfo.role', $customer->jobInfo?->role ?? '') }}" />
                                 {{-- Use $customer --}}
                                 <x-input-error for="customer.jobInfo.role" />
                             </x-input-group>
                             <x-input-group>
                                 <x-label for="start_date" value="{{ __('Start Date') }}" />
                                 <x-input2 id="start_date" type="date" name="customer[jobInfo][start_date]"
-                                    value="{{ old('customer.jobInfo.start_date', $customer->jobInfo?->start_date) }}" />
+                                    value="{{ old('customer.jobInfo.start_date', $customer->jobInfo?->start_date ?? '') }}" />
                                 {{-- Use $customer --}}
                                 <x-input-error for="customer.jobInfo.start_date" />
                             </x-input-group>
@@ -396,7 +396,7 @@
                                 <x-label for="salary" value="{{ __('Salary') }}" />
                                 <x-input2 id="salary" type="number" step="0.01"
                                     name="customer[jobInfo][salary]"
-                                    value="{{ old('customer.jobInfo.salary', $customer->jobInfo?->salary) }}" />
+                                    value="{{ old('customer.jobInfo.salary', $customer->jobInfo?->salary ?? '') }}" />
                                 {{-- Use $customer --}}
                                 <x-input-error for="customer.jobInfo.salary" />
                             </x-input-group>
@@ -440,7 +440,7 @@
                             <x-input-group>
                                 <x-label for="payment_bank" value="{{ __('Payment Bank') }}" />
                                 <x-input2 id="payment_bank" type="text" name="customer[jobInfo][payment_bank]"
-                                    value="{{ old('customer.jobInfo.payment_bank', $customer->jobInfo?->payment_bank) }}" />
+                                    value="{{ old('customer.jobInfo.payment_bank', $customer->jobInfo?->payment_bank ?? '') }}" />
                                 {{-- Use $customer --}}
                                 <x-input-error for="customer.jobInfo.payment_bank" />
                             </x-input-group>
@@ -448,7 +448,7 @@
                             <x-input-group>
                                 <x-label for="other_incomes" value="{{ __('Other Incomes') }}" />
                                 <x-input2 id="other_incomes" type="text" name="customer[jobInfo][other_incomes]"
-                                    value="{{ old('customer.jobInfo.other_incomes', $customer->jobInfo?->other_incomes) }}" />
+                                    value="{{ old('customer.jobInfo.other_incomes', $customer->jobInfo?->other_incomes ?? '') }}" />
                                 {{-- Use $customer --}}
                                 <x-input-error for="customer.jobInfo.other_incomes" />
                             </x-input-group>
@@ -456,14 +456,14 @@
                                 <x-label for="other_incomes_source" value="{{ __('Other Incomes Source') }}" />
                                 <x-input2 id="other_incomes_source" type="text"
                                     name="customer[jobInfo][other_incomes_source]"
-                                    value="{{ old('customer.jobInfo.other_incomes_source', $customer->jobInfo?->other_incomes_source) }}" />
+                                    value="{{ old('customer.jobInfo.other_incomes_source', $customer->jobInfo?->other_incomes_source ?? '') }}" />
                                 {{-- Use $customer --}}
                                 <x-input-error for="customer.jobInfo.other_incomes_source" />
                             </x-input-group>
                             <x-input-group>
                                 <x-label for="schedule" value="{{ __('Schedule') }}" />
                                 <x-input2 id="schedule" type="text" name="customer[jobInfo][schedule]"
-                                    value="{{ old('customer.jobInfo.schedule', $customer->jobInfo?->schedule) }}" />
+                                    value="{{ old('customer.jobInfo.schedule', $customer->jobInfo?->schedule ?? '') }}" />
                                 {{-- Use $customer --}}
                                 <x-input-error for="customer.jobInfo.schedule" />
                             </x-input-group>
@@ -472,7 +472,7 @@
                                 <x-label for="supervisor_name" value="{{ __('Supervisor Name') }}" />
                                 <x-input2 id="supervisor_name" type="text"
                                     name="customer[jobInfo][supervisor_name]"
-                                    value="{{ old('customer.jobInfo.supervisor_name', $customer->jobInfo?->supervisor_name) }}" />
+                                    value="{{ old('customer.jobInfo.supervisor_name', $customer->jobInfo?->supervisor_name ?? '') }}" />
                                 {{-- Use $customer --}}
                                 <x-input-error for="customer.jobInfo.supervisor_name" />
                             </x-input-group>
@@ -500,7 +500,7 @@
                                         value="{{ __('Name') }}" />
                                     <x-input2 id="reference_name_{{ $loop->index }}" type="text"
                                         name="customer[references][{{ $loop->index }}][name]"
-                                        value="{{ old('customer.references.' . $loop->index . '.name', $reference->name) }}" />
+                                        value="{{ old('customer.references.' . $loop->index . '.name', $reference->name ?? '') }}" />
                                     <x-input-error for="customer.references.{{ $loop->index }}.name" />
                                 </x-input-group>
 
@@ -509,7 +509,7 @@
                                         value="{{ __('Occupation') }}" />
                                     <x-input2 id="reference_occupation_{{ $loop->index }}" type="text"
                                         name="customer[references][{{ $loop->index }}][occupation]"
-                                        value="{{ old('customer.references.' . $loop->index . '.occupation', $reference->occupation) }}" />
+                                        value="{{ old('customer.references.' . $loop->index . '.occupation', $reference->occupation ?? '') }}" />
                                     <x-input-error for="customer.references.{{ $loop->index }}.occupation" />
                                 </x-input-group>
 
@@ -518,7 +518,7 @@
                                         value="{{ __('Relationship') }}" />
                                     <x-input2 id="reference_relationship_{{ $loop->index }}" type="text"
                                         name="customer[references][{{ $loop->index }}][relationship]"
-                                        value="{{ old('customer.references.' . $loop->index . '.relationship', $reference->relationship) }}" />
+                                        value="{{ old('customer.references.' . $loop->index . '.relationship', $reference->relationship ?? '') }}" />
                                     <x-input-error for="customer.references.{{ $loop->index }}.relationship" />
                                 </x-input-group>
 
