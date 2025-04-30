@@ -27,6 +27,7 @@ class CustomerFinancialInfoFactory extends Factory
       'household_expenses' => $this->faker->randomFloat(2, 0, 999999),
       'labor_benefits' => $this->faker->randomFloat(2, 0, 999999),
       'guarantee_assets' => $this->faker->randomFloat(2, 0, 999999),
+      'mode_of_transport' => $this->faker->randomElement(['public_transportation', 'own_car', 'own_motorcycle', 'bicycle', 'other']),
       'customer_id' => $this->faker->randomElement(\App\Models\Customer::pluck('id')),
 
     ];

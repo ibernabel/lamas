@@ -12,14 +12,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
-class CostumerController extends Controller // Renamed class
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // TODO: Implement view for listing customers
         return view('admin.customers.index'); // Changed view path
     }
 
@@ -28,7 +27,6 @@ class CostumerController extends Controller // Renamed class
      */
     public function datatable()
     {
-        // TODO: Implement datatable logic for customers
         try {
             $query = Customer::with([
                 'details:id,customer_id,first_name,last_name',

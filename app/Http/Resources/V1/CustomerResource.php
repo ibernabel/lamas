@@ -41,7 +41,7 @@ class CustomerResource extends JsonResource
                     'birthday' => $this->details->birthday,
                     'maritalStatus' => $this->details->marital_status,
                     'nationality' => $this->details->nationality,
-                    'housingType' => $this->details->housing_type,
+                    'housingPossessionType' => $this->details->housing_possession_type,
                     'gender' => $this->details->gender,
                     'educationLevel' => $this->details->education_level,
                     'moveInDate' => $this->details->move_in_date,
@@ -67,7 +67,7 @@ class CustomerResource extends JsonResource
             'vehicle' => $this->whenLoaded('vehicle', function () {
                 return [
                     'id' => $this->vehicle->id,
-                    'vehicleType' => $this->vehicle->vehicle_type,
+                    'vehiclePossessionType' => $this->vehicle->vehicle_possession_type,
                     'vehicleBrand' => $this->vehicle->vehicle_brand,
                     'vehicleModel' => $this->vehicle->vehicle_model,
                     'vehicleYear' => $this->vehicle->vehicle_year,

@@ -81,7 +81,7 @@ class LoanApplicationResource extends JsonResource
             'marital_status' => $this->customer->details->marital_status,
             'education_level' => $this->customer->details->education_level,
             'nationality' => $this->customer->details->nationality,
-            'housing_type' => $this->customer->details->housing_type,
+            'housing_possession_type' => $this->customer->details->housing_possession_type,
             'move_in_date' => $this->customer->details->move_in_date,
             'phones' => $this->customer->details->phones->isNotEmpty() ?  $this->customer->details->phones->map(fn($phone) => [
               'id' => $phone->id,
@@ -145,7 +145,7 @@ class LoanApplicationResource extends JsonResource
             'vehicle_model' => $this->customer->vehicle->vehicle_model,
             'vehicle_year' => $this->customer->vehicle->vehicle_year,
             'vehicle_color' => $this->customer->vehicle->vehicle_color,
-            'vehicle_type' => $this->customer->vehicle->vehicle_type,
+            'vehicle_possession_type' => $this->customer->vehicle->vehicle_possession_type,
             'vehicle_plate_number' => $this->customer->vehicle->vehicle_plate_number,
             'is_financed' => $this->customer->vehicle->is_financed,
             'is_owned' => $this->customer->vehicle->is_owned,

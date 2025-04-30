@@ -56,7 +56,7 @@ class CustomerRequest extends FormRequest
             ],
             'customer.details.marital_status' => ['required', 'in:single,married,divorced,widowed,other'],
             'customer.details.nationality' => 'sometimes|nullable|string|max:100',
-            'customer.details.housing_type' => ['required', 'in:owned,rented,mortgaged,other'],
+            'customer.details.housing_possession_type' => ['required', 'in:owned,rented,mortgaged,other'],
 
             // Customer Optional Info
             'customer.details.gender' => 'sometimes|nullable|in:male,female',
@@ -101,7 +101,7 @@ class CustomerRequest extends FormRequest
             'customer.details.addresses.*.type' => 'required|in:home,work,billing,shipping', // Made required
 
             // Vehicle (Optional)
-            'customer.vehicle.vehicle_type' => 'sometimes|nullable|required_with:customer.vehicle.vehicle_brand|in:owned,rented,financed,shared,leased,borrowed,none,other',
+            'customer.vehicle.vehicle_possession_type' => 'sometimes|nullable|required_with:customer.vehicle.vehicle_brand|in:owned,rented,financed,shared,leased,borrowed,none,other',
             'customer.vehicle.vehicle_brand' => 'sometimes|nullable|string|max:100',
             'customer.vehicle.vehicle_model' => 'sometimes|nullable|string|max:100',
             'customer.vehicle.vehicle_year' => [

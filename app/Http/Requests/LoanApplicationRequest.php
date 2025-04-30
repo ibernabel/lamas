@@ -86,7 +86,7 @@ class LoanApplicationRequest extends FormRequest
       ],
       'customer.details.marital_status' => [$this->isMethod('POST') ? 'required' : 'sometimes', 'in:single,married,divorced,widowed,other'],
       'customer.details.nationality' => 'sometimes|string|max:100',
-      'customer.details.housing_type' => [$this->isMethod('POST') ? 'required' : 'sometimes', 'in:owned,rented,mortgaged,other'],
+      'customer.details.housing_possession_type' => [$this->isMethod('POST') ? 'required' : 'sometimes', 'in:owned,rented,mortgaged,other'],
 
       // Customer Optional Info
       'customer.details.gender' => 'sometimes|nullable|in:male,female',
@@ -131,7 +131,7 @@ class LoanApplicationRequest extends FormRequest
       'customer.details.addresses.*.type' => 'sometimes|in:home,work,billing,shipping',
 
       // Vehicle (Optional)
-      'customer.vehicle.vehicle_type' => 'sometimes|nullable|required_with:customer.vehicle.vehicle_brand|in:owned,rented,financed,shared,leased,borrowed,none,other',
+      'customer.vehicle.vehicle_possession_type' => 'sometimes|nullable|required_with:customer.vehicle.vehicle_brand|in:owned,rented,financed,shared,leased,borrowed,none,other',
       'customer.vehicle.vehicle_brand' => 'sometimes|nullable|string|max:100',
       'customer.vehicle.vehicle_model' => 'sometimes|nullable|string|max:100',
       'customer.vehicle.vehicle_year' => [

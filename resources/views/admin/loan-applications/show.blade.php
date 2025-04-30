@@ -51,7 +51,7 @@
                             ->join(', ')
                         : __('No address available')" />
 
-                    <x-card.detail-item label="Tipo de vivienda" :value="$loanApplication?->customer?->details?->housing_type" />
+                    <x-card.detail-item label="Tipo de vivienda" :value="$loanApplication?->customer?->details?->housing_possession_type" />
                     <x-card.detail-item label="Reside desde" :value="$loanApplication?->customer?->details?->move_in_date" />
                     <x-card.detail-item label="Género" :value="__($loanApplication?->customer?->details?->gender)" />
                     <x-card.detail-item label="Educación" :value="$loanApplication?->customer?->details?->education_level" />

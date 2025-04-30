@@ -213,28 +213,28 @@
                             </x-input-group>
 
                             <x-input-group>
-                                <x-label for="housing_type" value="{{ __('Housing Type') }}" />
-                                <x-select id="housing_type" name="customer[details][housing_type]" required>
+                                <x-label for="housing_possession_type" value="{{ __('Housing Type') }}" />
+                                <x-select id="housing_possession_type" name="customer[details][housing_possession_type]" required>
                                     <option value="">{{ __('Select housing type') }}</option>
                                     <option value="owned"
-                                        {{ old('customer.details.housing_type') == 'owned' ? 'selected' : '' }}>
+                                        {{ old('customer.details.housing_possession_type') == 'owned' ? 'selected' : '' }}>
                                         {{ __('Owned') }}
                                     </option>
                                     <option value="rented"
-                                        {{ old('customer.details.housing_type') == 'rented' ? 'selected' : '' }}>
+                                        {{ old('customer.details.housing_possession_type') == 'rented' ? 'selected' : '' }}>
                                         {{ __('Rented') }}
                                     </option>
                                     <option value="mortgaged"
-                                        {{ old('customer.details.housing_type') == 'mortgaged' ? 'selected' : '' }}>
+                                        {{ old('customer.details.housing_possession_type') == 'mortgaged' ? 'selected' : '' }}>
                                         {{ __('Mortgaged') }}
                                     </option>
                                     <option value="other"
-                                        {{ old('customer.details.housing_type') == 'other' ? 'selected' : '' }}>
+                                        {{ old('customer.details.housing_possession_type') == 'other' ? 'selected' : '' }}>
                                         {{ __('Other') }}
                                     </option>
                                 </x-select>
 
-                                <x-input-error for="customer.details.housing_type" />
+                                <x-input-error for="customer.details.housing_possession_type" />
                             </x-input-group>
 
                             <x-input-group>
