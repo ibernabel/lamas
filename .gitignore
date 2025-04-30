@@ -111,7 +111,9 @@ Thumbs.db
 *.crt
 *.csr
 
+# Custom files and directories
 LOAN_APPLICATION_VALIDATION_MIGRATION_PLAN.md
 app/Http/Controllers/LoanApplicationController.old.php
 plans/
 datos_de_prueba/
+backup/
