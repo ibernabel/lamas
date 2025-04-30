@@ -14,15 +14,15 @@ class CustomerReference extends Model
 
     protected $fillable = [
         'name',
+        'nid',
+        'email',
         'relationship',
-        'is_who_referred',
-        'reference_email',
         'reference_since',
         'is_active',
         'occupation',
+        'is_who_referred',
         'customer_id',
         'type',
-        'nid',
         'address',
         'addresses',
         'phones',

@@ -13,18 +13,18 @@ return new class extends Migration
     {
         Schema::create('customer_job_info', function (Blueprint $table) {
             $table->id();
-            $table->string('role');
-            $table->string('level');
-            $table->date('start_date');
-            $table->float('salary');
+            $table->string('role')->default('employee');
+            $table->string('level')->nullable();
+            $table->date('start_date')->default('1900-01-01');
+            $table->integer('salary')->default(1);
             $table->float('other_incomes')->nullable();
             $table->string('other_incomes_source')->nullable();
-            $table->string('payment_type');
-            $table->string('payment_frequency');
-            $table->string('payment_bank');
-            $table->string('payment_account_number');
-            $table->string('schedule');
-            $table->string('supervisor_name');
+            $table->string('payment_type')->nullable();
+            $table->string('payment_frequency')->nullable();
+            $table->string('payment_bank')->nullable();
+            $table->string('payment_account_number')->nullable();
+            $table->string('schedule')->nullable();
+            $table->string('supervisor_name')->nullable();
             $table->boolean('is_self_employed')->default(false);
 
             $table->foreignId('customer_id')

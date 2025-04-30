@@ -36,7 +36,7 @@ class CreditRiskSeeder extends Seeder
 
       // Batch insert instead of multiple single inserts
       foreach (array_chunk($risks, 50) as $chunk) {
-        DB::table('credit_risk_loan_application')->insert($chunk);
+        DB::table('credit_risks')->insert($chunk);
       }
 
       DB::commit();

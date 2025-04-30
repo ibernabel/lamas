@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('loan_application_details', function (Blueprint $table) {
             $table->id();
-            $table->integer('amount');
-            $table->integer('term');
-            $table->integer('rate');
-            $table->float('quota');
-            $table->enum('frecuency',["daily", "weekly", "bi-weekly", "fortnightly", "monthly"]);
-            $table->string('purpose');
-            $table->string('customer_comment');
+            $table->integer('amount')->default(0); // Added default
+            $table->integer('term')->default(0); // Added default
+            $table->integer('rate')->default(0); // Added default
+            $table->float('quota')->nullable(); // Added nullable
+            $table->enum('frequency',["daily", "weekly", "bi-weekly", "fortnightly", "monthly"])->default('monthly'); // Renamed column and added default
+            $table->string('purpose')->nullable(); // Added nullable
+            $table->string('customer_comment')->nullable(); // Added nullable
 
             $table->foreignId('loan_application_id')
                   ->constrained('loan_applications')

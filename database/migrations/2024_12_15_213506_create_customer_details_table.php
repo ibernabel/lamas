@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('customer_details', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');
-            $table->string('last_name');
+            $table->string('last_name')->nullable(); // Added nullable() here
             $table->string('email')->unique();
             $table->string('nickname')->nullable();
             $table->date('birthday')->nullable();
@@ -22,9 +22,10 @@ return new class extends Migration
             $table->enum('marital_status', ['single', 'married', 'divorced', 'widowed', 'other'])->nullable();
             $table->enum('education_level', ['primary','secondary','high_school', 'bachelor', 'postgraduate', 'master', 'doctorate', 'other'])->nullable();
             $table->string('nationality')->nullable();
-            $table->enum('housing_type', ['owned', 'rented', 'mortgaged','other'])->nullable();
+            $table->enum('housing_possession_type', ['owned', 'rented', 'mortgaged','other'])->nullable();
+            $table->enum('housing_type', ['house', 'apartment', 'other'])->nullable();
             $table->date('move_in_date')->nullable();
-            //$table->enum('vehicle_type', ['owned', 'rented', 'financed', 'none', 'other'])->nullable();
+            // Ensure vehicle_type line is removed or stays commented out
 
             $table->foreignId('customer_id')
                 ->constrained('customers')

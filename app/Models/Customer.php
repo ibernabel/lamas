@@ -11,7 +11,7 @@ class Customer extends Model
     use HasFactory;
 
     protected $table = 'customers';
-    
+
     protected $fillable = [
         'NID',
         'is_referred',
@@ -68,5 +68,10 @@ class Customer extends Model
     public function vehicle()
     {
       return $this->hasOne(CustomerVehicle::class);
+    }
+
+    public function vehicles()
+    {
+      return $this->hasMany(CustomerVehicle::class);
     }
 }

@@ -58,7 +58,8 @@ class CustomerDetailFactory extends Factory
         'Salvadoran',
         'Guatemalan'
       ]),
-      'housing_type' => $this->faker->randomElement(['owned', 'rented', 'mortgaged']),
+      'housing_possession_type' => $this->faker->randomElement(['owned', 'rented', 'mortgaged']),
+      'housing_type' => $this->faker->randomElement(['house', 'apartment', 'other']),
       'move_in_date' => $this->faker->date,
       'customer_id' => $this->faker->randomElement(\App\Models\Customer::pluck('id')),
     ];

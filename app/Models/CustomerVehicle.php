@@ -22,15 +22,15 @@ class CustomerVehicle extends Model
         'is_leased',
         'is_rented',
         'is_shared',
+        'customer_id',
     ];
     protected $hidden = [
       'created_at',
       'updated_at',
     ];
-    
+
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'customer_id');
     }
-
 }

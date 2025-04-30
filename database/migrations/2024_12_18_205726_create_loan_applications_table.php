@@ -24,6 +24,8 @@ return new class extends Migration
                   ->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('set null');
+            $table->unsignedBigInteger('user_id')->nullable()->after('customer_id')->comment('ID of the user associated with the loan application');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

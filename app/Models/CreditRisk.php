@@ -11,7 +11,7 @@ class CreditRisk extends Model
 {
     use HasFactory;
 
-    protected $table = 'credit_risk_loan_application';
+    protected $table = 'credit_risks';
 
     protected $fillable = [
         'risk_category_id',
