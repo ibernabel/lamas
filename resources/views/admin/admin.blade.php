@@ -91,7 +91,7 @@
                     </div>
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Activos</p>
-                        <p class="text-md font-semibold text-gray-800 dark:text-gray-200">{{ \App\Models\Customer::where('status', 'active')->count() }}</p>
+                        <p class="text-md font-semibold text-gray-800 dark:text-gray-200">{{ \App\Models\Customer::where('is_active', true)->count() }}</p>
                     </div>
                 </div>
             </div>
@@ -107,7 +107,7 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Cartera</p>
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Carteras</p>
                         <p class="text-lg font-semibold text-gray-800 dark:text-gray-200">{{ \App\Models\Portfolio::count() }}</p>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
                 <div class="flex justify-between">
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Préstamos activos</p>
-                        <p class="text-md font-semibold text-gray-800 dark:text-gray-200">{{ \App\Models\LoanApplication::where('status', 'active')->count() }}</p>
+                        <p class="text-md font-semibold text-gray-800 dark:text-gray-200">{{ \App\Models\LoanApplication::where('is_active', true)->count() }}</p>
                     </div>
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Riesgo promedio</p>
@@ -198,10 +198,10 @@
                             @foreach(\App\Models\LoanApplication::with('customer')->latest()->take(5)->get() as $application)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $application->customer->name ?? 'N/A' }}</div>
+                                    <div class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $application->customer->details->first_name . ' ' . $application->customer->details->last_name ?? 'N/A' }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900 dark:text-gray-100">{{ number_format($application->amount, 2) }}</div>
+                                    <div class="text-sm text-gray-900 dark:text-gray-100">{{ number_format($application->details->amount, 2) }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
@@ -217,7 +217,7 @@
                                     <div class="text-sm text-gray-500 dark:text-gray-400">{{ $application->created_at->format('d/m/Y') }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="#" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Ver</a>
+                                    <a href="{{ route('loan-applications.show', $application->id) }}" class="btn btn-sm btn-primary">Ver</a>
                                 </td>
                             </tr>
                             @endforeach

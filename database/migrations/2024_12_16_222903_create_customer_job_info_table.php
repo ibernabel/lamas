@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('role')->default('employee');
             $table->string('level')->nullable();
-            $table->date('start_date')->default('1900-01-01');
-            $table->integer('salary')->default(1);
+            $table->date('start_date')->nullable();
+            $table->integer('salary')->nullable();
             $table->float('other_incomes')->nullable();
             $table->string('other_incomes_source')->nullable();
             $table->string('payment_type')->nullable();

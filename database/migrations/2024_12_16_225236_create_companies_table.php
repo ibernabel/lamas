@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique()->nullable()->default(null);
-            $table->string('type')->nullable()->default(null);
-            $table->string('rnc')->unique()->nullable()->default(null);
-            $table->string('website')->nullable()->default(null);
-            $table->string('departmet')->nullable()->default(null);
-            $table->string('branch')->nullable()->default(null);
+            $table->string('email')->unique()->nullable();
+            $table->string('type')->nullable();
+            $table->string('rnc')->unique()->nullable();
+            $table->string('website')->nullable();
+            $table->string('departmet')->nullable();
+            $table->string('branch')->nullable();
 
             $table->foreignId('customer_id')->constrained('customers')->cascadeOnDelete();
             $table->timestamps();

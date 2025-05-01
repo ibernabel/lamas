@@ -21,7 +21,7 @@ class LoanApplicationDetailFactory extends Factory
             'term' => $this->faker->numberBetween(1, 12),
             'rate' => $this->faker->numberBetween(1, 10),
             'quota' => $this->faker->randomFloat(2, 100, 1000),
-            'frecuency' => $this->faker->randomElement(["daily", "weekly", "bi-weekly", "fortnightly", "monthly"]),
+            'frequency' => $this->faker->randomElement(["daily", "weekly", "bi-weekly", "fortnightly", "monthly"]),
             'purpose' => $this->faker->sentence,
             'customer_comment' => $this->faker->sentence,
             'loan_application_id' => $this->faker->randomElement(\App\Models\LoanApplication::pluck('id')),

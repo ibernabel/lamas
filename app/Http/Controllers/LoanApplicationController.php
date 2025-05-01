@@ -286,7 +286,7 @@ class LoanApplicationController extends Controller
                     $query->limit(1);
                 },
                 'customer.portfolio.broker.user',
-                'risks',
+                //'credit_risks',
                 'notes'
             ];
 
@@ -327,7 +327,7 @@ class LoanApplicationController extends Controller
                 'customer.financialInfo',
                 'customer.references',
                 'customer.portfolio.broker.user',
-                'risks',
+                //'risks',
                 'notes'
             ];
 

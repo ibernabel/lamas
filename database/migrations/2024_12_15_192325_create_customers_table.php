@@ -16,7 +16,7 @@ return new class extends Migration
       $table->string('NID')
         ->unique()
         ->comment('National Identification Number (NID)');
-      $table->string('lead_channel')
+      $table->string('lead_channel')->nullable()
         ->comment('Channel used by the customer to reach us');
       $table->boolean('is_referred')
         ->default(false)

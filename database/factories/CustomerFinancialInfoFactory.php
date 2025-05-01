@@ -17,10 +17,8 @@ class CustomerFinancialInfoFactory extends Factory
   public function definition(): array
   {
     return [
-      'other_incomes' => $this->faker->randomFloat(2, 0, 999999),
       'total_incomes' => $this->faker->randomFloat(2, 0, 999999),
       'discounts' => $this->faker->randomFloat(2, 0, 999999),
-      'housing_type' => $this->faker->randomElement(['rented', 'owned', 'financed', 'borrowed']),
       'monthly_housing_payment' => $this->faker->randomFloat(2, 0, 999999),
       'total_debts' => $this->faker->randomFloat(2, 0, 999999),
       'loan_installments' => $this->faker->randomFloat(2, 0, 999999),

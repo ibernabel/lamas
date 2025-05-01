@@ -67,8 +67,7 @@ class CustomerSeeder extends Seeder
     {
         return LoanApplication::factory()
             ->has(LoanApplicationDetail::factory(), 'details')
-            ->has(LoanApplicationNote::factory()->count(self::LOAN_APPLICATION_NOTES_COUNT), 'notes')
-            ->has(CreditRisk::factory()->count(self::CREDIT_RISK_COUNT), 'credit_risks');
+            ->has(LoanApplicationNote::factory()->count(self::LOAN_APPLICATION_NOTES_COUNT), 'notes');
     }
     /**
      * Create References for Customer

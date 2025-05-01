@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('brokers', function (Blueprint $table) {
             $table->id();
-            $table->string('broker_seniority');
+            $table->string('broker_seniority')->nullable()
+                ->comment('Seniority of the broker');
+            $table->string('broker_type')->nullable()
+                ->comment('Type of the broker');
             $table->foreignId('user_id')->constrained()->onDelete('cascade')
             ->onUpdate('cascade');
             $table->timestamps();

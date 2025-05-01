@@ -20,19 +20,19 @@ return new class extends Migration
             $table->string('password');
             // Additions start here
             $table->text('two_factor_secret')
-                  ->after('password') // Keep ->after() for clarity, though not strictly needed on create
                   ->nullable();
             $table->text('two_factor_recovery_codes')
-                  ->after('two_factor_secret')
                   ->nullable();
             // Check if Fortify confirms 2FA
             if (Fortify::confirmsTwoFactorAuthentication()) {
                 $table->timestamp('two_factor_confirmed_at')
-                      ->after('two_factor_recovery_codes')
                       ->nullable();
             }
             // Additions end here
             $table->rememberToken();
+            $table->boolean('is_approved')->default(false);
+            $table->boolean('is_active')->default(true);
+
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();

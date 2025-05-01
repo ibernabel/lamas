@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->string('street');
-            $table->string('street2')->nullable()->default('');
-            $table->string('city')->nullable()->default('');
-            $table->string('state')->nullable()->default('');
+            $table->string('street2')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
             $table->enum('type', ['home', 'work', 'billing', 'shipping'])->nullable()->default('home');
-            $table->string('postal_code')->nullable()->default('');
-            $table->string('country')->nullable()->default('');
+            $table->string('postal_code')->nullable();
+            $table->string('country')->nullable();
             $table->text('references', 500)->nullable();
             $table->timestamps();
         });

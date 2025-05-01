@@ -20,11 +20,16 @@ return new class extends Migration
             $table->boolean('is_rejected')->default(false);
             $table->boolean('is_archived')->default(false);
             $table->boolean('is_new')->default(true);
+            $table->boolean('is_edited')->default(false);
+            $table->boolean('is_active')->default(true);
+            $table->dateTime('approved_at')->nullable();
+            $table->dateTime('rejected_at')->nullable();
+            $table->dateTime('archived_at')->nullable();
             $table->foreignId('customer_id')->nullable()
                   ->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('set null');
-            $table->unsignedBigInteger('user_id')->nullable()->after('customer_id')->comment('ID of the user associated with the loan application');
+            $table->unsignedBigInteger('user_id')->nullable()->comment('ID of the user associated with the loan application');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
