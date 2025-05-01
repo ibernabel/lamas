@@ -16,7 +16,7 @@ class InitialSeeder extends Seeder
             CreditRiskSeeder::class,
             RoleSeeder::class,
             PermissionSeeder::class,
-            //UserSeeder::class,
+            UserSeeder::class,
             BrokerSeeder::class,
             PortfolioSeeder::class,
 
