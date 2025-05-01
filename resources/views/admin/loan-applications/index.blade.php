@@ -36,12 +36,6 @@
         </div>
     </div>
 
-
-
-    <x-slot name="footer">
-        <p>{{ __('Footer') }}</p>
-    </x-slot>
-
     <x-slot name="js">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
@@ -180,5 +174,7 @@
             });
         </script>
     </x-slot>
-
+    <x-slot name="footer">
+        <p>{{ config('app.name') }}</p>
+    </x-slot>
 </x-admin.app-layout>

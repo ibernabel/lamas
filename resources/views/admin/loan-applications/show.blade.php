@@ -179,6 +179,6 @@
         </x-button2>
     </div>
     <x-slot name="footer">
-        <p>{{ __('Footer') }}</p>
+        <p>{{ config('app.name') }}</p>
     </x-slot>
 </x-admin.app-layout>

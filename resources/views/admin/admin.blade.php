@@ -491,5 +491,7 @@
         });
     </script>
     @endpush
-
+    <x-slot name="footer">
+        <p>{{ config('app.name') }}</p>
+    </x-slot>
 </x-admin.app-layout>

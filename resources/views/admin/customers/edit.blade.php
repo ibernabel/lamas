@@ -558,6 +558,6 @@
     </div> {{-- End max-w-5xl --}}
 
     <x-slot name="footer">
-        <p>{{ __('Footer') }}</p>
+        <p>{{ config('app.name') }}</p>
     </x-slot>
 </x-admin.app-layout>

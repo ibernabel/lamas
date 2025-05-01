@@ -197,7 +197,7 @@ return [
     'classes_content_wrapper' => 'bg-ghostWhite ',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-light-secondary elevation-2', // Changed for consistency with custom CSS
+    'classes_sidebar' => 'sidebar-light-secondary elevation-4', // Changed for consistency with custom CSS
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light shadow-md',
     'classes_topnav_nav' => 'navbar-expand ',
