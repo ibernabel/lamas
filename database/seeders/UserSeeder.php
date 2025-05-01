@@ -19,9 +19,8 @@ class UserSeeder extends Seeder
             'email' => env('MAIN_ADMIN_EMAIL'),
             'password' => bcrypt(env('MAIN_ADMIN_PASSWORD')),
             'is_approved' => true,
-            'is_active' => true,
-            'created_at' => now(),
-            'updated_at' => now()
+            'is_active' => true
+
         ])->assignRole('admin');
 
         //User::factory(10)->withPersonalTeam()->create();

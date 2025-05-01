@@ -16,22 +16,23 @@ class BrokerSeeder extends Seeder
         Broker::create([
             'broker_seniority' => 'Senior',
             'user_id' => 1
+
         ]);
-        Broker::create([
-            'broker_seniority' => 'Mid-senior',
-            'user_id' => 2
-        ]);
-        Broker::create([
-            'broker_seniority' => 'Junior',
-            'user_id' => 3
-        ]);
-        Broker::create([
-            'broker_seniority' => 'Trainee',
-            'user_id' => 4
-        ]);
-        Broker::create([
-            'broker_seniority' => 'Mid-senior',
-            'user_id' => 5
-        ]);
+        //Broker::create([
+        //    'broker_seniority' => 'Mid-senior',
+        //    'user_id' => 2
+        //]);
+        //Broker::create([
+        //    'broker_seniority' => 'Junior',
+        //    'user_id' => 3
+        //]);
+        //Broker::create([
+        //    'broker_seniority' => 'Trainee',
+        //    'user_id' => 4
+        //]);
+        //Broker::create([
+        //    'broker_seniority' => 'Mid-senior',
+        //    'user_id' => 5
+        //]);
     }
 }
