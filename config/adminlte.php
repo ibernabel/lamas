@@ -354,17 +354,46 @@ return [
             //'label_color' => 'success',
         ],
 
-        //['header' => 'account_settings'],
+        ['header' => 'account_settings'],
+        [
+            'text' => 'profile',
+            'route' => 'profile.show',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => 'change_password',
+            'route' => 'profile.show',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+        ['header' => 'users_management', 'can' => 'users.manage'],
         //[
-        //    'text' => 'profile',
-        //    'url' => 'admin/settings',
-        //    'icon' => 'fas fa-fw fa-user',
+        //    'text' => 'users_list',
+        //    'route' => 'users.index',
+        //    'icon' => 'fas fa-fw fa-users',
+        //    'can' => 'users.manage',
+        //    //'label' => 4,
+        //    //'label_color' => 'success',
         //],
         //[
-        //    'text' => 'change_password',
-        //    'url' => 'admin/settings',
-        //    'icon' => 'fas fa-fw fa-lock',
+        //    'text' => 'create_user',
+        //    'route' => 'users.create',
+        //    'icon' => 'fas fa-fw fa-user-plus',
+        //    'can' => 'users.manage',
+        //    //'label' => 4,
+        //    //'label_color' => 'success',
         //],
+        [
+            'text' => 'user_invitations',
+            'route' => 'invitations.index',
+            'icon' => 'fas fa-fw fa-user-plus',
+            'can' => 'users.manage',
+        ],
+        [
+            'text' => 'pending_users',
+            'route' => 'users.pending',
+            'icon' => 'fas fa-fw fa-user-clock',
+            'can' => 'users.manage',
+        ],
     ],
 
     /*

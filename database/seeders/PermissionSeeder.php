@@ -30,6 +30,7 @@ class PermissionSeeder extends Seeder
       Permission::create(['name' => 'user.edit'])->syncRoles([$admin, $manager]);
       Permission::create(['name' => 'user.index'])->syncRoles([$admin, $manager]);
       Permission::create(['name' => 'user.delete'])->syncRoles([$admin, $manager]);
+      Permission::create(['name' => 'users.manage'])->syncRoles([$admin, $manager]);
 
     }
 }
