@@ -117,5 +117,4 @@ app/Http/Controllers/LoanApplicationController.old.php
 plans/
 datos_de_prueba/
 backup/
-database/seeders/UserSeeder.php
 *:Zone.Identifier
