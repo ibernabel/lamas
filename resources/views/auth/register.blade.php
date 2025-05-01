@@ -6,18 +6,30 @@
 
         <x-validation-errors class="mb-4" />
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
-
-            <div>
-                <x-label for="name" value="{{ __('Name') }}" />
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+        @if (!request()->has('token') || !App\Models\UserInvitation::where('token', request()->token)->where('expires_at', '>', now())->exists())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                <strong class="font-bold">Acceso restringido!</strong>
+                <span class="block sm:inline">Necesitas una invitación válida para registrarte.</span>
             </div>
+        @else
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
 
-            <div class="mt-4">
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            </div>
+                <input type="hidden" name="invitation_token" value="{{ request()->token }}">
+
+                <div>
+                    <x-label for="name" value="{{ __('Name') }}" />
+                    <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                </div>
+
+                <div class="mt-4">
+                    <x-label for="email" value="{{ __('Email') }}" />
+                    @php
+                        $invitation = App\Models\UserInvitation::where('token', request()->token)->first();
+                        $email = $invitation ? $invitation->email : old('email');
+                    @endphp
+                    <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="$email" required readonly />
+                </div>
 
             <div class="mt-4">
                 <x-label for="password" value="{{ __('Password') }}" />
@@ -54,7 +66,8 @@
                 <x-button class="ms-4">
                     {{ __('Register') }}
                 </x-button>
-            </div>
-        </form>
+                </div>
+            </form>
+        @endif
     </x-authentication-card>
 </x-guest-layout>

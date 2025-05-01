@@ -15,6 +15,18 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    @can('user.create')
+                        <x-nav-link href="{{ route('invitations.index') }}" :active="request()->routeIs('invitations.*')">
+                            {{ __('Invitaciones') }}
+                        </x-nav-link>
+                    @endcan
+
+                    @can('user.edit')
+                        <x-nav-link href="{{ route('users.pending') }}" :active="request()->routeIs('users.pending')">
+                            {{ __('Usuarios Pendientes') }}
+                        </x-nav-link>
+                    @endcan
                 </div>
             </div>
 
@@ -142,6 +154,18 @@
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            @can('user.create')
+                <x-responsive-nav-link href="{{ route('invitations.index') }}" :active="request()->routeIs('invitations.*')">
+                    {{ __('Invitaciones') }}
+                </x-responsive-nav-link>
+            @endcan
+
+            @can('user.edit')
+                <x-responsive-nav-link href="{{ route('users.pending') }}" :active="request()->routeIs('users.pending')">
+                    {{ __('Usuarios Pendientes') }}
+                </x-responsive-nav-link>
+            @endcan
         </div>
 
         <!-- Responsive Settings Options -->

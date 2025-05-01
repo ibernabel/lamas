@@ -34,6 +34,7 @@ class User extends Authenticatable
     'name',
     'email',
     'password',
+    'is_approved',
   ];
 
   /**
@@ -67,7 +68,13 @@ class User extends Authenticatable
     return [
       'email_verified_at' => 'datetime',
       'password' => 'hashed',
+      'is_approved' => 'boolean',
     ];
+  }
+
+  public function isApproved()
+  {
+    return $this->is_approved;
   }
 
   public function promoter()
