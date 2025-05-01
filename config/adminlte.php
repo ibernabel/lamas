@@ -16,7 +16,7 @@ return [
 
     'title' => '',
     'title_prefix' => '',
-    'title_postfix' => ' | Lamas',
+    'title_postfix' => ' | ' . env('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
@@ -63,13 +63,13 @@ return [
     |
     */
 
-    'logo' => '<b>Lamas</b>',
+    'logo' => '<b>' . env('APP_NAME', 'Laravel') . '</b>',
     'logo_img' => 'img/coins-solid.svg',
     'logo_img_class' => 'brand-image mr-2',
     //'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Lamas Admin',
+    'logo_img_alt' => env('APP_NAME', 'Laravel') . ' Admin',
 
     /*
     |--------------------------------------------------------------------------
