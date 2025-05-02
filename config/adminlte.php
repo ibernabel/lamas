@@ -432,7 +432,7 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => true,
+            'active' => false, // Cambiado a false para evitar cargar desde CDN
             'files' => [
                 [
                     'type' => 'js',

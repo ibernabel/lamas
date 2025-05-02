@@ -39,8 +39,13 @@
     </x-slot>
 
     <x-slot name="js">
-        {{-- Removed CDN scripts for Bootstrap 5 and DataTables 5 --}}
-        {{-- They are now loaded via app.js (Vite) --}}
+        <!-- Cargar jQuery primero -->
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+        <!-- Cargar DataTables desde CDN como respaldo -->
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
         <script>
             // Optional: Keep timeAgo function if needed elsewhere, otherwise remove
             function timeAgo(date) {
@@ -69,10 +74,23 @@
             }
         </script>
         <script>
+            // Asegurarse de que jQuery esté disponible globalmente
+            if (typeof jQuery !== 'undefined') {
+                window.$ = window.jQuery = jQuery;
+            }
+
+            // Verificar si jQuery y DataTables están disponibles
+            console.log('jQuery disponible:', typeof jQuery !== 'undefined');
+            console.log('$ disponible:', typeof $ !== 'undefined');
+            console.log('$.fn.dataTable disponible:', typeof $.fn?.dataTable !== 'undefined');
+            console.log('DataTable script loading...');
+
             $(document).ready(function() {
+                console.log('Document ready, initializing DataTable...');
+                try {
                 $('#customersTable').DataTable({ // Changed table ID
                     "ajax": {
-                        "url": "{{ route('customers.datatable') }}", // Changed route name
+                        "url": "{{ url('/admin/customers/datatable') }}", // URL completa en lugar del nombre de la ruta
                         "error": function(xhr, error, thrown) {
                             console.error('Data Table error:', error);
                             alert('Error loading customers. Please try again.'); // Changed error message
@@ -148,6 +166,37 @@
                         }
                     }
                 });
+                } catch (error) {
+                    console.error('Error initializing DataTable:', error);
+                    alert('Error initializing DataTable: ' + error.message);
+
+                    // Intentar inicializar DataTables de forma más simple como respaldo
+                    try {
+                        console.log('Intentando inicializar DataTable de forma simple...');
+                        $('#customersTable').DataTable({
+                            "processing": true,
+                            "language": {
+                                "processing": "Procesando...",
+                                "search": "Buscar:",
+                                "lengthMenu": "Mostrar _MENU_ registros",
+                                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                                "zeroRecords": "No se encontraron resultados",
+                                "emptyTable": "No hay datos disponibles en la tabla",
+                                "paginate": {
+                                    "first": "Primero",
+                                    "previous": "Anterior",
+                                    "next": "Siguiente",
+                                    "last": "Último"
+                                }
+                            }
+                        });
+                        console.log('DataTable inicializado de forma simple con éxito');
+                    } catch (fallbackError) {
+                        console.error('Error en inicialización simple de DataTable:', fallbackError);
+                    }
+                }
             });
         </script>
     </x-slot>
