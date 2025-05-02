@@ -572,11 +572,11 @@
                                         'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Privacy Policy').'</a>',
                                 ]) !!}
                             </label>
-                            <input type="hidden" name="terms" value="accepted">
                         </div>
-                         <x-input-error for="terms" />
+                        <x-input-error for="terms" />
                     </x-card.content>
                 </x-card>--}}
+                <input type="hidden" name="terms" value="accepted">
 
 
                 <div class="sticky bottom-0 bg-white border-t border-gray-200 p-4 flex justify-end space-x-4 my-4">
