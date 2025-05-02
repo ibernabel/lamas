@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 
 Route::get('/', function () {
-  return view('welcome');
+  return view('auth.login');
 });
 Route::get('/terms', function () {
   return view('terms');
