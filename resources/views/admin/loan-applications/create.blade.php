@@ -576,7 +576,7 @@
                         <x-input-error for="terms" />
                     </x-card.content>
                 </x-card>--}}
-                <input type="hidden" name="terms" value="accepted">
+                <input type="hidden" name="terms" value="true">
 
 
                 <div class="sticky bottom-0 bg-white border-t border-gray-200 p-4 flex justify-end space-x-4 my-4">
