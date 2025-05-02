@@ -3,12 +3,9 @@
         {{ __('Loan Applications') }}
     </x-slot>
 
-    <x-slot name="css>
-        <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.css">
-    </x-slot>
+    {{-- CSS slot can be removed if no other custom CSS is needed here, or kept empty --}}
+    {{-- <x-slot name="css">
+    </x-slot> --}}
 
 
     <x-slot name="content_header">
@@ -37,12 +34,10 @@
     </div>
 
     <x-slot name="js">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
-        <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
-        <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
+        {{-- Removed CDN scripts for Bootstrap 5 and DataTables 5 --}}
+        {{-- They are now loaded via app.js (Vite) --}}
         <script>
+            // This function seems unused now as the render uses created_at_formated
             function timeAgo(date) {
                 const seconds = Math.floor((new Date() - new Date(date)) / 1000);
                 const intervals = {
