@@ -7,6 +7,19 @@ if (typeof window.jQuery === 'undefined') {
 
 import './bootstrap';
 
+// Importar Bootstrap explícitamente
+import * as bootstrap from 'bootstrap';
+window.bootstrap = bootstrap;
+
+// Inicializar los dropdowns de Bootstrap
+document.addEventListener('DOMContentLoaded', () => {
+    // Inicializar todos los dropdowns
+    const dropdownElementList = [].slice.call(document.querySelectorAll('[data-bs-toggle="dropdown"]'));
+    dropdownElementList.map(function (dropdownToggleEl) {
+        return new bootstrap.Dropdown(dropdownToggleEl);
+    });
+});
+
 // Importar AdminLTE y dependencias
 import 'overlayscrollbars';
 import 'admin-lte';
