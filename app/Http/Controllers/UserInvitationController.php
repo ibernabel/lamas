@@ -38,7 +38,7 @@ class UserInvitationController extends Controller
                 'expires_at' => now()->addDays(7),
             ]);
 
-            Mail::to($request->email)->send(new UserInvitationMail($invitation));
+            Mail::mailer('smtps')->to($request->email)->send(new UserInvitationMail($invitation));
 
             return redirect()->route('invitations.index')
                 ->with('success', 'Invitación enviada correctamente.');
