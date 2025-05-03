@@ -174,13 +174,13 @@ class LoanApplicationResource extends JsonResource
         ];
       }),
 
-      'risks' => $this->whenLoaded('risks', function () {
+      'creditRisks' => $this->whenLoaded('creditRisks', function () {
         // If RiskResource exists, use it:
         // return RiskResource::collection($this->risks);
-        return $this->risks->map(fn($risk) => [
-          'id' => $risk->id,
-          'name' => $risk->name,
-          'description' => $risk->description,
+        return $this->creditRisks->map(fn($creditRisks) => [
+          'id' => $creditRisks->id,
+          'name' => $creditRisks->name,
+          'description' => $creditRisks->description,
           // Include pivot data if necessary: $risk->pivot->...
         ]);
       }),

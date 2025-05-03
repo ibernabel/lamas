@@ -23,12 +23,9 @@ class CreditRisk extends Model
         'updated_at'
     ];
 
-    public function loanApplication(): BelongsToMany
+    public function loanApplications(): BelongsToMany
     {
         return $this->belongsToMany(LoanApplication::class);
-    }
-    public function riskCategory(): BelongsTo
-    {
-        return $this->belongsTo(CreditRiskCategory::class);
+
     }
 }

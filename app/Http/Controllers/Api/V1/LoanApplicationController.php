@@ -220,7 +220,7 @@ class LoanApplicationController extends Controller
                 'customer.financialInfo',
                 'customer.references',
                 'customer.portfolio.broker.user:id,name', // Example of loading related user info
-                'risks', // Assuming risks relationship exists
+                'creditRisks', // Assuming creditRisks relationship exists
                 'notes'  // Assuming notes relationship exists
             ]);
 

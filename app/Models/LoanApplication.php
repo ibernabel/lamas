@@ -32,9 +32,9 @@ class LoanApplication extends Model
   {
     return $this->hasOne(LoanApplicationDetail::class);
   }
-  public function creditRisks(): HasMany
+  public function creditRisks(): BelongsToMany
   {
-    return $this->hasMany(CreditRisk::class);
+    return $this->belongsToMany(CreditRisk::class);
   }
   public function notes(): HasMany
   {
