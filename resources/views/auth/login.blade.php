@@ -3,6 +3,11 @@
         <x-slot name="logo">
             <x-authentication-card-logo />
         </x-slot>
+
+        <x-slot name="appName">
+            <x-authentication-card-app-name />
+        </x-slot>
+
         <x-validation-errors class="mb-4" />
 
         @session('status')
@@ -11,7 +16,7 @@
             </div>
         @endsession
 
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('login') }} ">
             @csrf
 
             <div>
@@ -41,9 +46,9 @@
                     </a>
                 @endif
 
-                <x-button class="ms-4">
+                <x-authentication-card-button class="ms-4">
                     {{ __('Log in') }}
-                </x-button>
+                </x-authentication-card-button>
             </div>
         </form>
     </x-authentication-card>
