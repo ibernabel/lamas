@@ -4,6 +4,10 @@
             <x-authentication-card-logo />
         </x-slot>
 
+        <x-slot name="appName">
+            <x-authentication-card-app-name />
+        </x-slot>
+        
         <x-validation-errors class="mb-4" />
 
         @if (!request()->has('token') || !App\Models\UserInvitation::where('token', request()->token)->where('expires_at', '>', now())->exists())

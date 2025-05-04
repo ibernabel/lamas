@@ -4,6 +4,10 @@
             <x-authentication-card-logo />
         </x-slot>
 
+        <x-slot name="appName">
+            <x-authentication-card-app-name />
+        </x-slot>
+
         <x-validation-errors class="mb-4" />
 
         <form method="POST" action="{{ route('password.update') }}">
