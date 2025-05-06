@@ -22,19 +22,39 @@ class CustomerRequest extends FormRequest
      */
     public function rules(): array
     {
-        // Get the Customer model instance from the route parameter if it exists (for updates)
-        // Laravel's apiResource typically uses the singular resource name as the parameter
-        $customer = $this->route('customer'); // Get the customer model instance directly if route model binding is used, or the ID
+        $customer = $this->route('customer'); // Intenta obtener el modelo Customer directamente (Route Model Binding)
+        $customerIdToIgnore = null;
+        $customerDetailIdToIgnore = null;
+        $companyIdToIgnore = null;
 
-        // Get IDs to ignore for unique rules during updates
-        $customerIdToIgnore = $customer instanceof Customer ? $customer->id : $customer; // Get ID whether it's a model or just the ID
-        // Reload customer with relations if we only got the ID
-        if ($customer && !($customer instanceof Customer)) {
-             $customer = Customer::with(['details', 'company'])->find($customerIdToIgnore);
+        if ($customer instanceof Customer) {
+            // Si $customer ya es una instancia del modelo
+            if (!$customer->relationLoaded('details')) {
+                $customer->load('details');
+            }
+            if (!$customer->relationLoaded('company')) {
+                $customer->load('company');
+            }
+            $customerIdToIgnore = $customer->id;
+            $customerDetailIdToIgnore = $customer->details?->id;
+            $companyIdToIgnore = $customer->company?->id;
+        } else {
+            // Si $customer no es una instancia, podría ser un ID pasado como 'customer' o 'id' en la ruta
+            // o $this->route('customer') devolvió el ID como string en lugar del modelo.
+            $customerIdFromRoute = $this->route('customer') ?? $this->route('id');
+
+            if ($customerIdFromRoute) {
+                $customerIdToIgnore = $customerIdFromRoute;
+                // Intentar cargar la instancia del cliente para obtener los IDs de las relaciones
+                $customerInstance = Customer::with(['details', 'company'])->find($customerIdFromRoute);
+                if ($customerInstance) {
+                    $customerDetailIdToIgnore = $customerInstance->details?->id;
+                    $companyIdToIgnore = $customerInstance->company?->id;
+                    // Opcionalmente, asignar la instancia cargada a $customer si se necesita más adelante
+                    // $customer = $customerInstance;
+                }
+            }
         }
-
-        $customerDetailIdToIgnore = $customer?->details?->id;
-        $companyIdToIgnore = $customer?->company?->id;
 
         $rules = [
             // Customer Core Info
@@ -145,14 +165,14 @@ class CustomerRequest extends FormRequest
 
             // References
             'customer.references' => 'required|array|min:1',
-      'customer.references.*.name' => 'required|string|max:255',
-      'customer.references.*.relationship' => 'required|string|max:255',
-      'customer.references.*.occupation' => 'sometimes|nullable|string|max:255',
-      // 'customer.references.*.phone_number' => 'sometimes|nullable|string|max:20', // Removed old rule
-      'customer.references.*.phones' => 'required|array|min:1', // Require phones array
-      'customer.references.*.phones.*.number' => 'required|string|max:20', // Require number within phones
-      'customer.references.*.phones.*.type' => 'required|in:mobile,home', // Require type within phones
-    ];
+            'customer.references.*.name' => 'required|string|max:255',
+            'customer.references.*.relationship' => 'required|string|max:255',
+            'customer.references.*.occupation' => 'sometimes|nullable|string|max:255',
+            // 'customer.references.*.phone_number' => 'sometimes|nullable|string|max:20', // Removed old rule
+            'customer.references.*.phones' => 'required|array|min:1', // Require phones array
+            'customer.references.*.phones.*.number' => 'required|string|max:20', // Require number within phones
+            'customer.references.*.phones.*.type' => 'required|in:mobile,home', // Require type within phones
+        ];
 
         // Add specific rules for update method (PUT/PATCH)
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {

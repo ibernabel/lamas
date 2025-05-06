@@ -15,7 +15,7 @@
             </h3>
             <x-loan-status :status="$loanApplication->status" />
             <small class="text-secondary">{{ __('Date created') }}:
-                {{ $loanApplication->created_at->format('d/m/Y h:m:s a') }}
+                {{ $loanApplication->created_at->format('d/m/Y h:i:s a') }}
             </small>
             <small>
                 {{ __('Lead channel') }}: {{ $loanApplication->customer->lead_channel ?? __('No channel') }}
@@ -119,15 +119,19 @@
 
                 <x-card.content>
                     @foreach ($loanApplication?->customer?->references ?? [] as $reference)
+                        @php
+                            $is_household_member = $reference->relationship == 'household member';
+                            $relationship = $is_household_member ? __('household member') : $reference->relationship;
+                        @endphp
                         <div class="mb-4 last:mb-0">
-                            {{-- <h4 class="font-medium text-gray-900 mb-2">Referencia {{ $loop->iteration }}</h4> --}}
+
                             <x-card.detail-item label="Referencia" :value="$loop->iteration" />
                             <hr class="my-2 w-10/12" />
                             <x-card.detail-item label="Nombre" :value="$reference->name" />
                             <x-card.detail-item label="Ocupación" :value="$reference->occupation" />
-                            <x-card.detail-item label="Relación" :value="$reference->relationship" />
+                            <x-card.detail-item label="Relación" :value="$relationship" />
                             <x-card.detail-item label="Teléfono" :value="$reference->phones[0]?->number ?? ''" />
-                            <x-card.detail-item label="{{__('Type')}}" :value="$reference->type ?? ''" /> {{-- Added Type --}}
+                            <x-card.detail-item label="{{ __('Type') }}" :value="$reference->type ?? ''" /> {{-- Added Type --}}
                         </div>
                     @endforeach
                 </x-card.content>

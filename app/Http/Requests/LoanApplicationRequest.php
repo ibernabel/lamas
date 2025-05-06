@@ -52,7 +52,7 @@ class LoanApplicationRequest extends FormRequest
     // Get the Customer ID to ignore, if we are updating
     $customerIdToIgnore = $loanApplication?->customer?->id;
     // Get the Company ID to ignore, if we are updating
-    $companyIdToIgnore = $loanApplication?->customer?->jobInfo?->company?->id; // Assuming relationship path is correct
+    $companyIdToIgnore = $loanApplication?->customer?->company?->id; // Assuming relationship path is correct
 
 
     $rules = [

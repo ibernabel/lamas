@@ -4,6 +4,16 @@
     </x-slot>
 
     <div class="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8">
+        {{-- Header Section --}}
+        <div class="grid grid-cols-2 gap-x-2 grid-rows-1 mb-6 items-center"> {{-- Adjusted grid rows --}}
+            <h3 class="text-lg font-semibold text-gray-400">
+                {{ __('Customer') }} #{{ $customer->id }} {{-- Use $customer --}}
+            </h3>
+            {{-- Removed Loan Status --}}
+            <small class="text-secondary text-right">{{-- Added text-right --}}
+                {{ __('Date updated') }}: {{ $customer->updated_at->format('d/m/Y h:i:s a') }} {{-- Use $customer --}}
+            </small>
+        </div>
         <form action="{{ route('customers.update', $customer) }}" method="POST"> {{-- Changed Route and Variable --}}
             @csrf
             @method('PUT')
@@ -228,7 +238,8 @@
 
                             <x-input-group>
                                 <x-label for="housing_possession_type" value="{{ __('Housing Type') }}" />
-                                <x-select id="housing_possession_type" name="customer[details][housing_possession_type]">
+                                <x-select id="housing_possession_type"
+                                    name="customer[details][housing_possession_type]">
                                     <option value="">{{ __('Select housing type') }}</option>
                                     <option value="owned"
                                         {{ old('customer.details.housing_possession_type', $customer->details?->housing_possession_type) == 'owned' ? 'selected' : '' }}>
@@ -314,8 +325,8 @@
                             </x-input-group>
                             <x-input-group>
                                 <x-label for="vehicle_year" value="{{ __('Vehicle Year') }}" />
-                                <x-input2 id="vehicle_year" type="number" min="1900" max="{{ date('Y') }}"
-                                    name="customer[vehicle][vehicle_year]"
+                                <x-input2 id="vehicle_year" type="number" min="1900"
+                                    max="{{ date('Y') }}" name="customer[vehicle][vehicle_year]"
                                     value="{{ old('customer.vehicle.vehicle_year', $customer->vehicle?->vehicle_year ?? '') }}" />
                                 {{-- Use $customer --}}
                                 <x-input-error for="customer.vehicle.vehicle_year" />
@@ -531,7 +542,7 @@
                                     <input type="hidden"
                                         name="customer[references][{{ $loop->index }}][phones][0][type]"
                                         value="mobile">
-                                    <x-input-error for="customer.references.{{ $loop->index }}.phone_number" />
+                                    <x-input-error for="customer.references.{{ $loop->index }}.phones.0.number" />
                                 </x-input-group>
                             </div>
                         </x-card.content>

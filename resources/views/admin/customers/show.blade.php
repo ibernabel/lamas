@@ -11,7 +11,7 @@
             </h3>
             {{-- Removed Loan Status --}}
             <small class="text-secondary text-right">{{-- Added text-right --}}
-                {{ __('Date created') }}: {{ $customer->created_at->format('d/m/Y h:m:s a') }} {{-- Use $customer --}}
+                {{ __('Date created') }}: {{ $customer->created_at->format('d/m/Y h:i:s a') }} {{-- Use $customer --}}
             </small>
         </div>
 
@@ -93,12 +93,16 @@
                 <x-card.content>
                     @forelse ($customer?->references ?? [] as $reference)
                         {{-- Use forelse for empty check --}}
+                        @php
+                        $is_household_member = $reference->relationship == 'household member';
+                        $relationship = $is_household_member ? __('household member') : $reference->relationship;
+                    @endphp
                         <div class="mb-4 last:mb-0">
                             <x-card.detail-item label="Referencia" :value="$loop->iteration" />
                             <hr class="my-2 w-10/12" />
                             <x-card.detail-item label="Nombre" :value="$reference->name" />
                             <x-card.detail-item label="Ocupación" :value="$reference->occupation" />
-                            <x-card.detail-item label="Relación" :value="$reference->relationship" />
+                            <x-card.detail-item label="Relación" :value="$relationship" />
                             <x-card.detail-item label="Teléfono" :value="$reference->phones[0]?->number ?? ''" />
                             <x-card.detail-item label="{{__('Type')}}" :value="__($reference->type) ?? ''" />
 

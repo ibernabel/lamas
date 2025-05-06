@@ -207,7 +207,8 @@
 
                             <x-input-group>
                                 <x-label for="housing_possession_type" value="{{ __('Housing Type') }}" />
-                                <x-select id="housing_possession_type" name="customer[details][housing_possession_type]">
+                                <x-select id="housing_possession_type"
+                                    name="customer[details][housing_possession_type]">
                                     <option value="">{{ __('Select housing type') }}</option>
                                     <option value="owned"
                                         {{ old('customer.details.housing_possession_type', $loanApplication->customer->details->housing_possession_type) == 'owned' ? 'selected' : '' }}>
@@ -511,41 +512,45 @@
                         <x-card.content>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <x-input-group>
-                                    <x-card.detail-item label="Referencia" :value="$loop->iteration" />
+                                    <h4 class="font-medium text-gray-700">Referencia {{ $loop->iteration }}</h4>
+                                    <x-input type="hidden" name="customer[references][{{ $loop->index }}][id]"
+                                        value="{{ $reference->id }}" />
                                 </x-input-group>
                                 <x-input-group>
                                 </x-input-group>
                                 <x-input-group>
-                                    <x-label for="reference_name" value="{{ __('Name') }}" />
-                                    <x-input2 id="reference_name" type="text"
+                                    <x-label for="reference_name_{{ $loop->index }}"
+                                        value="{{ __('Name') }}" />
+                                    <x-input2 id="reference_name_{{ $loop->index }}" type="text"
                                         name="customer[references][{{ $loop->index }}][name]"
                                         value="{{ old('customer.references.' . $loop->index . '.name', $reference->name ?? '') }}" />
                                     <x-input-error for="customer.references.{{ $loop->index }}.name" />
                                 </x-input-group>
 
                                 <x-input-group>
-                                    <x-input type="hidden" name="customer[references][{{ $loop->index }}][id]"
-                                        value="{{ $reference->id }}" />
-                                    <x-label for="reference_occupation" value="{{ __('Occupation') }}" />
-                                    <x-input2 id="reference_occupation" type="text"
+                                    <x-label for="reference_occupation_{{ $loop->index }}"
+                                        value="{{ __('Occupation') }}" />
+                                    <x-input2 id="reference_occupation_{{ $loop->index }}" type="text"
                                         name="customer[references][{{ $loop->index }}][occupation]"
                                         value="{{ old('customer.references.' . $loop->index . '.occupation', $reference->occupation ?? '') }}" />
                                     <x-input-error for="customer.references.{{ $loop->index }}.occupation" />
                                 </x-input-group>
 
                                 <x-input-group>
-                                    <x-label for="reference_relationship" value="{{ __('Relationship') }}" />
-                                    <x-input2 id="reference_relationship" type="text"
+                                    <x-label for="reference_relationship_{{ $loop->index }}"
+                                        value="{{ __('Relationship') }}" />
+                                    <x-input2 id="reference_relationship_{{ $loop->index }}" type="text"
                                         name="customer[references][{{ $loop->index }}][relationship]"
                                         value="{{ old('customer.references.' . $loop->index . '.relationship', $reference->relationship ?? '') }}" />
                                     <x-input-error for="customer.references.{{ $loop->index }}.relationship" />
                                 </x-input-group>
 
                                 <x-input-group>
-                                    <x-label for="reference_phone" value="{{ __('Phone') }}" />
-                                    <x-input2 id="reference_phone" type="tel"
+                                    <x-label for="reference_phone_{{ $loop->index }}"
+                                        value="{{ __('Phone') }}" />
+                                    <x-input2 id="reference_phone_{{ $loop->index }}" type="tel"
                                         name="customer[references][{{ $loop->index }}][phones][0][number]"
-                                        value="{{ old('customer.references.' . $loop->index . '.phones.0.number', $reference->phone_number ?? '') }}" />
+                                        value="{{ old('customer.references.' . $loop->index . '.phones.0.number', $reference->phones[0]->number ?? '') }}" />
                                     <input type="hidden"
                                         name="customer[references][{{ $loop->index }}][phones][0][type]"
                                         value="mobile">
