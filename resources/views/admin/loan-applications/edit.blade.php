@@ -300,28 +300,28 @@
                     <x-card.content>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <x-input-group>
-                                <x-label for="amount" value="Amount" />
+                                <x-label for="amount" value="{{ __('Amount') }}" />
                                 <x-input2 id="amount" type="number" step="0.01" name="details[amount]"
                                     value="{{ old('details.amount', $loanApplication->details->amount ?? '') }}" />
                                 <x-input-error for="details.amount" />
                             </x-input-group>
 
                             <x-input-group>
-                                <x-label for="term" value="Term (months)" />
+                                <x-label for="term" value="{{ __('Term') }}" />
                                 <x-input2 id="term" type="number" name="details[term]"
                                     value="{{ old('details.term', $loanApplication->details->term ?? '') }}" />
                                 <x-input-error for="details.term" />
                             </x-input-group>
 
                             <x-input-group>
-                                <x-label for="rate" value="Rate (%)" />
+                                <x-label for="rate" value="{{ __('Rate') }} (%)" />
                                 <x-input2 id="rate" type="number" step="0.01" name="details[rate]"
                                     value="{{ old('details.rate', $loanApplication->details->rate ?? '') }}" />
                                 <x-input-error for="details.rate" />
                             </x-input-group>
 
                             <x-input-group>
-                                <x-label for="frequency" value="Payment Frequency" />
+                                <x-label for="frequency" value="{{ __('Payment Frequency') }}" />
                                 <x-select id="frequency" name="details[frequency]">
                                     <option value="">{{ __('Select') }}</option>
                                     <option value="weekly"
@@ -338,14 +338,14 @@
                             </x-input-group>
 
                             <x-input-group>
-                                <x-label for="quota" value="Quota" />
+                                <x-label for="quota" value="{{ __('Quota') }}" />
                                 <x-input2 id="quota" type="number" name="details[quota]"
                                     value="{{ old('details.quota', $loanApplication->details->quota ?? '') }}" />
                                 <x-input-error for="details.quota" />
                             </x-input-group>
 
                             <x-input-group>
-                                <x-label for="purpose" value="Purpose" />
+                                <x-label for="purpose" value="{{ __('Loan Purpose') }}" />
                                 <x-textarea id="purpose" name="details[purpose]">
                                     {{ old('details.purpose', $loanApplication->details->purpose ?? '') }}
                                 </x-textarea>
