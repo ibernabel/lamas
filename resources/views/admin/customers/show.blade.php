@@ -28,7 +28,7 @@
                     <x-card.detail-item label="Celular" :value="$customer?->details?->phones->where('type', 'mobile')->first()?->number ?? ''" /> {{-- Adjusted phone logic --}}
                     <x-card.detail-item label="Teléfono Casa:" :value="$customer?->details?->phones->where('type', 'home')->first()?->number ?? ''" /> {{-- Adjusted phone logic --}}
                     <x-card.detail-item label="Email" :value="$customer?->details?->email" />
-                    <x-card.detail-item label="Estado Civil" :value="$customer?->details?->marital_status" />
+                    <x-card.detail-item label="Estado Civil" :value="__($customer?->details?->marital_status)" />
                     <x-card.detail-item label="Nacionalidad" :value="$customer?->details?->nationality" />
                     <x-card.detail-item label="Dirección" :value="$customer?->details?->addresses?->first()
                         ? collect([
@@ -43,7 +43,7 @@
                     <x-card.detail-item label="Tipo de vivienda" :value="$customer?->details?->housing_possession_type" />
                     <x-card.detail-item label="Reside desde" :value="$customer?->details?->move_in_date" />
                     <x-card.detail-item label="Género" :value="__($customer?->details?->gender)" />
-                    <x-card.detail-item label="Educación" :value="$customer?->details?->education_level" />
+                    <x-card.detail-item label="Educación" :value="ucfirst(__($customer?->details?->education_level))" />
                     <x-card.detail-item label="Vehículo" :value="$customer?->vehicle?->vehicle_type ?? ''" />
                     <x-card.detail-item label="Marca" :value="$customer?->vehicle?->vehicle_brand ?? ''" />
                     <x-card.detail-item label="Modelo" :value="$customer?->vehicle?->vehicle_model ?? ''" />
