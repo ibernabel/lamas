@@ -28,7 +28,7 @@
                     <x-card.detail-item label="Celular" :value="$customer?->details?->phones->where('type', 'mobile')->first()?->number ?? ''" /> {{-- Adjusted phone logic --}}
                     <x-card.detail-item label="Teléfono Casa:" :value="$customer?->details?->phones->where('type', 'home')->first()?->number ?? ''" /> {{-- Adjusted phone logic --}}
                     <x-card.detail-item label="Email" :value="$customer?->details?->email" />
-                    <x-card.detail-item label="Estado Civil" :value="__($customer?->details?->marital_status)" />
+                    <x-card.detail-item label="Estado Civil" :value="ucfirst(__($customer?->details?->marital_status))" />
                     <x-card.detail-item label="Nacionalidad" :value="$customer?->details?->nationality" />
                     <x-card.detail-item label="Dirección" :value="$customer?->details?->addresses?->first()
                         ? collect([
@@ -75,8 +75,8 @@
                     <x-card.detail-item label="Cargo" :value="$customer?->jobInfo?->role ?? 'No especificado'" />
                     <x-card.detail-item label="Fecha de Ingreso" :value="$customer?->jobInfo?->start_date ?? ''" />
                     <x-card.detail-item label="Salario" :value="number_format($customer?->jobInfo?->salary ?? 0, 2)" prefix="RD$" />
-                    <x-card.detail-item label="Tipo de Pago" :value="$customer?->jobInfo?->payment_type ?? ''" />
-                    <x-card.detail-item label="Frecuencia de Pago" :value="$customer?->jobInfo?->payment_frequency ?? ''" />
+                    <x-card.detail-item label="Tipo de Pago" :value="ucfirst(__($customer?->jobInfo?->payment_type ?? ''))" />
+                    <x-card.detail-item label="Frecuencia de Pago" :value="ucfirst(__($customer?->jobInfo?->payment_frequency ?? ''))" /> {{-- Updated payment frequency --}}
                     <x-card.detail-item label="Banco Nomina" :value="$customer?->jobInfo?->payment_bank ?? ''" />
                     <x-card.detail-item label="Otros Ingresos" :value="$customer?->jobInfo?->other_incomes ?? ''" />
                     <x-card.detail-item label="Fuente Otros Ingresos" :value="$customer?->jobInfo?->other_incomes_source ?? ''" />
