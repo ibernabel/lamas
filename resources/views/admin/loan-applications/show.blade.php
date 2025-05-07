@@ -51,7 +51,7 @@
                             ->join(', ')
                         : __('No address available')" />
 
-                    <x-card.detail-item label="Tipo de vivienda" :value="$loanApplication?->customer?->details?->housing_possession_type" />
+                    <x-card.detail-item label="Tipo de vivienda" :value="ucfirst(__($loanApplication?->customer?->details?->housing_possession_type))" />
                     <x-card.detail-item label="Reside desde" :value="$loanApplication?->customer?->details?->move_in_date" />
                     <x-card.detail-item label="Género" :value="__($loanApplication?->customer?->details?->gender)" />
                     <x-card.detail-item label="Educación" :value="ucfirst(__($loanApplication?->customer?->details?->education_level))" />
@@ -73,7 +73,7 @@
                     <x-card.detail-item label="Plazo" :value="optional($loanApplication->details)->term ?? ''" suffix="meses" />
                     <x-card.detail-item label="Tasa" :value="optional($loanApplication->details)->rate ?? ''" suffix="%" />
                     <x-card.detail-item label="Cuota" :value="number_format(optional($loanApplication->details)->quota, 2) ?? ''" prefix="RD$" />
-                    <x-card.detail-item label="Frecuencia" :value="optional($loanApplication->details)->frequency ?? ''" />
+                    <x-card.detail-item label="Frecuencia" :value="__(optional($loanApplication->details)->frequency) ?? ''" />
                     <x-card.detail-item label="Propósito" :value="optional($loanApplication->details)->purpose ?? ''" />
                     <x-card.detail-item label="Comentario del Cliente" :value="optional($loanApplication->details)->customer_comment ?? ''" />
                 </x-card.content>

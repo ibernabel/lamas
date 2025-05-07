@@ -40,9 +40,9 @@
                             ->filter()
                             ->join(', ')
                         : __('No address available')" />
-                    <x-card.detail-item label="Tipo de vivienda" :value="$customer?->details?->housing_possession_type" />
+                    <x-card.detail-item label="Tipo de vivienda" :value="ucfirst(__($customer?->details?->housing_possession_type))" />
                     <x-card.detail-item label="Reside desde" :value="$customer?->details?->move_in_date" />
-                    <x-card.detail-item label="Género" :value="__($customer?->details?->gender)" />
+                    <x-card.detail-item label="Género" :value="ucfirst(__($customer?->details?->gender))" /> {{-- Updated gender value --}}
                     <x-card.detail-item label="Educación" :value="ucfirst(__($customer?->details?->education_level))" />
                     <x-card.detail-item label="Vehículo" :value="$customer?->vehicle?->vehicle_type ?? ''" />
                     <x-card.detail-item label="Marca" :value="$customer?->vehicle?->vehicle_brand ?? ''" />

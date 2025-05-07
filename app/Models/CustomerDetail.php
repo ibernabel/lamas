@@ -23,6 +23,7 @@ class CustomerDetail extends Model
     'education_level',
     'nationality',
     'housing_type',
+    'housing_possession_type',
     'move_in_date',
   ];
   protected $hidden = [
