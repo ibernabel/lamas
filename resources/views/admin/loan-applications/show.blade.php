@@ -101,8 +101,8 @@
                     <x-card.detail-item label="Cargo" :value="$loanApplication?->customer?->jobInfo?->role ?? 'No especificado'" />
                     <x-card.detail-item label="Fecha de Ingreso" :value="$loanApplication?->customer?->jobInfo?->start_date ?? ''" />
                     <x-card.detail-item label="Salario" :value="number_format($loanApplication?->customer?->jobInfo?->salary ?? 0, 2)" prefix="RD$" />
-                    <x-card.detail-item label="Tipo de Pago" :value="$loanApplication?->customer?->jobInfo?->payment_type ?? ''" />
-                    <x-card.detail-item label="Frecuencia de Pago" :value="$loanApplication?->customer?->jobInfo?->payment_frequency ?? ''" />
+                    <x-card.detail-item label="Tipo de Pago" :value="ucfirst(__($loanApplication?->customer?->jobInfo?->payment_type ?? ''))" /> {{-- Fixed missing parenthesis --}}
+                    <x-card.detail-item label="Frecuencia de Pago" :value="ucfirst(__($loanApplication?->customer?->jobInfo?->payment_frequency ?? ''))" /> {{-- Fixed missing parenthesis --}}
                     <x-card.detail-item label="Banco Nomina" :value="$loanApplication?->customer?->jobInfo?->payment_bank ?? ''" />
                     <x-card.detail-item label="Otros Ingresos" :value="$loanApplication?->customer?->jobInfo?->other_incomes ?? ''" />
                     <x-card.detail-item label="Fuente Otros Ingresos" :value="$loanApplication?->customer?->jobInfo?->other_incomes_source ?? ''" />
