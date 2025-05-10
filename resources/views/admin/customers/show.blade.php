@@ -72,7 +72,7 @@
                             ->filter()
                             ->join(', ')
                         : __('No address available')" />
-                    <x-card.detail-item label="Teléfono Empresa" :value="$customer?->company?->phones->where('type', 'work')->first()?->number ?? ''" /> {{-- Adjusted phone logic --}}
+                    <x-card.detail-item label="Teléfono" :value="optional($customer?->company?->phones->where('type', 'work')->first())?->number ?? ''" /> {{-- Adjusted phone logic --}}
                     <x-card.detail-item label="Cargo" :value="$customer?->jobInfo?->role ?? 'No especificado'" />
                     <x-card.detail-item label="Fecha de Ingreso" :value="$customer?->jobInfo?->start_date ?? ''" />
                     <x-card.detail-item label="Salario" :value="number_format($customer?->jobInfo?->salary ?? 0, 2)" prefix="RD$" />

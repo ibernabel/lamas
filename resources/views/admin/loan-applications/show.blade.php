@@ -89,6 +89,7 @@
                 <x-card.content>
                     <x-card.detail-item label="Trabajador Independiente" :value="$loanApplication?->customer?->jobInfo?->is_self_employed ? __('Yes') : __('No')" />
                     <x-card.detail-item label="Empresa" :value="$loanApplication?->customer?->company?->name" />
+                    <x-card.detail-item label="Teléfono" :value="optional($loanApplication?->customer?->company?->phones)[0]?->number" />
                     <x-card.detail-item label="Dirección" :value="$loanApplication?->customer?->company?->addresses?->first()
                         ? collect([
                             $loanApplication?->customer?->company?->addresses[0]?->street,

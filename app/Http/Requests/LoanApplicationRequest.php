@@ -37,6 +37,25 @@ class LoanApplicationRequest extends FormRequest
         $this->merge(['details' => $details]);
       }
     }
+
+    // Filtrar los teléfonos de la compañía: solo procesar si se proporciona un número.
+    if ($this->has('customer.company.phones') && is_array($this->input('customer.company.phones'))) {
+      $companyPhonesInput = $this->input('customer.company.phones');
+      $validCompanyPhones = [];
+      foreach ($companyPhonesInput as $phoneData) {
+        // Considerar el teléfono solo si 'number' está presente y no es una cadena vacía.
+        if (isset($phoneData['number']) && $phoneData['number'] !== '' && $phoneData['number'] !== null) {
+          $validCompanyPhones[] = $phoneData;
+        }
+      }
+
+      // Actualizar la entrada 'customer.company.phones' con los teléfonos filtrados.
+      $customerData = $this->input('customer', []);
+      $companyData = $customerData['company'] ?? [];
+      $companyData['phones'] = $validCompanyPhones;
+      $customerData['company'] = $companyData;
+      $this->merge(['customer' => $customerData]);
+    }
   }
 
   /**
@@ -154,7 +173,9 @@ class LoanApplicationRequest extends FormRequest
         // Use the company ID from the route model binding for ignoring
         Rule::unique('companies', 'email')->ignore($companyIdToIgnore)
       ],
-      'customer.company.phones.*.number' => 'sometimes|nullable|string|max:20',
+      'customer.company.phones' => 'sometimes|array',
+      'customer.company.phones.*.number' => 'required|string|max:20',
+      'customer.company.phones.*.type' => 'required|string|in:work,mobile,fax,other',
       'customer.company.addresses' => 'required|array|min:1',
       'customer.company.addresses.*.street' => 'required|string|max:255',
       'customer.company.addresses.*.street2' => 'sometimes|nullable|string|max:255',

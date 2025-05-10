@@ -258,7 +258,7 @@
                             {{-- Empty cell --}}
                             <x-input-group>
                             </x-input-group>
-                            
+
                             {{-- Vehicle --}}
                             <x-input-group>
                                 <br>
@@ -424,7 +424,6 @@
                                 <input type="hidden" name="customer[company][phones][0][type]" value="work">
                                 {{-- Added type --}}
                                 <x-input-error for="customer.company.phones.0.number" />
-                                <x-input-error for="customer.company.phones.0.type" />
                             </x-input-group>
 
                             <x-input-group>

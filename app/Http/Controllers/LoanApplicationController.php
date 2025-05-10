@@ -275,6 +275,10 @@ class LoanApplicationController extends Controller
                 },
                 'customer.vehicle',
                 'customer.company',
+                'customer.company.phones',
+                'customer.company.phones' => function ($query) {
+                    $query->limit(1);
+                },
                 'customer.jobInfo',
                 'customer.financialInfo',
                 'customer.references',
@@ -323,6 +327,10 @@ class LoanApplicationController extends Controller
                 },
                 'customer.vehicle',
                 'customer.company',
+                'customer.company.phones',
+                'customer.company.phones' => function ($query) {
+                    $query->limit(1);
+                },
                 'customer.jobInfo',
                 'customer.financialInfo',
                 'customer.references',
