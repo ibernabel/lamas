@@ -206,9 +206,9 @@
                             </x-input-group>
 
                             <x-input-group>
-                                <x-label for="housing_possession_type" value="{{ __('Housing Type') }}" />
+                                <x-label for="housing_possession_type" value="{{ __('Housing Type') }}" required />
                                 <x-select id="housing_possession_type"
-                                    name="customer[details][housing_possession_type]">
+                                    name="customer[details][housing_possession_type]" required>
                                     <option value="">{{ __('Select housing type') }}</option>
                                     <option value="owned"
                                         {{ old('customer.details.housing_possession_type', $loanApplication->customer->details->housing_possession_type) == 'owned' ? 'selected' : '' }}>
