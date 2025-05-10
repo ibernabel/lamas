@@ -53,12 +53,13 @@
 
                     <x-card.detail-item label="Tipo de vivienda" :value="ucfirst(__($loanApplication?->customer?->details?->housing_possession_type))" />
                     <x-card.detail-item label="Reside desde" :value="$loanApplication?->customer?->details?->move_in_date" />
+                    <x-card.detail-item label="Medio de transporte" :value="__($loanApplication?->customer?->details?->mode_of_transport)" />
                     <x-card.detail-item label="Género" :value="__($loanApplication?->customer?->details?->gender)" />
                     <x-card.detail-item label="Educación" :value="ucfirst(__($loanApplication?->customer?->details?->education_level))" />
-                    <x-card.detail-item label="Vehículo" :value="$loanApplication?->customer?->vehicle?->vehicle_type ?? ''" />
+                    {{--<x-card.detail-item label="Vehículo" :value="$loanApplication?->customer?->vehicle?->vehicle_type ?? ''" />
                     <x-card.detail-item label="Marca" :value="$loanApplication?->customer?->vehicle?->vehicle_brand ?? ''" />
                     <x-card.detail-item label="Modelo" :value="$loanApplication?->customer?->vehicle?->vehicle_model ?? ''" />
-                    <x-card.detail-item label="Año" :value="$loanApplication?->customer?->vehicle?->vehicle_year ?? ''" />
+                    <x-card.detail-item label="Año" :value="$loanApplication?->customer?->vehicle?->vehicle_year ?? ''" />--}}
                 </x-card.content>
             </x-card>
 

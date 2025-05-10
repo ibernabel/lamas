@@ -25,6 +25,7 @@ class CustomerDetail extends Model
     'housing_type',
     'housing_possession_type',
     'move_in_date',
+    'mode_of_transport',
   ];
   protected $hidden = [
     'created_at',

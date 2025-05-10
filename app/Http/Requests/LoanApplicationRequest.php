@@ -92,6 +92,7 @@ class LoanApplicationRequest extends FormRequest
       'customer.details.gender' => 'sometimes|nullable|in:male,female',
       'customer.details.education_level' => 'sometimes|nullable|in:primary,secondary,high_school,bachelor,postgraduate,master,doctorate,other',
       'customer.details.move_in_date' => 'sometimes|nullable|date',
+      'customer.details.mode_of_transport' => [$this->isMethod('POST') ? 'required' : 'sometimes', 'in:public_transportation,own_car,own_motorcycle,bicycle,other'],
 
       // Customer Phones (Required: at least one mobile)
       'customer.details.phones' => [

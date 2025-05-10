@@ -594,6 +594,26 @@
     "Back to": "Volver",
     "Admin Dashboard": "Panel de Administración",
     "Admin Panel": "Panel de Administración",
+    "Mode of Transport": "Medio de Transporte",
+    "Select mode of transport": "Seleccione medio de transporte",
+    "public_transportation": "Transporte público",
+    "Public transportation": "Transporte público",
+    "own_car": "Carro propio",
+    "Own car": "Carro propio",
+    "own_motorcycle": "Motor propio",
+    "Own motorcycle": "Motor propio",
+    "bicycle": "Bicicleta",
+    "motorcycle": "Motocicleta",
+    "bus": "Bus",
+    "taxi": "Taxi",
+    "train": "Tren",
+    "Metro": "Metro",
+    "subway": "Subterráneo",
+    "airplane": "Avión",
+    "boat": "Barco",
+    "other": "Otro",
+    "other_transport": "Otro transporte",
+
 
 
 

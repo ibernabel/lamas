@@ -45,6 +45,7 @@ class CustomerResource extends JsonResource
                     'gender' => $this->details->gender,
                     'educationLevel' => $this->details->education_level,
                     'moveInDate' => $this->details->move_in_date,
+                    'modeOfTransport' => $this->details->mode_of_transport,
                     'phones' => $this->details->phones->map(function ($phone) {
                         return [
                             'id' => $phone->id,

@@ -228,12 +228,37 @@
                             </x-input-group>
 
                             <x-input-group>
-                                <x-label for="state" value="{{ __('Move in date') }}" />
-                                <x-input2 id="state" type="date" name="customer[details][move_in_date]"
+                                <x-label for="move_in_date" value="{{ __('Move in date') }}" />
+                                <x-input2 id="move_in_date" type="date" name="customer[details][move_in_date]"
                                     value="{{ old('customer.details.move_in_date', $loanApplication->customer->details->move_in_date ?? '') }}" />
                                 <x-input-error for="customer.details.move_in_date" />
                             </x-input-group>
 
+                            <x-input-group>
+                                <x-label for="mode_of_transport" value="{{ __('Mode of Transport') }}" />
+                                <x-select id="mode_of_transport" name="customer[details][mode_of_transport]">
+                                    <option value="">{{ __('Select') }}</option>
+                                    <option value="public_transportation"
+                                        {{ old('customer.details.mode_of_transport', $loanApplication->customer->details->mode_of_transport ?? '') == 'public_transportation' ? 'selected' : '' }}>
+                                        {{ __('Public transportation') }}</option>
+                                    <option value="public_transportation"
+                                        {{ old('customer.details.mode_of_transport', $loanApplication->customer->details->mode_of_transport ?? '') == 'own_car' ? 'selected' : '' }}>
+                                        {{ __('Own car') }}</option>
+                                    <option value="public_transportation"
+                                        {{ old('customer.details.mode_of_transport', $loanApplication->customer->details->mode_of_transport ?? '') == 'own_motorcycle' ? 'selected' : '' }}>
+                                        {{ __('Own motorcycle') }}</option>
+
+                                    <option value="other"
+                                        {{ old('customer.details.mode_of_transport', $loanApplication->customer->details->mode_of_transport ?? '') == 'other' ? 'selected' : '' }}>
+                                        {{ __('Other') }}</option>
+                                </x-select>
+                                <x-input-error for="customer.details.mode_of_transport" />
+                            </x-input-group>
+
+                            {{-- Empty cell --}}
+                            <x-input-group>
+                            </x-input-group>
+                            
                             {{-- Vehicle --}}
                             <x-input-group>
                                 <br>
@@ -376,10 +401,10 @@
                                 <x-select id="is_self_employed" name="customer[jobInfo][is_self_employed]">
                                     <option value="">{{ __('Select') }}</option>
                                     <option value="1"
-                                        {{ old('customer.jobInfo.is_self_employed', $loanApplication->customer->jobInfo->is_self_employed) == 1 ? 'selected' : '' }}>
+                                        {{ old('customer.jobInfo.is_self_employed', $loanApplication->customer->jobInfo->is_self_employed ?? '') == 1 ? 'selected' : '' }}>
                                         {{ __('Yes') }}</option>
                                     <option value="0"
-                                        {{ old('customer.jobInfo.is_self_employed', $loanApplication->customer->jobInfo->is_self_employed) == 0 ? 'selected' : '' }}>
+                                        {{ old('customer.jobInfo.is_self_employed', $loanApplication->customer->jobInfo->is_self_employed ?? '') == 0 ? 'selected' : '' }}>
                                         {{ __('No') }}</option>
                                 </x-select>
                                 <x-input-error for="customer.jobInfo.is_self_employed" />
@@ -438,10 +463,10 @@
                                 <x-select id="payment_type" name="customer[jobInfo][payment_type]">
                                     <option value="">{{ __('Select') }}</option>
                                     <option value="cash"
-                                        {{ old('customer.jobInfo.payment_type', $loanApplication->customer->jobInfo->payment_type) == 'cash' ? 'selected' : '' }}>
+                                        {{ old('customer.jobInfo.payment_type', $loanApplication->customer->jobInfo->payment_type ?? '') == 'cash' ? 'selected' : '' }}>
                                         {{ __('Cash') }}</option>
                                     <option value="bank_transfer"
-                                        {{ old('customer.jobInfo.payment_type', $loanApplication->customer->jobInfo->payment_type) == 'bank_transfer' ? 'selected' : '' }}>
+                                        {{ old('customer.jobInfo.payment_type', $loanApplication->customer->jobInfo->payment_type ?? '') == 'bank_transfer' ? 'selected' : '' }}>
                                         {{ __('Bank Transfer') }}</option>
                                 </x-select>
                                 <x-input-error for="customer.jobInfo.payment_type" />
@@ -452,13 +477,13 @@
                                 <x-select id="payment_frequency" name="customer[jobInfo][payment_frequency]">
                                     <option value="">{{ __('Select') }}</option>
                                     <option value="weekly"
-                                        {{ old('customer.jobInfo.payment_frequency', $loanApplication->customer->jobInfo->payment_frequency) == 'weekly' ? 'selected' : '' }}>
+                                        {{ old('customer.jobInfo.payment_frequency', $loanApplication->customer->jobInfo->payment_frequency ?? '') == 'weekly' ? 'selected' : '' }}>
                                         {{ __('Weekly') }}</option>
                                     <option value="biweekly"
-                                        {{ old('customer.jobInfo.payment_frequency', $loanApplication->customer->jobInfo->payment_frequency) == 'biweekly' ? 'selected' : '' }}>
+                                        {{ old('customer.jobInfo.payment_frequency', $loanApplication->customer->jobInfo->payment_frequency ?? '') == 'biweekly' ? 'selected' : '' }}>
                                         {{ __('Biweekly') }}</option>
                                     <option value="monthly"
-                                        {{ old('customer.jobInfo.payment_frequency', $loanApplication->customer->jobInfo->payment_frequency) == 'monthly' ? 'selected' : '' }}>
+                                        {{ old('customer.jobInfo.payment_frequency', $loanApplication->customer->jobInfo->payment_frequency ?? '') == 'monthly' ? 'selected' : '' }}>
                                         {{ __('Monthly') }}</option>
                                 </x-select>
                                 <x-input-error for="customer.jobInfo.payment_frequency" />

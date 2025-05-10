@@ -83,6 +83,7 @@ class LoanApplicationResource extends JsonResource
             'nationality' => $this->customer->details->nationality,
             'housing_possession_type' => $this->customer->details->housing_possession_type,
             'move_in_date' => $this->customer->details->move_in_date,
+            'mode_of_transport' => $this->customer->details->mode_of_transport,
             'phones' => $this->customer->details->phones->isNotEmpty() ?  $this->customer->details->phones->map(fn($phone) => [
               'id' => $phone->id,
               'number' => $phone->number,

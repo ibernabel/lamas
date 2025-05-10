@@ -42,12 +42,13 @@
                         : __('No address available')" />
                     <x-card.detail-item label="Tipo de vivienda" :value="ucfirst(__($customer?->details?->housing_possession_type))" />
                     <x-card.detail-item label="Reside desde" :value="$customer?->details?->move_in_date" />
+                    <x-card.detail-item label="Medio de transporte" :value="__($customer?->details?->mode_of_transport)" />
                     <x-card.detail-item label="Género" :value="ucfirst(__($customer?->details?->gender))" /> {{-- Updated gender value --}}
                     <x-card.detail-item label="Educación" :value="ucfirst(__($customer?->details?->education_level))" />
-                    <x-card.detail-item label="Vehículo" :value="$customer?->vehicle?->vehicle_type ?? ''" />
+                    {{--<x-card.detail-item label="Vehículo" :value="$customer?->vehicle?->vehicle_type ?? ''" />
                     <x-card.detail-item label="Marca" :value="$customer?->vehicle?->vehicle_brand ?? ''" />
                     <x-card.detail-item label="Modelo" :value="$customer?->vehicle?->vehicle_model ?? ''" />
-                    <x-card.detail-item label="Año" :value="$customer?->vehicle?->vehicle_year ?? ''" />
+                    <x-card.detail-item label="Año" :value="$customer?->vehicle?->vehicle_year ?? ''" />--}}
                 </x-card.content>
             </x-card>
 
