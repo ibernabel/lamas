@@ -1,6 +1,6 @@
 <x-admin.app-layout>
     <x-slot name="title">
-        {{ __('Customers') }}
+        {{ __(env('CUSTOMERS_TITLE', 'Customers')) }}
     </x-slot>
 
     {{-- CSS slot can be removed if no other custom CSS is needed here, or kept empty --}}
@@ -10,7 +10,7 @@
 
     <x-slot name="content_header">
         <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Customers') }}
+            {{ __(env('CUSTOMERS_TITLE', 'Customers')) }}
         </h2>
     </x-slot>
 

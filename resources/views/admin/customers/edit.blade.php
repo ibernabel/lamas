@@ -33,7 +33,7 @@
             <div class="space-y-6">
                 {{-- Customer Information Section --}}
                 <x-card.header>
-                    <x-card.title>{{ __('Customer Information') }}</x-card.title>
+                    <x-card.title>{{ __( (env('CUSTOMER_TITLE') . ' ' . 'Information') ) }}</x-card.title>
                 </x-card.header>
                 <x-card>
                     <x-card.content>

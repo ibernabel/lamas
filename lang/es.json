@@ -80,6 +80,7 @@
     "Delete API Token": "Borrar token API",
     "Delete Team": "Borrar equipo",
     "Detach": "Desvincular",
+    "details": "detalles",
     "Details": "Detalles",
     "Disable": "Deshabilitar",
     "Discard": "Descartar",
@@ -613,6 +614,15 @@
     "boat": "Barco",
     "other": "Otro",
     "other_transport": "Otro transporte",
+    "member": "socio",
+    "Member": "Socio",
+    "members": "socios",
+    "Members": "Socios",
+    "information": "información",
+    "Information": "Información",
+    "Member Information": "Información del Socio",
+    "Members Information": "Información de los Socios",
+
 
 
 
