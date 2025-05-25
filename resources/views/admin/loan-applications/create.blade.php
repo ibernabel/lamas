@@ -244,6 +244,34 @@
                                 <x-input-error for="customer.details.move_in_date" />
                             </x-input-group>
 
+
+                            <x-input-group>
+                                <x-label for="mode_of_transport" value="{{ __('Mode of Transport') }}" />
+                                <x-select id="mode_of_transport" name="customer[details][mode_of_transport]">
+                                    <option value="">{{ __('Select') }}</option>
+                                    <option value="public_transportation"
+                                        {{ old('customer.details.mode_of_transport', $loanApplication->customer->details->mode_of_transport ?? '') == 'public_transportation' ? 'selected' : '' }}>
+                                        {{ __('Public transportation') }}</option>
+                                    <option value="public_transportation"
+                                        {{ old('customer.details.mode_of_transport', $loanApplication->customer->details->mode_of_transport ?? '') == 'own_car' ? 'selected' : '' }}>
+                                        {{ __('Own car') }}</option>
+                                    <option value="public_transportation"
+                                        {{ old('customer.details.mode_of_transport', $loanApplication->customer->details->mode_of_transport ?? '') == 'own_motorcycle' ? 'selected' : '' }}>
+                                        {{ __('Own motorcycle') }}</option>
+
+                                    <option value="other"
+                                        {{ old('customer.details.mode_of_transport', $loanApplication->customer->details->mode_of_transport ?? '') == 'other' ? 'selected' : '' }}>
+                                        {{ __('Other') }}</option>
+                                </x-select>
+                                <x-input-error for="customer.details.mode_of_transport" />
+                            </x-input-group>
+
+                            {{-- Empty cell --}}
+                            <x-input-group>
+                            </x-input-group>
+
+                            @if (config('features.show_vehicle_section'))
+
                             {{-- Vehicle --}}
                             <x-input-group>
                                 <br>
@@ -296,7 +324,7 @@
                                     value="{{ old('customer.vehicle.vehicle_year') }}" />
                                 <x-input-error for="customer.vehicle.vehicle_year" />
                             </x-input-group>
-
+                            @endif
                         </div>
 
                     </x-card.content>

@@ -45,10 +45,13 @@
                     <x-card.detail-item label="Medio de transporte" :value="__($customer?->details?->mode_of_transport)" />
                     <x-card.detail-item label="Género" :value="ucfirst(__($customer?->details?->gender))" /> {{-- Updated gender value --}}
                     <x-card.detail-item label="Educación" :value="ucfirst(__($customer?->details?->education_level))" />
-                    {{-- <x-card.detail-item label="Vehículo" :value="$customer?->vehicle?->vehicle_type ?? ''" />
+                    @if (config('features.show_vehicle_section'))
+
+                    <x-card.detail-item label="Vehículo" :value="$customer?->vehicle?->vehicle_type ?? ''" />
                     <x-card.detail-item label="Marca" :value="$customer?->vehicle?->vehicle_brand ?? ''" />
                     <x-card.detail-item label="Modelo" :value="$customer?->vehicle?->vehicle_model ?? ''" />
-                    <x-card.detail-item label="Año" :value="$customer?->vehicle?->vehicle_year ?? ''" /> --}}
+                    <x-card.detail-item label="Año" :value="$customer?->vehicle?->vehicle_year ?? ''" />
+                    @endif
                 </x-card.content>
             </x-card>
 

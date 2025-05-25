@@ -214,7 +214,8 @@
 
                             <x-input-group>
                                 <x-label for="housing_possession_type" value="{{ __('Housing Type') }}" />
-                                <x-select id="housing_possession_type" name="customer[details][housing_possession_type]" required>
+                                <x-select id="housing_possession_type"
+                                    name="customer[details][housing_possession_type]" required>
                                     <option value="">{{ __('Select housing type') }}</option>
                                     <option value="owned"
                                         {{ old('customer.details.housing_possession_type') == 'owned' ? 'selected' : '' }}>
@@ -244,58 +245,85 @@
                                 <x-input-error for="customer.details.move_in_date" />
                             </x-input-group>
 
-                            {{-- Vehicle --}}
                             <x-input-group>
-                                <br>
-                                <x-label value="{{ __('Vehicle') }}" />
-                                <hr>
-                            </x-input-group>
-                            <x-input-group>
-                            </x-input-group>
-                            <x-input-group>
-                                <x-label for="vehicle_type" value="{{ __('Vehicle Type') }}" />
-                                <x-select id="vehicle_type" name="customer[vehicle][vehicle_type]">
+                                <x-label for="mode_of_transport" value="{{ __('Mode of Transport') }}" />
+                                <x-select id="mode_of_transport" name="customer[details][mode_of_transport]">
                                     <option value="">{{ __('Select') }}</option>
-                                    <option value="owned"
-                                        {{ old('customer.vehicle.vehicle_type') == 'owned' ? 'selected' : '' }}>
-                                        {{ __('Owned') }}</option>
-                                    <option value="rented"
-                                        {{ old('customer.vehicle.vehicle_type') == 'rented' ? 'selected' : '' }}>
-                                        {{ __('Rented') }}</option>
-                                    <option value="financed"
-                                        {{ old('customer.vehicle.vehicle_type') == 'financed' ? 'selected' : '' }}>
-                                        {{ __('Financed') }}</option>
-                                    <option value="borrowed"
-                                        {{ old('customer.vehicle.vehicle_type') == 'borrowed' ? 'selected' : '' }}>
-                                        {{ __('Borrowed') }}</option>
-                                    <option value="none"
-                                        {{ old('customer.vehicle.vehicle_type') == 'none' ? 'selected' : '' }}>
-                                        {{ __('None') }}</option>
+                                    <option value="public_transportation"
+                                        {{ old('customer.details.mode_of_transport', $customer->details->mode_of_transport ?? '') == 'public_transportation' ? 'selected' : '' }}>
+                                        {{ __('Public transportation') }}</option>
+                                    <option value="own_car"
+                                        {{ old('customer.details.mode_of_transport', $customer->details->mode_of_transport ?? '') == 'own_car' ? 'selected' : '' }}>
+                                        {{ __('Own car') }}</option>
+                                    <option value="own_motorcycle"
+                                        {{ old('customer.details.mode_of_transport', $customer->details->mode_of_transport ?? '') == 'own_motorcycle' ? 'selected' : '' }}>
+                                        {{ __('Own motorcycle') }}</option>
+
                                     <option value="other"
-                                        {{ old('customer.vehicle.vehicle_type') == 'other' ? 'selected' : '' }}>
+                                        {{ old('customer.details.mode_of_transport', $customer->details->mode_of_transport ?? '') == 'other' ? 'selected' : '' }}>
                                         {{ __('Other') }}</option>
                                 </x-select>
-                                <x-input-error for="customer.vehicle.vehicle_type" />
+                                <x-input-error for="customer.details.mode_of_transport" />
                             </x-input-group>
+
+                            {{-- Empty cell --}}
                             <x-input-group>
-                                <x-label for="vehicle_brand" value="{{ __('Vehicle Brand') }}" />
-                                <x-input2 id="vehicle_brand" type="text" name="customer[vehicle][vehicle_brand]"
-                                    value="{{ old('customer.vehicle.vehicle_brand') }}" />
-                                <x-input-error for="customer.vehicle.vehicle_brand" />
                             </x-input-group>
-                            <x-input-group>
-                                <x-label for="vehicle_model" value="{{ __('Vehicle Model') }}" />
-                                <x-input2 id="vehicle_model" type="text" name="customer[vehicle][vehicle_model]"
-                                    value="{{ old('customer.vehicle.vehicle_model') }}" />
-                                <x-input-error for="customer.vehicle.vehicle_model" />
-                            </x-input-group>
-                            <x-input-group>
-                                <x-label for="vehicle_year" value="{{ __('Vehicle Year') }}" />
-                                <x-input2 id="vehicle_year" type="number" min="1900" max="{{ date('Y') }}"
-                                    name="customer[vehicle][vehicle_year]"
-                                    value="{{ old('customer.vehicle.vehicle_year') }}" />
-                                <x-input-error for="customer.vehicle.vehicle_year" />
-                            </x-input-group>
+
+                            @if (config('features.show_vehicle_section'))
+                                {{-- Vehicle --}}
+                                <x-input-group>
+                                    <br>
+                                    <x-label value="{{ __('Vehicle') }}" />
+                                    <hr>
+                                </x-input-group>
+                                <x-input-group>
+                                </x-input-group>
+                                <x-input-group>
+                                    <x-label for="vehicle_type" value="{{ __('Vehicle Type') }}" />
+                                    <x-select id="vehicle_type" name="customer[vehicle][vehicle_type]">
+                                        <option value="">{{ __('Select') }}</option>
+                                        <option value="owned"
+                                            {{ old('customer.vehicle.vehicle_type') == 'owned' ? 'selected' : '' }}>
+                                            {{ __('Owned') }}</option>
+                                        <option value="rented"
+                                            {{ old('customer.vehicle.vehicle_type') == 'rented' ? 'selected' : '' }}>
+                                            {{ __('Rented') }}</option>
+                                        <option value="financed"
+                                            {{ old('customer.vehicle.vehicle_type') == 'financed' ? 'selected' : '' }}>
+                                            {{ __('Financed') }}</option>
+                                        <option value="borrowed"
+                                            {{ old('customer.vehicle.vehicle_type') == 'borrowed' ? 'selected' : '' }}>
+                                            {{ __('Borrowed') }}</option>
+                                        <option value="none"
+                                            {{ old('customer.vehicle.vehicle_type') == 'none' ? 'selected' : '' }}>
+                                            {{ __('None') }}</option>
+                                        <option value="other"
+                                            {{ old('customer.vehicle.vehicle_type') == 'other' ? 'selected' : '' }}>
+                                            {{ __('Other') }}</option>
+                                    </x-select>
+                                    <x-input-error for="customer.vehicle.vehicle_type" />
+                                </x-input-group>
+                                <x-input-group>
+                                    <x-label for="vehicle_brand" value="{{ __('Vehicle Brand') }}" />
+                                    <x-input2 id="vehicle_brand" type="text" name="customer[vehicle][vehicle_brand]"
+                                        value="{{ old('customer.vehicle.vehicle_brand') }}" />
+                                    <x-input-error for="customer.vehicle.vehicle_brand" />
+                                </x-input-group>
+                                <x-input-group>
+                                    <x-label for="vehicle_model" value="{{ __('Vehicle Model') }}" />
+                                    <x-input2 id="vehicle_model" type="text" name="customer[vehicle][vehicle_model]"
+                                        value="{{ old('customer.vehicle.vehicle_model') }}" />
+                                    <x-input-error for="customer.vehicle.vehicle_model" />
+                                </x-input-group>
+                                <x-input-group>
+                                    <x-label for="vehicle_year" value="{{ __('Vehicle Year') }}" />
+                                    <x-input2 id="vehicle_year" type="number" min="1900"
+                                        max="{{ date('Y') }}" name="customer[vehicle][vehicle_year]"
+                                        value="{{ old('customer.vehicle.vehicle_year') }}" />
+                                    <x-input-error for="customer.vehicle.vehicle_year" />
+                                </x-input-group>
+                            @endif
 
                         </div>
 
@@ -495,7 +523,7 @@
                         {{ __('Cancel') }}
                     </x-button2>
                     <x-button2 type="submit" variant="submit">
-                    <i class="fas fa-save mr-2"></i>
+                        <i class="fas fa-save mr-2"></i>
                         {{ __('Create Customer') }} {{-- Changed Button Text --}}
                     </x-button2>
                 </div>

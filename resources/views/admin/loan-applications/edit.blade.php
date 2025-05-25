@@ -259,6 +259,8 @@
                             <x-input-group>
                             </x-input-group>
 
+                            @if (config('features.show_vehicle_section'))
+
                             {{-- Vehicle --}}
                             <x-input-group>
                                 <br>
@@ -311,7 +313,7 @@
                                     value="{{ old('customer.vehicle.vehicle_year', $loanApplication->customer->vehicle->vehicle_year ?? '') }}" />
                                 <x-input-error for="customer.vehicle.vehicle_year" />
                             </x-input-group>
-
+                            @endif
                         </div>
 
                     </x-card.content>

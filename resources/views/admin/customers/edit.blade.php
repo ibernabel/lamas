@@ -295,6 +295,8 @@
                             <x-input-group>
                             </x-input-group>
 
+                            @if (config('features.show_vehicle_section'))
+
                             {{-- Vehicle --}}
                             <x-input-group>
                                 <br>
@@ -356,10 +358,14 @@
                                 {{-- Use $customer --}}
                                 <x-input-error for="customer.vehicle.vehicle_year" />
                             </x-input-group>
+                            @endif
                         </div>
                     </x-card.content>
                 </x-card>
 
+                {{-- Removed Loan Details Section --}}
+                {{-- <x-card.header>
+                    <x-card.title>{{ __('Loan Details') }}</x-card.title>
                 {{-- Removed Loan Details Section --}}
 
                 {{-- Employment Information --}}
