@@ -198,7 +198,7 @@
                             @foreach(\App\Models\LoanApplication::with('customer')->latest()->take(5)->get() as $application)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $application->customer->details->first_name ?? 'N/A' . ' ' . $application->customer->details->last_name ?? '' }}</div>
+                                    <div class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $application->customer->details?->first_name . ' ' . $application->customer->details?->last_name }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-900 dark:text-gray-100">{{ number_format($application->details->amount, 2) }}</div>
