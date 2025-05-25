@@ -241,10 +241,10 @@
                                     <option value="public_transportation"
                                         {{ old('customer.details.mode_of_transport', $loanApplication->customer->details->mode_of_transport ?? '') == 'public_transportation' ? 'selected' : '' }}>
                                         {{ __('Public transportation') }}</option>
-                                    <option value="public_transportation"
+                                    <option value="own_car"
                                         {{ old('customer.details.mode_of_transport', $loanApplication->customer->details->mode_of_transport ?? '') == 'own_car' ? 'selected' : '' }}>
                                         {{ __('Own car') }}</option>
-                                    <option value="public_transportation"
+                                    <option value="own_motorcycle"
                                         {{ old('customer.details.mode_of_transport', $loanApplication->customer->details->mode_of_transport ?? '') == 'own_motorcycle' ? 'selected' : '' }}>
                                         {{ __('Own motorcycle') }}</option>
 
