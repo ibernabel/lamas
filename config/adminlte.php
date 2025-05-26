@@ -354,17 +354,17 @@ return [
             //'label_color' => 'success',
         ],
 
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'route' => 'profile.show',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'route' => 'profile.show',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
+        //['header' => 'account_settings'],
+        //[
+        //    'text' => 'profile',
+        //    'route' => 'profile.show',
+        //    'icon' => 'fas fa-fw fa-user',
+        //],
+        //[
+        //    'text' => 'change_password',
+        //    'route' => 'profile.show',
+        //    'icon' => 'fas fa-fw fa-lock',
+        //],
         ['header' => 'users_management', 'can' => 'users.manage'],
         //[
         //    'text' => 'users_list',
