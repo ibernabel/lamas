@@ -11,8 +11,11 @@ Route::middleware([
   'verified',
 ])->group(function () {
   Route::get('', function () {
-    return view('admin.admin');
-    //return view('admin.loan-applications.index'); // Cambia temporalmente a la vista de index de loan-applications, hasta que se creemos la vista de admin correctamente
+    //return view('admin.admin');
+    // Cambia temporalmente a la vista de index de loan-applications o customers, hasta que se creemos la vista de admin correctamente
+    //return view('admin.loan-applications.index');
+    return view('admin.customers.index');
+
 
   })->name('dashboard');
 
