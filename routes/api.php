@@ -31,4 +31,8 @@ Route::prefix('v1')->middleware([
 Route::prefix('v1')->group(function () {
 
     Route::post('/login', [AuthController::class, 'login']);
+
+    Route::get('/time', function () {
+        return response()->json(['time' => now()]);
+    });
 });
