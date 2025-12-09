@@ -634,12 +634,12 @@ class CustomerController extends Controller
             'message' => $customerExists ? __('The client\'s NID was found.') : __('The client\'s NID was not found.'),
             'customer' => $customerExists ? [
                 'NID' => $customer->NID,
-                'id' => $customer->id,
-                'details' => $customer->details ? [
-                    'first_name' => $customer->details->first_name,
-                    'last_name' => $customer->details->last_name,
-                    'email' => $customer->details->email,
-                ] : null,
+                'id' => $customer->id
+                //'details' => $customer->details ? [
+                //    'first_name' => $customer->details->first_name,
+                //    'last_name' => $customer->details->last_name,
+                //    'email' => $customer->details->email,
+                //] : null,
             ] : null,
         ]);
     }
