@@ -29,7 +29,12 @@ class CustomerResource extends JsonResource
         return [
             'id' => $this->id,
             'nid' => $this->NID,
+            'isReferred' => $this->is_referred,
+            'referredBy' => $this->referred_by,
             'leadChannel' => $this->lead_channel,
+            'membershipStatus' => $this->membership_status,
+            'membershipApprovedDate' => $this->membership_approved_date,
+            'hasBankbook' => $this->has_bankbook,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
             'details' => $this->whenLoaded('details', function () {
@@ -129,6 +134,15 @@ class CustomerResource extends JsonResource
                                 'type' => $phone->type,
                             ];
                         }),
+                    ];
+                });
+            }),
+            'accounts' => $this->whenLoaded('accounts', function () {
+                return $this->accounts->map(function ($account) {
+                    return [
+                        'id' => $account->id,
+                        'number' => $account->number,
+                        'type' => $account->type,
                     ];
                 });
             }),
