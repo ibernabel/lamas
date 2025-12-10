@@ -32,7 +32,7 @@ class Customer extends Model
     {
         return $this->belongsTo(Portfolio::class);
     }
-    public function customersAccounts()
+    public function accounts()
     {
         return $this->hasMany(CustomersAccount::class);
     }
