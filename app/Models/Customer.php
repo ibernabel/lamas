@@ -19,6 +19,9 @@ class Customer extends Model
         'lead_channel',
         'portfolio_id',
         'promoter_id',
+        'membership_status',
+        'membership_approved_date',
+        'has_bankbook',
     ];
     protected $hidden = [
         'created_at',
@@ -28,6 +31,10 @@ class Customer extends Model
     public function portfolio()
     {
         return $this->belongsTo(Portfolio::class);
+    }
+    public function customersAccounts()
+    {
+        return $this->hasMany(CustomersAccount::class);
     }
     public function promoter()
     {
