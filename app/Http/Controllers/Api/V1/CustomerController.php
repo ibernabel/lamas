@@ -333,6 +333,7 @@ class CustomerController extends Controller
                 'jobInfo',
                 'vehicle',
                 'references',
+                'accounts', // Include customer accounts
                 'portfolio.broker.user:id,name', // Include portfolio/broker if needed
                 // Add any other relationships you want to show
             ])->findOrFail($id); // Use findOrFail to handle not found automatically
