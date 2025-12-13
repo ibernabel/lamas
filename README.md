@@ -1,10 +1,9 @@
 <p align="center">
-  <img src="./public/img/lamas-id.png" alt="LAMaS Visual Identity" width="300" height="200">
+  <img src="./public/img/lamas-id-mini.png" alt="LAMaS Visual Identity" width="300" height="200">
 </p>
 <p align="center">
   <img src="https://img.shields.io/badge/LAMaS-Loan%20Applications%20Management%20System-0F4C81?style=for-the-badge&logo=laravel&logoColor=white" alt="LAMaS Badge">
 </p>
-
 
 <p align="center">
 <!-- Replace with your project's badges -->
