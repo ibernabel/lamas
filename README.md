@@ -1,4 +1,10 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center">
+  <img src="./public/img/lamas-id.png" alt="LAMaS Visual Identity" width="300" height="200">
+</p>
+<p align="center">
+  <img src="https://img.shields.io/badge/LAMaS-Loan%20Applications%20Management%20System-0F4C81?style=for-the-badge&logo=laravel&logoColor=white" alt="LAMaS Badge">
+</p>
+
 
 <p align="center">
 <!-- Replace with your project's badges -->
