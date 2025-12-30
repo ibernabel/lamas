@@ -118,3 +118,7 @@ plans/
 datos_de_prueba/
 backup/
 *:Zone.Identifier
+
+# Agent
+.agent
+.agent/*
